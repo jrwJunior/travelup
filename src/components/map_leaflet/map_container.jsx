@@ -71,10 +71,10 @@ class Mapleaflet extends Component {
   }
 
   selectedCountry = evt => {
-    const { marks } = this.props.map;
+    const { map } = this.props;
     const { id } = evt.layer.feature;
 
-    if (!marks.some(item => item.id === id)) {
+    if (!map.marks.some(item => item.id === id)) {
       console.log(evt.layer.feature.id);
     } else {
       evt.originalEvent.stopPropagation();
@@ -122,7 +122,7 @@ const mapStateToProps = ({ fb, map, gpsCords, gallery }) => {
     map,
     uid: fb.auth.uid,
     cords: gpsCords.cords,
-    gallery: gallery.photos
+    gallery: gallery
   }
 }
 

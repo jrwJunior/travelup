@@ -1,4 +1,5 @@
 .gallery-head {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,13 +7,44 @@
 }
 
 .select-photo {
-  font-size: 16px;
-  font-weight: 500;
+  position: relative;
+  width: 45px;
 }
 
 .select-btn {
+  font-size: 16px;
+  font-weight: 500;
   color: #41a6f1;
   cursor: pointer;
+}
+
+.gallery-basket {
+  position: absolute;
+  top: 4px;
+  right: -30px;
+}
+
+.gallery-basket:disabled .icon-basket {
+  background: url('../../img/garbage.svg') no-repeat 50%/contain;
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.gallery-basket:enabled .icon-basket {
+  background: url('../../img/garbage_enabled.svg') no-repeat 50%/contain;
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.head-title {
+  color: #323232;
+  font-weight: 500;
+}
+
+.gallery-head .spinner {
+  right: 30px;
 }
 
 .close-btn {
@@ -24,11 +56,31 @@
   transition: opacity .15s;
 }
 
+.gallery {
+  height: 100%;
+}
+
 .gallery-content {
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  height: calc(100% - 195px);
   padding: 12px 0;
+}
+
+.gallery-title {
+  font-size: 28px;
+  text-align: center;
+  color: #74819c;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.pic-info {
+  background: url('../../img/pictures.svg') no-repeat 50%/contain;
+  display: block;
+  width: 65px;
+  height: 65px;
+  margin: 30px auto;
 }
 
 .gallery-item {
@@ -113,20 +165,6 @@
   height: 100%;
   background: hsla(0,0%,100%,.65);
   opacity: 1;
-}
-
-.basket:disabled .icon-basket {
-  background: url('../../img/garbage.svg') no-repeat 50%/contain;
-  display: block;
-  width: 15px;
-  height: 15px;
-}
-
-.basket:enabled .icon-basket {
-  background: url('../../img/garbage_enabled.svg') no-repeat 50%/contain;
-  display: block;
-  width: 15px;
-  height: 15px;
 }
 
 .select-check-icon {

@@ -2,7 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GalleryItem from './gallery_item';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import Spinner from '../spinner';
 import './style.scss';
+
+const GalleryGreeting = () => {
+  return (
+    <div className='gallery-title'>
+      <span>You can upload your photos here.</span>
+      <span className='pic-info'/>
+    </div>
+  )
+}
 
 const GalleryView = props => {
   const { 
@@ -21,8 +31,9 @@ const GalleryView = props => {
     isSelectedItem,
     islightboxOpen,
     isSelectedIndex,
-    inputRef,
-    data
+    isImages,
+    isLoading,
+    inputRef
   } = props;
 
   return (
@@ -33,24 +44,27 @@ const GalleryView = props => {
             className='select-btn'
             onClick={ onSelected }
           >
-            { isSelected ? 'Cancel' : 'select' }
+            { isSelected ? 'Cancel' : 'Select' }
           </button>
-          { isSelected ?
+          { isSelected ? (
             <button
-              className="basket"
+              className="gallery-basket"
               disabled={ !isSelectedItem.check }
               onClick={ onRemoveItem }
             >
               <span className="icon-basket" />
-            </button> : null }
+            </button>
+          ) : null }
         </div>
         <div className="head-title">Photos</div>
         <div className="head-close">
           <button className='close-btn' onClick={ onClose } />
         </div>
+        {/* { isLoading ? <Spinner mode='dark'/> : null } */}
       </div>
       <div className="gallery-content">
-        { data.map(item => (
+        { !isImages.length ? GalleryGreeting() : null }
+        { isImages.map(item => (
           <GalleryItem
             key={ item.name }
             data={ item }
@@ -67,34 +81,32 @@ const GalleryView = props => {
             >
               <Carousel
                 currentIndex={isSelectedIndex}
-                views={data}
+                views={isImages}
               />
             </Modal>
           ) : null}
         </ModalGateway>
       </div>
-      <div className="gallery-drag-file">
-        <div 
-          className="drag-file"
-          onDragEnter={ evt => onDragEnter(evt)}
-          onDragOver={evt => onDragOver(evt)}
-          onDragLeave={evt => onDragLeave(evt)}
-          onDrop={evt => onDrop(evt)}
-        >
-        <>
-          <input 
-            className="input-file"
-            onChange={evt => onChange(evt)}
-            type="file" 
-            name="file" 
-            multiple accept="image/*"
-            ref={ inputRef }
-            />
-          <div className="drag-info"> 
-            Drag a file here or <span onClick={ onClick }>browse</span> for a file to upload
-          </div>
-        </>
+      <div 
+        className="drag-file"
+        onDragEnter={ evt => onDragEnter(evt)}
+        onDragOver={evt => onDragOver(evt)}
+        onDragLeave={evt => onDragLeave(evt)}
+        onDrop={evt => onDrop(evt)}
+      >
+      <>
+        <input 
+          className="input-file"
+          onChange={evt => onChange(evt)}
+          type="file" 
+          name="file" 
+          multiple accept="image/*"
+          ref={ inputRef }
+          />
+        <div className="drag-info"> 
+          Drag a file here or <span onClick={ onClick }>browse</span> for a file to upload
         </div>
+      </>
       </div>
     </div>
   )
@@ -116,7 +128,8 @@ GalleryView.propTypes = {
   isSelectedItem: PropTypes.object,
   islightboxOpen: PropTypes.bool,
   isSelectedIndex: PropTypes.number,
-  data: PropTypes.array
+  isImages: PropTypes.array,
+  isLoading: PropTypes.bool
 }
 
 export default GalleryView;

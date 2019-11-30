@@ -5,8 +5,18 @@ import ReactModal from '../modal';
 import Gallery from '../gallery';
 import './style.scss';
 
+const Notification = isNotification => {
+  return (
+    <div className='notification'>
+      <div className='notification-text'>
+        { isNotification.message }
+      </div>
+    </div>
+  )
+}
+
 const Home = props => {
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, isNotification } = props;
   
   return (
     <div className='app-layout'>
@@ -27,6 +37,7 @@ const Home = props => {
           onClose={ onClose }
         />
       </ReactModal>
+      { isNotification.notifi ? Notification(isNotification) : null }
     </div>
   )
 }

@@ -4,7 +4,7 @@ const setGPSCoordinates = (uid, cords) => async(dispatch, getState, { getFirebas
   const db = getFirestore();
   
   try {
-    await db.collection('location').doc(uid).set({
+    await db.collection('photos_location').doc(uid).set({
       [cords.id]: [{ ...cords }]
     });
     dispatch({ type: actionTypes.SET_GPS_COORDINATES, payload: [].concat(cords) });
@@ -17,7 +17,7 @@ const getGPSCoordinates = (uid) => async(dispatch, getState, { getFirebase, getF
   const db = getFirestore();
 
   try {
-    const docRef = await db.collection('location').doc(uid);
+    const docRef = await db.collection('photos_location').doc(uid);
     const cords = await docRef.get();
 
     if (cords.exists) {

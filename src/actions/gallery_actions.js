@@ -4,6 +4,8 @@ const setGalleryPhotos = (uid, file, id) => async(dispatch, getState, { getFireb
   const firebase = getFirebase();
 
   try {
+    dispatch({ type: actionTypes.FETCH_REQUEST_COORDINATES });
+    
     await firebase.storage().ref(`users/${uid}/gallery/${id}/${file.name}`).put(file);
   } catch(e) {
     console.log(e);
@@ -60,8 +62,12 @@ const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getF
       const { ref } = await firebase.storage().ref(`users/${uid}/gallery/${id}/${files[0].name}`).put(files[0]);
       const src = await ref.getDownloadURL();
       
-      if (!(data[id].every(el => el.name.includes(ref.name)))) {
-        data[id].push({ src, name: ref.name });
+      if (!data.hasOwnProperty(id)) {
+        data[id] = [{ src, name: ref.name }];
+      } else {
+        if (!(data[id].every(el => el.name.includes(ref.name))) || !data[id].length) {
+          data[id].push({ src, name: ref.name });
+        }
       }
 
       dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
@@ -81,7 +87,11 @@ const removeFiles = (uid, id, removeEl) => (dispatch, getState, { getFirebase })
       if (!removeEl.names.includes(el.name)) {
         newData.push(el);
       } else {
-        firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete();
+        firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
+        .then(() => dispatch({ type: actionTypes.SET_NOTIFICATION, payload: {
+          notifi: true,
+          message: 'Photo removed from gallery'
+        }}));
       }
     })
   }

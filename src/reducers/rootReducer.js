@@ -8,6 +8,7 @@ import gpsCoordinates from './gpsCoordinatesReducer';
 import mapLeafletReducer from './mapleafletReducer';
 import cropperReducer from './cropperReducer';
 import galleryReducer from './galleryReducer';
+import notificationReducer from './notificationReducer';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   gpsCords: gpsCoordinates,
   map: mapLeafletReducer,
   gallery: galleryReducer,
+  notification: notificationReducer,
   fb: firebaseReducer,
 });
 

@@ -110,6 +110,7 @@ class GalleryContainer extends Component {
   render() {
     const { gallery, map } = this.props;
     const { selected, selectedItem, lightboxIsOpen, selectedIndex } = this.state;
+    const images = gallery[map.id] || [];
 
     return (
       <Gallery
@@ -127,8 +128,9 @@ class GalleryContainer extends Component {
         isSelectedItem={ selectedItem }
         islightboxOpen={ lightboxIsOpen }
         isSelectedIndex={ selectedIndex }
+        isImages={ images }
+        isLoading={ gallery.loading }
         inputRef={ this.fileInput }
-        data={ gallery[map.id] }
       />
     )
   }

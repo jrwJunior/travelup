@@ -44,19 +44,23 @@ class UploadFileContainer extends Component {
   }
 
   render() {
+    const { loading } = this.props.gpsCords;
+
     return (
       <UploadFile
         onChange={ this.handleChange }
         onClick={ this.handleClick }
+        isLoading={ loading }
         fileInput={ this.fileInput }
       />
     )
   }
 }
 
-const mapStateToProps = ({ fb }) => {
+const mapStateToProps = ({ fb, gpsCords }) => {
   return {
-    uid: fb.auth.uid
+    uid: fb.auth.uid,
+    gpsCords
   }
 }
 

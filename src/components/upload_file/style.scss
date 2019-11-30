@@ -1,14 +1,20 @@
 .upload-photos {
+  position: relative;
   background: #fff;
   display: flex;
   align-items: center;
-  padding: 8px 10px;
+  padding: 10px 20px;
   margin-right: 25px;
   border: 0;
   border-radius: 5px;
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background 0.15s ease-in;
+}
+
+.upload-photos .spinner {
+  top: 10px;
+  left: -35px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 650px) {
@@ -26,4 +32,10 @@
   display: inline-block;
   width: 15px;
   height: 15px;
+}
+
+.upload-photos-label {
+  font-size: 15px;
+  color: #565656;
+  margin-left: 15px;
 }
