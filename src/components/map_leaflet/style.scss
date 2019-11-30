@@ -1,0 +1,22 @@
+.app-map {
+  height: 100%;
+}
+
+.map-marker {
+  height: 100%;
+  background: url('../../img/map-marker.svg') no-repeat 50%/cover;
+  position: relative;
+  cursor: default;
+}
+
+.mark-btn {
+  width: 22px;
+  height: 22px;
+  background-color: #fdfeff;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  box-shadow: 0 0 8px 3px rgba(0,0,0,.2);
+  cursor: pointer;
+}

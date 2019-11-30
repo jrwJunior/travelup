@@ -1,0 +1,202 @@
+.popper {
+  position: absolute;
+  top: 100%;
+  right: -25px;
+  padding-top: 15px;
+  z-index: 500;
+}
+
+.popper-content {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px 0 rgba(25, 25, 34, 0.24);
+  color: #52525d;
+  // padding: 16px;
+  position: relative;
+  width: 240px;
+}
+
+.popper-lg {
+  width: 320px;
+}
+
+.account-header {
+  display: flex;
+  align-items: center;
+  color: #32323d;
+  padding: 12px 20px;
+  transition-duration: 0.15s;
+  transition-property: background-color;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+
+.account-thumbnail {
+  position: relative;
+}
+
+.thumbnail-rounded {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.thumbnail {
+  border-radius: 20px;
+  display: inline-block;
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  transform: translateZ(0);
+  vertical-align: top;
+}
+
+.thumbnail .picture {
+  display: block;
+  position: relative;
+}
+
+.account-heading {
+  color: #32323d;
+  flex: 1;
+  font-size: 16px;
+  margin-left: 12px;
+}
+
+.picture-edit {
+  position: absolute;
+  top: 25px;
+  background: #fff url('../../img/pencil.svg') no-repeat center/10px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-name {
+  font-size: 15px;
+}
+
+.animate-wobble:hover .animate-wobble-target {
+  animation: wobble .3s;
+}
+
+@keyframes wobble {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+50% {
+    -webkit-transform: translateX(6px);
+    transform: translateX(6px);
+}
+100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+.account-menu {
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  border-top: 1px solid #f8f8f9;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.account-item {
+  padding: 0 8px;
+}
+
+.account-link.is-main {
+  color: #32323d;
+  padding: 12px;
+}
+
+.account-link {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  color: #72727d;
+  padding: 8px;
+  transition-duration: 0.15s;
+  transition-property: background-color;
+}
+
+.account-link:hover {
+  background-color: #f2f2f2;
+}
+
+.account-link-label {
+  flex: 1;
+}
+
+.account-input-label {
+  margin-right: auto;
+}
+
+.account-input {
+  align-items: center;
+  display: flex;
+  padding: 12px;
+}
+
+.input-switch {
+  background-color: #dedee3;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  padding: 1px;
+  position: relative;
+  width: 32px;
+  transition-duration: .15s;
+  transition-property: background-color;
+  box-sizing: border-box;
+}
+
+.input-control {
+  display: none;
+}
+
+.input-switch:after {
+  content: "";
+  background-color: #fff;
+  border-radius: 50%;
+  display: block;
+  height: 14px;
+  width: 14px;
+  transition-duration: 0.15s;
+  transition-property: transform;
+}
+
+.input-switch.is-checked {
+  background-color: #ef5466;
+}
+
+.input-switch.is-checked:after {
+  transform: translate3d(16px,0,0);
+}
+
+.popper-arrow {
+  position: absolute;
+  border: 6px solid rgba(0,0,0,0);
+  height: 0;
+  width: 0;
+  border-bottom-color: #fff;
+  border-top-width: 0;
+  left: calc(100% - 47px);
+  margin-bottom: 0;
+  margin-top: 0;
+  top: 9px;
+}

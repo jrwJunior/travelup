@@ -1,0 +1,41 @@
+.button-send {
+  display: inline-flex;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 300;
+  max-width: 100%;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 175px;
+  color: rgb(255, 255, 255);
+  height: 45px;
+  line-height: 45px;
+  border-width: 0;
+  text-decoration: none;
+  border-radius: 30px;
+  padding: 0 8px;
+  transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  outline: none;
+}
+
+.button-send:enabled {
+  background: #41A6F1;
+  cursor: pointer;
+}
+
+.button-send:disabled {
+  background-color: #cecece;
+  cursor: default;
+}
+
+.button-send:enabled.button-send:hover {
+  background: #75c4ff;
+}
+
+@media screen and (min-width: 320px) and (max-width: 420px) {
+  .button-send {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+  }
+}

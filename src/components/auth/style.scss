@@ -1,0 +1,353 @@
+/*
+Auth
+=============================
+*/
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  min-height: 545px;
+  margin-top: 75px;
+}
+
+@media screen and (min-width:320px) and (max-width: 420px) {
+  .container-auth {
+    min-height: auto;
+    height: 100%;
+  }
+}
+
+@media screen and (min-width:675px) and (max-width: 992px) {
+  .container-auth {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/*
+Auth-information
+=============================
+*/
+
+.auth-information {
+  background: rgba(65, 166, 241, 1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 75px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  max-width: 355px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 675px) {
+  .auth-information {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 675px) and (max-width: 992px) {
+  .auth-information {
+    max-width: 285px;
+    padding: 15px 25px;
+  }
+}
+
+.auth-information-heading {
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.auth-information-descr {
+  font-size: 14px;
+  font-weight: 300;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.button-view {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 300;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: transparent;
+  display: inline-block;
+  border: 1px solid #fff;
+  border-radius: 32px;
+  width: 175px;
+  margin-top: 25px;
+  transition: background 0.15s ease-in, color 0.15s ease-in;
+}
+
+.button-view:hover {
+  background: #fff;
+  color: #333;
+}
+
+/*
+Auth-form
+=============================
+*/
+
+.wrapper-auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 475px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 45px 55px 50px 55px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 420px) {
+  .wrapper-auth {
+    width: 100%;
+    padding: 0 6% 0 6%;
+    border-radius: 0;
+  }
+}
+
+@media screen and (min-width: 420px) and (max-width: 675px) {
+  .wrapper-auth {
+    min-width: 375px;
+    max-width: 425px;
+    margin: 0 auto;
+    padding: 0 35px 0 35px;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (min-width: 675px) and (max-width: 992px) {
+  .wrapper-auth {
+    width: 420px;
+  }
+}
+
+.auth-title {
+	font-size: 24px;
+	font-weight: 500;
+	color: #9a9a9a;
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 370px) {
+  .auth-title {
+    margin-bottom: 15px;
+  }
+}
+
+.auth-or {
+  font-size: 14px;
+  text-align: center;
+  color: #989898;
+  display: block;
+  margin-bottom: 15px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 370px) {
+  .auth-or {
+    display: none;
+  }
+}
+
+.auth-field {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.auth-input {
+  font-size: 14px;
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid #f2f2f2;
+  border-radius: 30px;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.auth-input::-webkit-input-placeholder {
+  font-size: 12px;
+}
+
+.eye {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: url('../../img/eye.svg') no-repeat center/contain;
+  display: block;
+  width: 20px;
+  height: 20px;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.15s ease-in;
+}
+
+.auth-input:focus {
+  border-color: #41A6F1;
+  background: #fff;
+}
+
+.auth-input.is-error {
+  border-color: rgb(222, 53, 11);
+}
+
+.error-server {
+  font-size: 12px;
+  color: rgb(222, 53, 11);
+  text-align: center;
+  margin-top: 15px;
+}
+
+.auth-button {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.auth-success {
+  position: absolute;
+  top: calc(50% - (15px / 2));
+  left: -25px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url('../../img/checked.svg') no-repeat center/contain;
+}
+
+@media screen and (min-width: 320px) and (max-width: 420px) {
+  .field-valid {
+    left: calc(100% - 58px);
+  }
+}
+
+.auth-bottom {
+  font-size: 14px;
+  color: #989898;
+  text-align: center;
+  margin-top: 15px;
+}
+
+@media screen and (min-width: 675px) {
+  .auth-bottom{
+    display: none;
+  }
+}
+
+.auth-link {
+  font-size: 16px;
+  color: #4292e7;
+  text-decoration: none;
+}
+
+.text-error {
+  font-size: 12px;
+  color: rgb(222, 53, 11);
+  position: absolute;
+  left: 20px;
+  bottom: -20px;
+  display: block;
+}
+
+/*
+Auth-animate route
+=============================
+*/
+
+.example-enter {
+  opacity: 0;
+}
+
+.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-exit {
+  opacity: 0;
+}
+
+.example-exit-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+/*
+Auth-animate error message
+=============================
+*/
+.alert-enter {
+  opacity: 0;
+}
+.alert-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.auth-socials {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 370px) {
+  .auth-socials {
+    margin-bottom: 20px;
+  }
+}
+
+.auth-socials button:first-child {
+  margin-right: 15px;
+}
+
+.auth-social-button {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  padding: 2px;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  box-shadow: 0 0 8px 1px rgba(82, 82, 82, 0.1);
+  transition: transform 0.15s ease-in;
+}
+
+.auth-social-button:hover {
+  transform: scale(1.1);
+}
+
+.icon-gpl {
+  background: url("../../img/g-pl.svg") no-repeat center/18px;
+  display: inline-block;
+  width: 100%;
+  height: 32px;
+}
+
+.icon-fb {
+  background: url("../../img/fb.svg") no-repeat center/18px;
+  display: inline-block;
+  width: 100%;
+  height: 32px;
+}
