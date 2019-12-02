@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setGPSCoordinates } from '../../actions/gps_actions';
+import { setGPSCoordinates } from '../../actions/map_actions';
 import { setGalleryPhotos } from '../../actions/gallery_actions';
 import EXIF from 'exif-js';
 import ServiceGeoocoder from '../../services/service_geocoder';
@@ -33,7 +33,17 @@ class UploadFileContainer extends Component {
 
       gpsTags.forEach(value => {
         const cord = this.getGPSCoordinates(EXIF.getTag(file, value));
-        coordinates[value] = cord;
+
+        switch(value) {
+          case 'GPSLatitude':
+            coordinates['lat'] = cord;
+            break;
+          case 'GPSLongitude':
+            coordinates['lon'] = cord;
+            break;
+          default:
+            break;
+        }
       });
       this.serviceGeoocoder.getData(coordinates)
         .then(cords => {
@@ -44,7 +54,7 @@ class UploadFileContainer extends Component {
   }
 
   render() {
-    const { loading } = this.props.gpsCords;
+    const { loading } = this.props;
 
     return (
       <UploadFile
@@ -57,10 +67,10 @@ class UploadFileContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, gpsCords }) => {
+const mapStateToProps = ({ fb, map }) => {
   return {
     uid: fb.auth.uid,
-    gpsCords
+    loading: map.loading
   }
 }
 

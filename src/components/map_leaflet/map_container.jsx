@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { Map, Marker, TileLayer, GeoJSON } from 'react-leaflet';
 import { divIcon } from 'leaflet';
 import MapGeo from './map.geo.json';
-import { setMapCoordinates } from '../../actions/map_actions';
-import { getGPSCoordinates } from '../../actions/gps_actions';
-import { setCountryMapId } from '../../actions/map_actions';
+import { getGPSCoordinates } from '../../actions/map_actions';
+import { setMapId } from '../../actions/map_actions';
 import { showModal } from '../../actions/modal_actions';
 import shortid from 'shortid';
 import './style.scss';
@@ -19,20 +18,10 @@ class Mapleaflet extends Component {
   });
 
   componentDidUpdate(prevProps, prevState) {
-    const { uid, cords, getCordsFile, setMapNewCords } = this.props;
+    const { uid, getCordinates } = this.props;
 
-    if (uid !== prevProps.uid && !cords.length) {
-      getCordsFile(uid);
-    }
-
-    if (cords.length !== prevProps.cords.length) {
-      cords.forEach(({ GPSLatitude: lat, GPSLongitude: lon, id }) => (
-        setMapNewCords({
-          lon,
-          lat,
-          id
-        })
-      ));
+    if (uid !== prevProps.uid) {
+      getCordinates(uid);
     }
   }
 
@@ -60,22 +49,23 @@ class Mapleaflet extends Component {
 
   filterCountryId = evt => {
     const { options } = evt.target;
-    const { map, toggleModal, setCountryId } = this.props;
+    const { map, toggleModal, selectCountry } = this.props;
 
     map.marks.forEach(item => {
       if (item.id.includes(options.position.id)) {
-        setCountryId(options.position.id);
+        selectCountry(options.position.id);
         toggleModal();
       }
     });
   }
 
   selectedCountry = evt => {
-    const { map } = this.props;
+    const { map, selectCountry, toggleModal } = this.props;
     const { id } = evt.layer.feature;
 
     if (!map.marks.some(item => item.id === id)) {
-      console.log(evt.layer.feature.id);
+      selectCountry(evt.layer.feature.id);
+      toggleModal();
     } else {
       evt.originalEvent.stopPropagation();
     }
@@ -88,7 +78,7 @@ class Mapleaflet extends Component {
     return (
       <Map
         className="app-map" 
-        center={ position } 
+        center={ position }
         zoom={ 3 }
         maxBounds={ [[90, -180], [-70, 180]] }
       >
@@ -104,10 +94,10 @@ class Mapleaflet extends Component {
           onMouseOut={ this.handleMouseOut }
           onClick={ evt => this.selectedCountry(evt) }
         />
-        { map.marks.map(cord => (
+        { map.marks.map(cords => (
           <Marker 
             key={ shortid.generate() }
-            position={ cord }
+            position={ cords }
             icon={ this.customIconMarker }
             onClick={ evt => this.filterCountryId(evt)}
           />
@@ -117,21 +107,18 @@ class Mapleaflet extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, map, gpsCords, gallery }) => {
+const mapStateToProps = ({ fb, map }) => {
   return {
     map,
-    uid: fb.auth.uid,
-    cords: gpsCords.cords,
-    gallery: gallery
+    uid: fb.auth.uid
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setMapNewCords: crods => dispatch(setMapCoordinates(crods)),
-    getCordsFile: uid => dispatch(getGPSCoordinates(uid)),
+    getCordinates: uid => dispatch(getGPSCoordinates(uid)),
     toggleModal: () => dispatch(showModal()),
-    setCountryId: id => dispatch(setCountryMapId(id))
+    selectCountry: id => dispatch(setMapId(id))
   }
 }
 

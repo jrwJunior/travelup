@@ -14,8 +14,16 @@
 .select-btn {
   font-size: 16px;
   font-weight: 500;
+}
+
+.select-btn:enabled {
   color: #41a6f1;
   cursor: pointer;
+}
+
+.select-btn:disabled {
+  cursor: default;
+  color: #afafaf;
 }
 
 .gallery-basket {

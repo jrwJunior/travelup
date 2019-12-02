@@ -29,7 +29,7 @@ const UploadFileView = props => {
 UploadFileView.propTypes = {
   onChange: PropTypes.func,
   onClick: PropTypes.func,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.bool
 }
 
 export default UploadFileView;

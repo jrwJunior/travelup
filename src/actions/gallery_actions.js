@@ -4,9 +4,15 @@ const setGalleryPhotos = (uid, file, id) => async(dispatch, getState, { getFireb
   const firebase = getFirebase();
 
   try {
-    dispatch({ type: actionTypes.FETCH_REQUEST_COORDINATES });
-    
-    await firebase.storage().ref(`users/${uid}/gallery/${id}/${file.name}`).put(file);
+    const data = getState().gallery;
+    const { ref } = await firebase.storage().ref(`users/${uid}/gallery/${id}/${file.name}`).put(file);
+    const src = await ref.getDownloadURL();
+
+    if (!data.hasOwnProperty(id)) {
+      data[id] = [{ src, name: ref.name }];
+    }
+
+    dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
   } catch(e) {
     console.log(e);
   }
@@ -77,24 +83,22 @@ const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getF
   }
 }
 
-const removeFiles = (uid, id, removeEl) => (dispatch, getState, { getFirebase }) => {
+const deletedData = (uid, id, delItem) => (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   const data = getState().gallery;
   const newData = [];
 
-  for (let key in data) {
-    data[key].forEach(el => {
-      if (!removeEl.names.includes(el.name)) {
-        newData.push(el);
-      } else {
-        firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
+  data[id].forEach(el => {
+    if (!delItem.keys.includes(el.name)) {
+      newData.push(el);
+    } else {
+      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
         .then(() => dispatch({ type: actionTypes.SET_NOTIFICATION, payload: {
           notifi: true,
           message: 'Photo removed from gallery'
         }}));
-      }
-    })
-  }
+    }
+  })
 
   dispatch({ type: actionTypes.REMOVE_ITEM_GALLERY, payload: { id, newData }});
 }
@@ -103,5 +107,5 @@ export {
   setGalleryPhotos,
   getGalleryPhotos,
   setDragFilesGallery,
-  removeFiles
+  deletedData
 }

@@ -4,23 +4,34 @@ const initState  = {
   lat: 55,
   lng: 10,
   marks: [],
-  id: null
+  selectMapId: null,
+  loading: false
 };
 
 const mapLeafletReducer = (state = initState, action) => {
   switch(action.type) {
+    case actionTypes.CORDS_FETCH_REQUESTED:
+      return {
+        ...state,
+        loading: true
+      }
     case actionTypes.SET_MAP_COORDINATES:
       return {
         ...state,
-        marks: [
-          ...state.marks,
-          action.payload
-        ]
+        marks: state.marks.concat(action.payload),
+        loading: false
       }
-    case actionTypes.SET_COUNT_MAP_ID:
+    case actionTypes.SET_MAP_ID:
       return {
         ...state,
-        id: action.payload
+        selectMapId: action.payload
+      }
+    case actionTypes.DELETE_MAP_COORDINATES:
+      return {
+        ...state,
+        marks: [
+          ...action.payload
+        ]
       }
     default:
       return state;

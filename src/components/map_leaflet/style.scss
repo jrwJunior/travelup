@@ -1,5 +1,6 @@
 .app-map {
-  height: 100%;
+  width: calc(100% - 300px);
+  height: calc(100vh - 65px);
 }
 
 .map-marker {

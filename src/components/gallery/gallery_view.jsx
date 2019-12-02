@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GalleryItem from './gallery_item';
 import Carousel, { Modal, ModalGateway } from 'react-images';
-import Spinner from '../spinner';
 import './style.scss';
 
 const GalleryGreeting = () => {
@@ -32,7 +31,6 @@ const GalleryView = props => {
     islightboxOpen,
     isSelectedIndex,
     isImages,
-    isLoading,
     inputRef
   } = props;
 
@@ -42,6 +40,7 @@ const GalleryView = props => {
         <div className="select-photo">
           <button 
             className='select-btn'
+            disabled={ !isImages.length }
             onClick={ onSelected }
           >
             { isSelected ? 'Cancel' : 'Select' }
@@ -49,14 +48,14 @@ const GalleryView = props => {
           { isSelected ? (
             <button
               className="gallery-basket"
-              disabled={ !isSelectedItem.check }
+              disabled={ !isSelectedItem.selected }
               onClick={ onRemoveItem }
             >
               <span className="icon-basket" />
             </button>
           ) : null }
         </div>
-        <div className="head-title">Photos</div>
+        <div className="head-title">{ isSelected ? 'Select items' : 'Photos' }</div>
         <div className="head-close">
           <button className='close-btn' onClick={ onClose } />
         </div>

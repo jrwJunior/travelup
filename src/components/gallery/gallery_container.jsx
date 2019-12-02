@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setDragFilesGallery, removeFiles } from '../../actions/gallery_actions';
+import { setDragFilesGallery, deletedData } from '../../actions/gallery_actions';
+import { deleteGPSCoordinates, setGPSCoordinates } from '../../actions/map_actions';
+import ServicesGeoCordinats from '../../services/service_geo_cordinats';
 import Gallery from './gallery_view';
 
 class GalleryContainer extends Component {
   fileInput = React.createRef();
+  serviceGeoCordinats = new ServicesGeoCordinats();
 
   state = {
     lightboxIsOpen: false,
     selectedIndex: 0,
     selected: false,
     selectedItem: {
-      check: false,
-      names: []
+      selected: false,
+      keys: []
     }
   }
 
@@ -20,11 +23,23 @@ class GalleryContainer extends Component {
     this.fileInput.current.click();
   }
 
-  handleChange = evt => {
-    const { uid, setPhotosGallery, map } = this.props;
+  handleChange = async(evt) => {
+    const { uid, map, setPhotosGallery, setCoordinates } = this.props;
+    const { selectMapId } = map;
     const fileList = evt.target.files;
+    const isCoincidence = map.marks.some(({ id }) => id.includes(selectMapId));
 
-    setPhotosGallery(uid, map.id, fileList);
+    if (!isCoincidence) {
+      const { latlng }  = await this.serviceGeoCordinats.getCords(selectMapId);
+
+      setCoordinates(uid, {
+        lat: latlng[0],
+        lon: latlng[1],
+        id: selectMapId
+      });
+    }
+
+    setPhotosGallery(uid, selectMapId, fileList);
   }
 
   handleDragOverEnter(evt) {
@@ -61,7 +76,7 @@ class GalleryContainer extends Component {
 
   handleSelectItem = val => {
     this.setState(({ selectedItem }) => {
-      const keys = selectedItem.names;
+      const keys = selectedItem.keys;
       const index = keys.findIndex(el => el === val);
       const newArray = [];
       
@@ -75,29 +90,34 @@ class GalleryContainer extends Component {
 
       return {
         selectedItem: {
-          check: !!newArray.length,
-          names: newArray
+          selected: !!newArray.length,
+          keys: newArray
         }
       }
     });
   }
 
-  handleRemoveItem = () => {
+  handleRemoveItem = async() => {
     const { selectedItem } = this.state;
-    const { uid, map, removeItem } = this.props;
+    const { uid, map, deleteDataItem, deleteMapCords } = this.props;
+    const { selectMapId } = map;
 
-    removeItem(uid, map.id, selectedItem);
     this.setState({
+      selected: false,
       selectedItem: {
-        check: false,
-        names: []
+        selected: false,
+        keys: []
       }
     });
+
+    deleteDataItem(uid, selectMapId, selectedItem);
+    deleteMapCords(uid, selectMapId);
   }
 
   handleOpenLightbox = name => {
-    const { gallery: data, map } = this.props;
-    const selectedIndex = data[map.id].findIndex(item => item.name === name);
+    const { data, map } = this.props;
+    const { selectMapId } = map;
+    const selectedIndex = data[selectMapId].findIndex(item => item.name === name);
     
     this.setState(state => {
       return {
@@ -108,9 +128,10 @@ class GalleryContainer extends Component {
   };
 
   render() {
-    const { gallery, map } = this.props;
+    const { data, map } = this.props;
     const { selected, selectedItem, lightboxIsOpen, selectedIndex } = this.state;
-    const images = gallery[map.id] || [];
+    const { selectMapId } = map;
+    const images = data[selectMapId];
 
     return (
       <Gallery
@@ -128,8 +149,7 @@ class GalleryContainer extends Component {
         isSelectedItem={ selectedItem }
         islightboxOpen={ lightboxIsOpen }
         isSelectedIndex={ selectedIndex }
-        isImages={ images }
-        isLoading={ gallery.loading }
+        isImages={ images || [] }
         inputRef={ this.fileInput }
       />
     )
@@ -139,7 +159,7 @@ class GalleryContainer extends Component {
 const mapStateToProps = ({ fb, gallery, map }) => {
   return {
     uid: fb.auth.uid,
-    gallery,
+    data: gallery,
     map
   }
 }
@@ -147,7 +167,9 @@ const mapStateToProps = ({ fb, gallery, map }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setPhotosGallery: (uid, id, files) => dispatch(setDragFilesGallery(uid, id, files)),
-    removeItem: (uid, id, removeEl) => dispatch(removeFiles(uid, id, removeEl))
+    deleteDataItem: (uid, id, delitem) => dispatch(deletedData(uid, id, delitem)),
+    setCoordinates: (uid, cords) => dispatch(setGPSCoordinates(uid, cords)),
+    deleteMapCords: (uid, id) => dispatch(deleteGPSCoordinates(uid, id))
   }
 }
 

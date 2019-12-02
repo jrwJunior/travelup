@@ -19,13 +19,11 @@ const Home = props => {
   const { isOpen, onClose, isNotification } = props;
   
   return (
-    <div className='app-layout'>
-      <div className='app-wrapper'>
-        <div className='app-content'>
-          <AppHeader/>
-          <AppMap/>
-        </div>
+    <>
+      <AppHeader/>
+      <div className='app-content'>
         <aside className='app-sidebar'>Sidebar</aside>
+        <AppMap/>
       </div>
       <ReactModal
         isOpen={ isOpen }
@@ -38,7 +36,7 @@ const Home = props => {
         />
       </ReactModal>
       { isNotification.notifi ? Notification(isNotification) : null }
-    </div>
+    </>
   )
 }
 

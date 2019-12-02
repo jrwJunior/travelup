@@ -10,7 +10,7 @@ const GalleryItem = props => {
     onOpenLightBox
   } = props;
 
-  const { check, names } = isSelectedItem;
+  const { selected, keys } = isSelectedItem;
 
   return (
     <div className='gallery-item'>
@@ -19,7 +19,7 @@ const GalleryItem = props => {
         className={ `${ isSelected ? 'gallery-item-view on-selected' : 'gallery-item-view' }` }
         onClick={ !isSelected ? () => onOpenLightBox(data.name) : () => onSelectedItem(data.name) }
         >
-        { check && names.includes(data.name) ? <span className="select-check-icon" /> : null }
+        { selected && keys.includes(data.name) ? <span className="select-check-icon" /> : null }
         <img src={ data.src } alt=""/>
       </a>
     </div>
