@@ -1,9 +1,9 @@
 import * as actionTypes from './action_types';
 
-const showModal = () => dispatch => {
-  dispatch({ type: actionTypes.SHOW_MODAL });
+const modalOppened = id => dispatch => {
+  dispatch({ type: actionTypes.MODAL_OPENEND, payload: id });
 }
 
 export {
-  showModal
+  modalOppened
 }

@@ -5,18 +5,11 @@ import { divIcon } from 'leaflet';
 import MapGeo from './map.geo.json';
 import { getGPSCoordinates } from '../../actions/map_actions';
 import { setMapId } from '../../actions/map_actions';
-import { showModal } from '../../actions/modal_actions';
+import { modalOppened } from '../../actions/modal_actions';
 import shortid from 'shortid';
 import './style.scss';
 
 class Mapleaflet extends Component {
-  customIconMarker = divIcon({
-    html: `<div class="map-marker"><button class="mark-btn"></button></div>`,
-    className: 'iconButtonAddPhoto',
-    iconAnchor: [15, 40],
-    iconSize: [30, 40]
-  });
-
   componentDidUpdate(prevProps, prevState) {
     const { uid, getCordinates } = this.props;
 
@@ -39,11 +32,29 @@ class Mapleaflet extends Component {
     evt.target.resetStyle(evt.layer);
   }
 
+  mapCustomMarkIcon = id => {
+    const { images } = this.props;
+    const items = images[id];
+
+    if (images.hasOwnProperty(id)) {
+      return divIcon({
+        html: `
+          <img src=${ items[items.length-1].src } alt=''>
+          <span class='marker-quantity'>${ images[id].length }</span>  
+          `,
+        className: 'iconButtonAddPhoto',
+        iconAnchor: [20, 40],
+        iconSize: [40, 40]
+      });
+    }
+  }
+
   mapLayerStyled() {
     return {
       fill: true,
       fillColor: 'transparent',
-      weight: 0
+      weight: 0,
+      width: 100
     }
   }
 
@@ -54,7 +65,7 @@ class Mapleaflet extends Component {
     map.marks.forEach(item => {
       if (item.id.includes(options.position.id)) {
         selectCountry(options.position.id);
-        toggleModal();
+        toggleModal('modal_gallery');
       }
     });
   }
@@ -65,25 +76,26 @@ class Mapleaflet extends Component {
 
     if (!map.marks.some(item => item.id === id)) {
       selectCountry(evt.layer.feature.id);
-      toggleModal();
+      toggleModal('modal_gallery');
     } else {
       evt.originalEvent.stopPropagation();
     }
   }
 
   render() {
-    const { map } = this.props;
+    const { map, images } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
+    const a = Object.keys(images).length;
 
     return (
       <Map
-        className="app-map" 
+        className='app-map'
         center={ position }
         zoom={ 3 }
         maxBounds={ [[90, -180], [-70, 180]] }
       >
         <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           minZoom={ 3 }
           maxZoom={ 5 }
         />
@@ -94,11 +106,11 @@ class Mapleaflet extends Component {
           onMouseOut={ this.handleMouseOut }
           onClick={ evt => this.selectedCountry(evt) }
         />
-        { map.marks.map(cords => (
+        { !!a && map.marks.map(cords => (
           <Marker 
             key={ shortid.generate() }
             position={ cords }
-            icon={ this.customIconMarker }
+            icon={ this.mapCustomMarkIcon(cords.id) }
             onClick={ evt => this.filterCountryId(evt)}
           />
         ))}
@@ -107,17 +119,18 @@ class Mapleaflet extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, map }) => {
+const mapStateToProps = ({ fb, map, gallery }) => {
   return {
-    map,
-    uid: fb.auth.uid
+    uid: fb.auth.uid,
+    images: gallery,
+    map
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getCordinates: uid => dispatch(getGPSCoordinates(uid)),
-    toggleModal: () => dispatch(showModal()),
+    toggleModal: (id) => dispatch(modalOppened(id)),
     selectCountry: id => dispatch(setMapId(id))
   }
 }

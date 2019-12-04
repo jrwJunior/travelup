@@ -29,20 +29,25 @@ const getGalleryPhotos = uid => async(dispatch, getState, { getFirebase }) => {
     list.prefixes.forEach(async({ name: id, fullPath: url }) => {
       const res = await firebase.storage().ref(url).listAll();
       res.items.forEach(async({ name, fullPath: url }) => {
+        const { timeCreated } = await firebase.storage().ref(url).getMetadata();
         const src = await firebase.storage().ref(url).getDownloadURL();
         const data = getState().gallery;
 
         if (!data.hasOwnProperty(id)) {
-          data[id] = [{ src, name }];
+          data[id] = [{ src, name, timeCreated }];
         }
 
         if (data[id].length) {
           const noMatches = data[id].every(el => el.name.includes(name));
           
           if (!noMatches) {
-            data[id].push({ src, name });
+            data[id].push({ src, name, timeCreated });
           }
         }
+
+        data[id].sort((a, b) => (
+          new Date(b.timeCreated) - new Date(a.timeCreated)
+        ))
 
         if (res.items.length === data[id].length) {
           dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
@@ -92,7 +97,7 @@ const deletedData = (uid, id, delItem) => (dispatch, getState, { getFirebase }) 
     if (!delItem.keys.includes(el.name)) {
       newData.push(el);
     } else {
-      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
+      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}`).delete()
         .then(() => dispatch({ type: actionTypes.SET_NOTIFICATION, payload: {
           notifi: true,
           message: 'Photo removed from gallery'

@@ -1,7 +1,7 @@
 import React from 'react';
+import Carousel, { Modal, ModalGateway } from 'react-images';
 import PropTypes from 'prop-types';
 import GalleryItem from './gallery_item';
-import Carousel, { Modal, ModalGateway } from 'react-images';
 import './style.scss';
 
 const GalleryGreeting = () => {

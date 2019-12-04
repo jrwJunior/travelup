@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal } from '../../actions/modal_actions';
 import { getGalleryPhotos } from '../../actions/gallery_actions';
 import { setNotification } from '../../actions/notification_actions';
-import AppHome from './home_view';
+import { modalOppened } from '../../actions/modal_actions';
+import AppHome from './home';
 
 class HomeContainer extends Component {
+  modal_id = 'modal_gallery'
+
   componentDidUpdate(prevProps, prevState) {
     const { uid, getAllPhotos, notification } = this.props;
 
@@ -14,7 +16,7 @@ class HomeContainer extends Component {
     }
 
     if (notification.notifi !== prevProps.notification.notifi) {
-      this.addNotification();
+      this.pushNotification();
     }
   }
 
@@ -22,27 +24,27 @@ class HomeContainer extends Component {
     this.props.toggleModal();
   }
 
-  addNotification = () => {
+  pushNotification = () => {
     const { setNotifi } = this.props;
 
     setTimeout(setNotifi, 5000);
   }
 
   render() {
-    const { modal, notification } = this.props;
+    const { notification, modal } = this.props;
 
     return (
       <AppHome
-        isOpen={ modal.isOpen }
         onClose={ this.handleClosedModal }
-        onA={ this.a }
+        isOpen={ modal.modalId === this.modal_id }
+        isModalId={ modal.modalId }
         isNotification={ notification }
       />
     )
   }
 }
 
-const mapStateToProps = ({ modal, fb, notification }) => {
+const mapStateToProps = ({ fb, notification, modal }) => {
   return {
     uid: fb.auth.uid,
     modal,
@@ -52,9 +54,9 @@ const mapStateToProps = ({ modal, fb, notification }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleModal: () => dispatch(showModal()),
     getAllPhotos: uid => dispatch(getGalleryPhotos(uid)),
-    setNotifi: () => dispatch(setNotification())
+    setNotifi: () => dispatch(setNotification()),
+    toggleModal: () => dispatch(modalOppened())
   }
 }
 

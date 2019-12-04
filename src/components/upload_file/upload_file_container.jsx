@@ -21,7 +21,14 @@ class UploadFileContainer extends Component {
   };
 
   getGPSCoordinates(coordinates) {
-    return coordinates[0].numerator + coordinates[1].numerator / (60 * coordinates[1].denominator) + coordinates[2].numerator / (3600 * coordinates[2].denominator);
+    return new Promise((res, req) => {
+      if (coordinates) {
+        const b = coordinates[0].numerator + coordinates[1].numerator / (60 * coordinates[1].denominator) + coordinates[2].numerator / (3600 * coordinates[2].denominator);
+        res(b);
+      } else {
+        req();
+      }
+    });
   }
 
   getFile(file) {
@@ -31,25 +38,28 @@ class UploadFileContainer extends Component {
       const gpsTags = ['GPSLatitude', 'GPSLongitude'];
       const coordinates = {};
 
-      gpsTags.forEach(value => {
-        const cord = this.getGPSCoordinates(EXIF.getTag(file, value));
+      gpsTags.forEach((value) => {
+        this.getGPSCoordinates(EXIF.getTag(file, value))
+        .then(data => {
+          switch(value) {
+            case 'GPSLatitude':
+              coordinates['lat'] = data;
+              break;
+            case 'GPSLongitude':
+              coordinates['lon'] = data;
+              break;
+            default:
+              break;
+          }
 
-        switch(value) {
-          case 'GPSLatitude':
-            coordinates['lat'] = cord;
-            break;
-          case 'GPSLongitude':
-            coordinates['lon'] = cord;
-            break;
-          default:
-            break;
-        }
-      });
-      this.serviceGeoocoder.getData(coordinates)
-        .then(cords => {
-          setCoordinates(uid, cords);
-          setPhotosStorage(uid, file, cords.id);
-        });
+          this.serviceGeoocoder.getData(coordinates)
+          .then(cords => {
+            setCoordinates(uid, cords);
+            setPhotosStorage(uid, file, cords.id);
+          });
+        })
+        .catch(() => console.log('err'));
+      })
     });
   }
 

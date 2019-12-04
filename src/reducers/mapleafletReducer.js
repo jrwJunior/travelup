@@ -1,8 +1,8 @@
 import * as actionTypes from '../actions/action_types';
 
 const initState  = {
-  lat: 55,
-  lng: 10,
+  lat: 51.505,
+  lng: 0,
   marks: [],
   selectMapId: null,
   loading: false

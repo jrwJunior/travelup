@@ -11,7 +11,7 @@ const App = props => {
   const pathAuth = ['/login', '/register'];
 
   return (
-    <main className='main-content'>
+    <main className='main-content' id='main'>
       { pathAuth.some(el => el === pathname) ? <div className='homepage-photo'/> : null }
       <PrivateRoute
         exact

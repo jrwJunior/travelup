@@ -1,9 +1,13 @@
 .app-layout {
+  display: flex;
+  flex-direction: row-reverse;
   height: 100%;
 }
 
 .app-content {
   display: flex;
+  flex-direction: column;
+  width: calc(100% - 300px);
 }
 
 .app-sidebar {

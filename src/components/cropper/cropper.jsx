@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { uploadUserPhoto } from '../../actions/user_actions';
-import { showModal } from '../../actions/modal_actions';
-import { setCropPhoto, setCropZoomPhoto } from '../../actions/cropper_actions';
+import { modalOppened } from '../../actions/modal_actions';
+import { setCropZoomPhoto } from '../../actions/cropper_actions';
 import Cropper from 'react-avatar-editor';
 import InputRange from 'react-input-slider';
 
@@ -17,9 +17,9 @@ class EditorPhoto extends Component {
 	};
 
 	handleSave = () => {
-    const file = this.fileInput.current.files[0];
+		const file = this.props.isFile.current.files[0];
 
-		this.props.setUserPhoto(this.props.uid, file);
+		this.props.updateUserAvatar(this.props.uid, file);
 		this.props.toggleModal();
   };
 	
@@ -29,6 +29,7 @@ class EditorPhoto extends Component {
   };
 
 	render() {
+
 		return (
 			<div className="cropper">
 				<Cropper
@@ -38,13 +39,13 @@ class EditorPhoto extends Component {
 					border={ 0 }
 					borderRadius={ 250 * 2 }
 					color={ [255, 255, 255, 0.6] }
-					scale={ this.handleZoomSlider }
+					scale={ this.props.cropper.zoom }
 					rotate={ 0 }
 				/>
 				<span className="crop-title">Select an area for your profile photo</span>
 				<InputRange 
 					axis="x"
-					x={ this.handleZoomSlider }
+					x={ this.props.cropper.zoom }
 					xmin={ 1 }
 					xmax={ 10 }
 					xstep={ 0.1 }
@@ -78,10 +79,9 @@ const mapStateToProps = ({ fb, cropper }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-		setUserPhoto: (uid, url) => dispatch(uploadUserPhoto(uid, url)),
-		cropPhoto: url => dispatch(setCropPhoto(url)),
+		updateUserAvatar: (uid, url) => dispatch(uploadUserPhoto(uid, url)),
 		cropZoomPhoto: zoom => dispatch(setCropZoomPhoto(zoom)),
-		toggleModal: () => dispatch(showModal()),
+		toggleModal: () => dispatch(modalOppened()),
   }
 }
 

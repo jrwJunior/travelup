@@ -1,6 +1,8 @@
 import React from 'react';
+// import { slide as Menu } from 'react-burger-menu';
 import AppHeader from '../header';
 import AppMap from '../map_leaflet';
+import AppSidebar from '../sidebar';
 import ReactModal from '../modal';
 import Gallery from '../gallery';
 import './style.scss';
@@ -16,14 +18,22 @@ const Notification = isNotification => {
 }
 
 const Home = props => {
-  const { isOpen, onClose, isNotification } = props;
-  
+  const { 
+    isOpen,
+    onClose,
+    isNotification
+  } = props;
+
   return (
     <>
-      <AppHeader/>
-      <div className='app-content'>
-        <aside className='app-sidebar'>Sidebar</aside>
-        <AppMap/>
+      <div className='app-layout'>
+        <div className='app-content'>
+          <AppHeader/>
+          <AppMap/>
+        </div>
+        <aside className='app-sidebar'>
+          <AppSidebar/>
+        </aside>
       </div>
       <ReactModal
         isOpen={ isOpen }

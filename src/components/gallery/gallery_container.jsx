@@ -131,7 +131,11 @@ class GalleryContainer extends Component {
     const { data, map } = this.props;
     const { selected, selectedItem, lightboxIsOpen, selectedIndex } = this.state;
     const { selectMapId } = map;
-    const images = data[selectMapId];
+    const images = [];
+
+    if (data.hasOwnProperty(selectMapId)) {
+      data[selectMapId].forEach(el => images.push(el));
+    }
 
     return (
       <Gallery
@@ -149,7 +153,7 @@ class GalleryContainer extends Component {
         isSelectedItem={ selectedItem }
         islightboxOpen={ lightboxIsOpen }
         isSelectedIndex={ selectedIndex }
-        isImages={ images || [] }
+        isImages={ images }
         inputRef={ this.fileInput }
       />
     )

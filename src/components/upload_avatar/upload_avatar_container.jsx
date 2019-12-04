@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../../actions/user_actions';
-import { showModal } from '../../actions/modal_actions';
 import { setCropPhoto } from '../../actions/cropper_actions';
-import UploadAvatar from './upload_avatar_view';
+import { modalOppened } from '../../actions/modal_actions';
+import UploadAvatar from './upload_avatar';
 
 class UploadAvatarContainer extends Component {
   fileInput = React.createRef();
+  modal_id = 'modal_cropper'
 
   state = {
     popperShow: false
@@ -21,12 +22,15 @@ class UploadAvatarContainer extends Component {
   }
 
   handleChange = evt => {
-    const { toggleModal, cropPhoto } = this.props;
-    const file = evt.target.files[0];
-    const url = window.URL.createObjectURL(file);
+    const { cropPhoto, toggleModal } = this.props;
 
-    toggleModal();
-    cropPhoto(url);
+    if (evt.target.files.length) {
+      const file = evt.target.files[0];
+      const url = window.URL.createObjectURL(file);
+
+      toggleModal(this.modal_id);
+      cropPhoto(url);
+    }
   };
 
   handleClick = () => {
@@ -44,19 +48,24 @@ class UploadAvatarContainer extends Component {
     });
   }
 
+  handleCloseModal = () => {
+    this.props.toggleModal();
+  }
+
   render() {
     const { popperShow } = this.state;
+    const { modal } = this.props;
 
     return (
       <UploadAvatar
         userData={ this.props.user }
-        isOpen={ this.props.modal.isOpen }
         isPopperShow={ popperShow }
+        isOpen={ modal.modalId === this.modal_id }
         fileRef={ this.fileInput }
         onChange={ this.handleChange }
         onClick={ this.handleClick }
         onClickPopper={ this.handlePopper }
-        onToggleModal={ this.props.toggleModal }
+        onCloseModal={ this.handleCloseModal }
       />
     )
   }
@@ -73,8 +82,8 @@ const mapStateToProps = ({ fb, user, modal }) => {
 const mapDispatchToProps = dispatch => {
   return {
     getUserPhoto: uid => dispatch(getCurrentUser(uid)),
-    toggleModal: () => dispatch(showModal()),
     cropPhoto: url => dispatch(setCropPhoto(url)),
+    toggleModal: (id) => dispatch(modalOppened(id))
   }
 }
 

@@ -1,3 +1,3 @@
-import Cropper from './cropper_view';
+import Cropper from './cropper';
 
 export default Cropper;

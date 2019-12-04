@@ -1,15 +1,19 @@
 import React from 'react';
 import Popper from '../popper';
+import ReactModal from '../modal';
+import Cropper from '../cropper';
 import './style.scss';
 
 const EditorView = props => {
   const { 
     isPopperShow,
     userData,
+    isOpen,
     fileRef,
     onChange,
     onClick,
     onClickPopper,
+    onCloseModal
   } = props;
 
   return (
@@ -30,6 +34,16 @@ const EditorView = props => {
         ref={ fileRef }
       />
       { isPopperShow ? <Popper onClick={ onClick } /> : null }
+      <ReactModal
+        isOpen={ isOpen }
+        onRequestClose={ onCloseModal }
+        className="modal modal-cropper"
+        overlayClassName="modal-mask"
+      >
+        <Cropper
+          isFile={ fileRef }
+        />
+      </ReactModal>
     </div>
   )
 }
