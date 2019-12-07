@@ -52,11 +52,11 @@ const deleteGPSCoordinates = (uid, id) => async(dispatch, getState, { getFirebas
   const { marks } = getState().map;
   const data = getState().gallery;
   
-  if (!data[id].length) {
+  if (!data.hasOwnProperty(id)) {
     const newMarks = marks.filter(el => el.id !== id);
-    
+
     db.collection('map_location').doc(uid).update({
-      [id]: newMarks
+      [id]: db.FieldValue.delete()
     });
 
     dispatch({ type: actionTypes.DELETE_MAP_COORDINATES, payload: newMarks });

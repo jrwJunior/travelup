@@ -23,7 +23,7 @@ const getGalleryPhotos = uid => async(dispatch, getState, { getFirebase }) => {
 
   try {
     const storageRef = await firebase.storage().ref(`users/${uid}/`);
-    const listRef = await storageRef.child(`gallery/`)
+    const listRef = await storageRef.child(`gallery/`);
 
     const list = await listRef.listAll();
     list.prefixes.forEach(async({ name: id, fullPath: url }) => {
@@ -49,7 +49,8 @@ const getGalleryPhotos = uid => async(dispatch, getState, { getFirebase }) => {
           new Date(b.timeCreated) - new Date(a.timeCreated)
         ))
 
-        if (res.items.length === data[id].length) {
+        if (list.prefixes.length === Object.keys(data).length) {
+          console.log('foo')
           dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
         }
       })
@@ -91,21 +92,24 @@ const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getF
 const deletedData = (uid, id, delItem) => (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   const data = getState().gallery;
-  const newData = [];
 
-  data[id].forEach(el => {
-    if (!delItem.keys.includes(el.name)) {
-      newData.push(el);
-    } else {
-      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}`).delete()
+  data[id].forEach((el, idx) => {
+    if (delItem.keys.includes(el.name)) {
+      data[id].splice(idx, 1);
+
+      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
         .then(() => dispatch({ type: actionTypes.SET_NOTIFICATION, payload: {
           notifi: true,
           message: 'Photo removed from gallery'
         }}));
     }
-  })
+  });
 
-  dispatch({ type: actionTypes.REMOVE_ITEM_GALLERY, payload: { id, newData }});
+  if (data.hasOwnProperty(id) && !data[id].length) {
+    delete data[id];
+  }
+
+  dispatch({ type: actionTypes.REMOVE_ITEM_GALLERY, payload: data });
 }
 
 export {

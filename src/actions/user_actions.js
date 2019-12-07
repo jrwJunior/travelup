@@ -31,6 +31,8 @@ const getCurrentUser = uid => async(dispatch, getState, { getFirebase }) => {
 const uploadUserPhoto = (uid, file) => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
 
+  dispatch({ type: actionTypes.FETCH_REQUEST_DATA });
+
   try {
     const snapshot = await firebase.storage().ref(`users/${uid}/user_avatar/`).put(file);
     const url = await snapshot.ref.getDownloadURL();

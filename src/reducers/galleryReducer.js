@@ -10,11 +10,8 @@ const galleryReducer = (state = initState, action) => {
         ...action.payload
       }
     case actionTypes.REMOVE_ITEM_GALLERY:
-      const id = action.payload.id;
-
       return {
-        ...state,
-        [id]: action.payload.newData
+        ...action.payload
       }
     default:
       return state;

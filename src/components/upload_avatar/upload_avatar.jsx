@@ -40,9 +40,7 @@ const EditorView = props => {
         className="modal modal-cropper"
         overlayClassName="modal-mask"
       >
-        <Cropper
-          isFile={ fileRef }
-        />
+        <Cropper/>
       </ReactModal>
     </div>
   )

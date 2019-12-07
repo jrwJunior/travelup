@@ -6,8 +6,17 @@ import { modalOppened } from '../../actions/modal_actions';
 import { setCropZoomPhoto } from '../../actions/cropper_actions';
 import Cropper from 'react-avatar-editor';
 import InputRange from 'react-input-slider';
+import Spinner from '../spinner';
 
 class EditorPhoto extends Component {
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.updatePhoto !== prevProps.updatePhoto) {
+			if (!this.props.updatePhoto) {
+				this.props.toggleModal();
+			}
+		}
+	}
+
 	handleZoomSlider = value => {
     this.props.cropZoomPhoto(value);
   };
@@ -17,22 +26,31 @@ class EditorPhoto extends Component {
 	};
 
 	handleSave = () => {
-		const file = this.props.isFile.current.files[0];
+		const { uid } = this.props;
 
-		this.props.updateUserAvatar(this.props.uid, file);
-		this.props.toggleModal();
+		if (this.editor) {
+			const canvasScaled = this.editor.getImageScaledToCanvas();
+
+			canvasScaled.toBlob(blob => {
+				this.props.updateUserAvatar(uid, blob);
+			});
+		}
   };
 	
 	handleCancel = () => {
 		this.handleResetZommSlider();
 		this.props.toggleModal();
-  };
+	};
+	
+	setEditorRef = editor => this.editor = editor;
 
 	render() {
+		const { updatePhoto } = this.props;
 
 		return (
 			<div className="cropper">
 				<Cropper
+					ref={ this.setEditorRef }
 					image={ this.props.cropper.photo }
 					width={ 250 }
 					height={ 250 }
@@ -60,9 +78,11 @@ class EditorPhoto extends Component {
           </button>
           <button 
             className="crop-control" 
-            onClick={ this.handleSave }
+						onClick={ this.handleSave }
+						disabled={ updatePhoto }
           >
-            Save
+            Save 
+						{ updatePhoto ? <Spinner/> : null }
           </button>
         </div>
 			</div>
@@ -70,10 +90,11 @@ class EditorPhoto extends Component {
 	}
 }
 
-const mapStateToProps = ({ fb, cropper }) => {
+const mapStateToProps = ({ fb, cropper, user }) => {
   return {
 		uid: fb.auth.uid,
-		cropper
+		cropper,
+		updatePhoto: user.loading
   }
 }
 

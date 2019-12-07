@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../../actions/user_actions';
-import { setCropPhoto } from '../../actions/cropper_actions';
+import { setCropPhoto, setCropZoomPhoto } from '../../actions/cropper_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import UploadAvatar from './upload_avatar';
 
@@ -22,7 +22,8 @@ class UploadAvatarContainer extends Component {
   }
 
   handleChange = evt => {
-    const { cropPhoto, toggleModal } = this.props;
+    const { cropPhoto, toggleModal, cropZoomPhoto } = this.props;
+    cropZoomPhoto(1);
 
     if (evt.target.files.length) {
       const file = evt.target.files[0];
@@ -30,6 +31,7 @@ class UploadAvatarContainer extends Component {
 
       toggleModal(this.modal_id);
       cropPhoto(url);
+      
     }
   };
 
@@ -83,6 +85,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getUserPhoto: uid => dispatch(getCurrentUser(uid)),
     cropPhoto: url => dispatch(setCropPhoto(url)),
+    cropZoomPhoto: zoom => dispatch(setCropZoomPhoto(zoom)),
     toggleModal: (id) => dispatch(modalOppened(id))
   }
 }

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setGPSCoordinates } from '../../actions/map_actions';
 import { setGalleryPhotos } from '../../actions/gallery_actions';
+import { modalOppened } from '../../actions/modal_actions';
 import EXIF from 'exif-js';
 import ServiceGeoocoder from '../../services/service_geocoder';
-import UploadFile from './upload_file_view';
+import UploadFile from './upload_file';
 
 class UploadFileContainer extends Component {
   fileInput = React.createRef();
+  modal_id = 'modal_info';
   serviceGeoocoder = new ServiceGeoocoder();
 
   handleChange = evt => {
@@ -19,6 +21,10 @@ class UploadFileContainer extends Component {
   handleClick = () => {
     this.fileInput.current.click();
   };
+
+  handleModalClose = () => {
+    this.props.toggleModal();
+  }
 
   getGPSCoordinates(coordinates) {
     return new Promise((res, req) => {
@@ -35,31 +41,17 @@ class UploadFileContainer extends Component {
     const { setCoordinates, uid, setPhotosStorage } = this.props;
 
     EXIF.getData(file, () => {
-      const gpsTags = ['GPSLatitude', 'GPSLongitude'];
-      const coordinates = {};
-
-      gpsTags.forEach((value) => {
-        this.getGPSCoordinates(EXIF.getTag(file, value))
-        .then(data => {
-          switch(value) {
-            case 'GPSLatitude':
-              coordinates['lat'] = data;
-              break;
-            case 'GPSLongitude':
-              coordinates['lon'] = data;
-              break;
-            default:
-              break;
-          }
-
-          this.serviceGeoocoder.getData(coordinates)
-          .then(cords => {
-            setCoordinates(uid, cords);
-            setPhotosStorage(uid, file, cords.id);
-          });
+      Promise.all([
+        this.getGPSCoordinates(EXIF.getTag(file, 'GPSLatitude')),
+        this.getGPSCoordinates(EXIF.getTag(file, 'GPSLongitude'))
+      ])
+      .then(data => {
+        this.serviceGeoocoder.getData(data)
+        .then(cords => {
+          setCoordinates(uid, cords);
+          setPhotosStorage(uid, file, cords.id);
         })
-        .catch(() => console.log('err'));
-      })
+      }, () => console.log('err'))
     });
   }
 
@@ -67,27 +59,31 @@ class UploadFileContainer extends Component {
     const { loading } = this.props;
 
     return (
-      <UploadFile
-        onChange={ this.handleChange }
-        onClick={ this.handleClick }
-        isLoading={ loading }
-        fileInput={ this.fileInput }
-      />
+      <>
+        <UploadFile
+          onChange={ this.handleChange }
+          onClick={ this.handleClick }
+          isLoading={ loading }
+          fileInput={ this.fileInput }
+        />
+      </>
     )
   }
 }
 
-const mapStateToProps = ({ fb, map }) => {
+const mapStateToProps = ({ fb, map, modal }) => {
   return {
     uid: fb.auth.uid,
-    loading: map.loading
+    loading: map.loading,
+    modal
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     setCoordinates: (uid, cords) => dispatch(setGPSCoordinates(uid, cords)),
-    setPhotosStorage: (uid, file, id) => dispatch(setGalleryPhotos(uid, file, id))
+    setPhotosStorage: (uid, file, id) => dispatch(setGalleryPhotos(uid, file, id)),
+    toggleModal: (id) => dispatch(modalOppened(id))
   }
 }
 

@@ -4,6 +4,7 @@ import { Map, Marker, TileLayer, GeoJSON } from 'react-leaflet';
 import { divIcon } from 'leaflet';
 import MapGeo from './map.geo.json';
 import { getGPSCoordinates } from '../../actions/map_actions';
+import { getGalleryPhotos } from '../../actions/gallery_actions';
 import { setMapId } from '../../actions/map_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import shortid from 'shortid';
@@ -11,10 +12,14 @@ import './style.scss';
 
 class Mapleaflet extends Component {
   componentDidUpdate(prevProps, prevState) {
-    const { uid, getCordinates } = this.props;
+    const { uid, getAllPhotos, getCordinates } = this.props;
 
     if (uid !== prevProps.uid) {
-      getCordinates(uid);
+      console.log('foo2')
+      Promise.all([
+        getAllPhotos(uid),
+        getCordinates(uid)
+      ])
     }
   }
 
@@ -36,17 +41,15 @@ class Mapleaflet extends Component {
     const { images } = this.props;
     const items = images[id];
 
-    if (images.hasOwnProperty(id)) {
-      return divIcon({
-        html: `
-          <img src=${ items[items.length-1].src } alt=''>
-          <span class='marker-quantity'>${ images[id].length }</span>  
-          `,
-        className: 'iconButtonAddPhoto',
-        iconAnchor: [20, 40],
-        iconSize: [40, 40]
-      });
-    }
+    return divIcon({
+      html: `
+        <img src=${ items[items.length-1].src } alt=''>
+        <span class='marker-quantity'>${ items.length }</span>  
+        `,
+      className: 'iconButtonAddPhoto',
+      iconAnchor: [20, 40],
+      iconSize: [40, 40]
+    });
   }
 
   mapLayerStyled() {
@@ -85,7 +88,7 @@ class Mapleaflet extends Component {
   render() {
     const { map, images } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
-    const a = Object.keys(images).length;
+    const a = Object.keys(images).length === map.marks.length;
 
     return (
       <Map
@@ -106,7 +109,7 @@ class Mapleaflet extends Component {
           onMouseOut={ this.handleMouseOut }
           onClick={ evt => this.selectedCountry(evt) }
         />
-        { !!a && map.marks.map(cords => (
+        { a && map.marks.map(cords => (
           <Marker 
             key={ shortid.generate() }
             position={ cords }
@@ -129,8 +132,9 @@ const mapStateToProps = ({ fb, map, gallery }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCordinates: uid => dispatch(getGPSCoordinates(uid)),
     toggleModal: (id) => dispatch(modalOppened(id)),
+    getCordinates: uid => dispatch(getGPSCoordinates(uid)),
+    getAllPhotos: uid => dispatch(getGalleryPhotos(uid)),
     selectCountry: id => dispatch(setMapId(id))
   }
 }

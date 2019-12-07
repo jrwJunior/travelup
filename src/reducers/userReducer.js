@@ -26,7 +26,8 @@ const userReducer = (state = initState, action) => {
       return {
         currentUser: {
           userAvatar: action.payload
-        }
+        },
+        loading: false
       }
     default:
       return state;
