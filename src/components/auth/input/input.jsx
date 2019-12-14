@@ -24,7 +24,7 @@ const Input = props => {
     visiblePass,
     infoPass,
     showHidePassword,
-    onShowPassword 
+    onShowPassword
   } = props;
 
   return(
@@ -52,8 +52,8 @@ const Input = props => {
             className='tooltip-anchor' 
             data-tooltip='The password must be at least 6 characters long, contain at least 1 number and 1 letter.'
           >
-            <svg width='20' height='20' focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            <svg width="20" height="20" viewBox="0 0 524.235 524.235" xmlns="http://www.w3.org/2000/svg">
+              <path d="M262.118 0C117.588 0 0 117.588 0 262.118s117.588 262.118 262.118 262.118 262.118-117.588 262.118-262.118S406.647 0 262.118 0zm17.05 417.639c-12.453 2.076-37.232 7.261-49.815 8.303-10.651.882-20.702-5.215-26.829-13.967a32.756 32.756 0 01-3.968-29.997l49.547-136.242h-51.515c-.044-28.389 21.25-49.263 48.485-57.274 12.997-3.824 37.212-9.057 49.809-8.255 7.547.48 20.702 5.215 26.829 13.967a32.756 32.756 0 013.968 29.997l-49.547 136.242h51.499c.01 28.356-20.49 52.564-48.463 57.226zm15.714-253.815c-18.096 0-32.765-14.671-32.765-32.765 0-18.096 14.669-32.765 32.765-32.765s32.765 14.669 32.765 32.765c0 18.095-14.668 32.765-32.765 32.765z"/>
             </svg>
           </button>
          ) : null }

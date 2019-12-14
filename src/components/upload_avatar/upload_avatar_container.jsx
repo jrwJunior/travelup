@@ -8,12 +8,13 @@ import UploadAvatar from './upload_avatar';
 
 class UploadAvatarContainer extends Component {
   fileInput = React.createRef();
-  modal_id = 'modal_cropper'
+  modal_id = 'modal_cropper';
 
   componentDidUpdate(prevProps, prevState) {
     const { auth } = this.props.fb;
 
     if (auth.uid !== prevProps.fb.auth.uid) {
+      console.log('foo')
       this.props.getUserPhoto(auth.uid);
     }
   }

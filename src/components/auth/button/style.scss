@@ -11,7 +11,7 @@
   border-width: 0;
   border-radius: 36px;
   text-decoration: none;
-  padding: 15px 8px;
+  padding: 16px 8px;
   transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
   outline: none;
   margin-top: 15px;
@@ -34,15 +34,6 @@
 
 .unlogged-btn:enabled.unlogged-btn:hover {
   background: lighten(#ff2f56, 10%);
-}
-
-.unlogged-btn:not(.unlogged-btn-outline):hover {
-  background: darken(#3ca0ff, 12%);
-  border-color: darken(#3ca0ff, 12%);
-}
-
-.unlogged-btn.unlogged-btn-outline:hover .unlogged-btn-label {
-  color: darken(#3ca0ff, 12%);
 }
 
 @media screen and (min-width: 320px) and (max-width: 420px) {

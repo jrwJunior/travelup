@@ -4,9 +4,8 @@ const signIn = ({ email, password }) => async(dispatch, getState, { getFirebase 
   const firebase = getFirebase();
 
   try {
-    await firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    await firebase.auth().signInWithEmailAndPassword(email, password);
 
     localStorage.setItem('user', JSON.stringify({ loggedIn : true }));
     dispatch({ type: actionTypes.FETCH_LOGIN_SUCCESS });
@@ -24,6 +23,7 @@ const signUp = ({ email, password }) => async(dispatch, getState, { getFirebase,
   try {
     const res = await firebase
     .auth()
+    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .createUserWithEmailAndPassword(email, password);
 
     localStorage.setItem('user', JSON.stringify({ loggedIn : true }));

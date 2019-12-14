@@ -1,6 +1,5 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { withRouter } from 'react-router-dom';
 import Button from '../button';
 import Social from '../auth_socials';
 
@@ -10,15 +9,17 @@ const SignUpView = props => {
     onValidate,
     onToggleShowPassword,
     valid,
-    location,
-    showHide
+    showHide,
    } = props;
 
   return(
     <>
       <div className='unlogged-heading-2'>Ready to sign up?</div>
       <Social/>
-      <form className='unlogged-form' onSubmit={ handleSubmit }>
+      <form 
+        className='unlogged-form' 
+        onSubmit={ handleSubmit }
+      >
         <Field
           name="email"
           type="email"
@@ -38,7 +39,7 @@ const SignUpView = props => {
           component={ props.renderProp }
         />
         <Field
-          name="confirmpassword"
+          name="confirm"
           type="password"
           placeholder="Enter your re-password"
           validate={ onValidate }
@@ -50,7 +51,6 @@ const SignUpView = props => {
         <div className='auth-button'> 
           <Button
             disabled={ !valid }
-            path={ location }
           >
             {/* { loading ? <Spinner/> : null } */}
           </Button>
@@ -63,4 +63,4 @@ const SignUpView = props => {
 
 export default reduxForm({
   form: 'signup'
-})(withRouter(SignUpView));
+})(SignUpView);

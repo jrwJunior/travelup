@@ -1,6 +1,7 @@
 import React from 'react';
 import UploadAvatar from '../upload_avatar';
 import UploadFile from '../upload_file';
+import Logo from '../logo';
 import './style.scss';
 
 const Header = () => {
@@ -8,10 +9,7 @@ const Header = () => {
     <header className='app-header'>
       <div className="app-header-container">
         <div className="app-header-left">
-          <a href="/" className='app-logo'>
-            <span className='app-logo-pic'/>
-            <span className='app-logo-text'>Easy Travel</span>
-          </a>
+          <Logo/>
         </div>
         <div className='app-header-right'>
           <UploadFile/>

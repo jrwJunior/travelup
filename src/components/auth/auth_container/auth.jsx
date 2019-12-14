@@ -10,7 +10,7 @@ class authContainer extends ReactComponent {
     password: {
       showPass: false
     },
-    confirmpassword: {
+    confirm: {
       showPass: false
     }
   }
@@ -47,8 +47,8 @@ class authContainer extends ReactComponent {
           return this.handleValidUserPassword(field.password);
         }
         break;
-      case field.confirmpassword:
-        return this.handleValidConfirmPass(field.confirmpassword, field.password);
+      case field.confirm:
+        return this.handleValidConfirmPass(field.confirm, field.password);
       default:
         break;
     }
@@ -79,26 +79,13 @@ class authContainer extends ReactComponent {
   handleValidConfirmPass = ( password, confirmPassword ) => {
     if (!confirmPassword) {
       return 'Require field';
-    } else if (confirmPassword !== password) {
+    }
+
+    if (confirmPassword !== password) {
       return 'Passwords do not match';
     }
 
     return undefined;
-  }
-
-  handleFocus = evt => {
-    const { value } = evt.target;
-    if (this.handleValidUserEmail(value)) {
-      evt.target.classList.remove('is-error');
-    }
-  }
-
-  handleBlur = evt => {
-    const { value } = evt.target;
-
-    if (this.handleValidUserEmail(value)) {
-      evt.target.classList.add('is-error');
-    }
   }
 
   handleToggleShowPassword = name => {
@@ -129,8 +116,6 @@ class authContainer extends ReactComponent {
               renderProp={ props => <Input { ...props } /> }
               onSubmit={ this.handleSubmit }
               onValidate={ this.handleValidate }
-              onFocus={ this.handleFocus }
-              onBlur={ this.handleBlur }
               onToggleShowPassword={ this.handleToggleShowPassword }
               authError={ authError }
               showHide={ showHide }

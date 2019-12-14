@@ -1,0 +1,45 @@
+.topbar {
+  padding: 12px 0;
+  background: #fff;
+  border-bottom: 3px solid rgba(214, 214, 214, 0.6);
+}
+
+.header-col {
+  display: flex;
+}
+
+.header-col .unlogged-btn:last-child {
+  margin-left: 15px;
+}
+
+.unlogged-btn-blue {
+  border: 2px solid #3ca0ff;
+  background: #3ca0ff;
+}
+
+.unlogged-btn-outline {
+  background-color: rgba(0,0,0,0);
+}
+
+.unlogged-btn-small {
+  font-size: 15px;
+  padding: 7px 30px;
+  margin-top: 0;
+}
+
+.unlogged-btn-label:not(.unlogged-btn-outline) {
+  color: #fff;
+}
+
+.unlogged-btn-outline .unlogged-btn-label {
+  color: #000;
+}
+
+.unlogged-btn-small:not(.unlogged-btn-outline):hover {
+  background: darken(#3ca0ff, 12%);
+  border-color: darken(#3ca0ff, 12%);
+}
+
+.unlogged-btn-small.unlogged-btn-outline:hover .unlogged-btn-label {
+  color: darken(#3ca0ff, 12%);
+}

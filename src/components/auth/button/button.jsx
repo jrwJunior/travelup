@@ -1,9 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import './style.scss';
 
 const Button = props => {
-  const { children, path, disabled } = props;
-  const { pathname } = path;
+  const { children, location, disabled } = props;
+  const { pathname } = location;
 
   return (
     <button
@@ -17,4 +18,4 @@ const Button = props => {
   );
 }
 
-export default Button;
+export default withRouter(Button);
