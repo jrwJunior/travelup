@@ -1,6 +1,7 @@
 .upload-photos {
   position: relative;
-  background: #fff;
+  background: var(--button-main-background-color);
+  color: var(--picture--color);
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -8,8 +9,17 @@
   border: 0;
   border-radius: 5px;
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   transition: background 0.15s ease-in;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background: var(--button-main-hover-background-color);
+  }
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    padding: 8px 12px;
+  }
 }
 
 .upload-photos .spinner {
@@ -17,25 +27,12 @@
   left: -35px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 650px) {
-  .upload-action {
-    display: none;
-  }
-}
-
-.upload-photos:hover {
-  background: #dadada;
-}
-
-.upload-icon {
-  background: url('../../img/upload.svg') no-repeat center/contain;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-}
-
 .upload-photos-label {
   font-size: 15px;
-  color: #565656;
+  color: var(--text-main-color);
   margin-left: 15px;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    display: none;
+   }
 }

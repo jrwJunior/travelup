@@ -6,8 +6,10 @@ import userReducer from './userReducer';
 import mapLeafletReducer from './mapleafletReducer';
 import cropperReducer from './cropperReducer';
 import modalReducer from './modalReducer';
+import popperReducer from './popperReducer';
 import galleryReducer from './galleryReducer';
-import notificationReducer from './notificationReducer';
+import noticeReducer from './noticeReducer';
+import themeReducer from './themeReducer';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -16,8 +18,10 @@ const rootReducer = combineReducers({
   cropper: cropperReducer,
   map: mapLeafletReducer,
   modal: modalReducer,
+  popper: popperReducer,
   gallery: galleryReducer,
-  notification: notificationReducer,
+  notice: noticeReducer,
+  theme: themeReducer,
   fb: firebaseReducer,
 });
 

@@ -1,13 +1,24 @@
 .user-action {
   position: relative;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    position: static;
+  }
 }
 
 .user-action-profile {
   width: 38px;
   height: 38px;
-  overflow: hidden;
+  background-color: #efefef;
   border-radius: 50%;
   vertical-align: middle;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  overflow: hidden;
+
+  &:hover {
+    opacity: 0.55;
+  }
 }
 
 .input-file {

@@ -1,3 +1,3 @@
-import Button from './button_view';
+import Button from './button'
 
 export default Button;

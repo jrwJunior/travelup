@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setNotification } from '../../actions/notification_actions';
+import { setNotice } from '../../actions/notice_actions';
 import { modalOppened } from '../../actions/modal_actions';
+import { getTheme } from '../../actions/theme_actions';
 import AppHome from './home';
 
 class HomeContainer extends Component {
-  modal_id = 'modal_gallery'
+  modal_id = 'modal_gallery';
+
+  componentDidMount() {
+    this.props.theme();
+  }
 
   componentDidUpdate(prevProps, prevState) {
-    const { notification } = this.props;
+    const { notice, colorTheme } = this.props;
+    const body = document.body;
 
-    if (notification.notifi !== prevProps.notification.notifi) {
-      this.pushNotification();
+    if (notice.isNotice !== prevProps.notice.isNotice) {
+      this.pushNotice();
+    }
+
+    if (colorTheme !== prevProps.colorTheme) {
+      colorTheme ? body.dataset.theme = colorTheme : body.removeAttribute('data-theme');
     }
   }
 
@@ -19,37 +29,39 @@ class HomeContainer extends Component {
     this.props.toggleModal();
   }
 
-  pushNotification = () => {
-    const { setNotifi } = this.props;
+  pushNotice = () => {
+    const { getNotice } = this.props;
 
-    setTimeout(setNotifi, 5000);
+    setTimeout(getNotice, 5000);
   }
 
   render() {
-    const { notification, modal } = this.props;
+    const { notice, modal } = this.props;
 
     return (
       <AppHome
         onClose={ this.handleClosedModal }
         isOpen={ modal.modalId === this.modal_id }
         isModalId={ modal.modalId }
-        isNotification={ notification }
+        isNotice={ notice }
       />
     )
   }
 }
 
-const mapStateToProps = ({ notification, modal }) => {
+const mapStateToProps = ({ notice, modal, theme }) => {
   return {
     modal,
-    notification
+    notice,
+    colorTheme: theme.colorTheme
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setNotifi: () => dispatch(setNotification()),
-    toggleModal: () => dispatch(modalOppened())
+    getNotice: () => dispatch(setNotice()),
+    toggleModal: () => dispatch(modalOppened()),
+    theme: () => dispatch(getTheme())
   }
 }
 

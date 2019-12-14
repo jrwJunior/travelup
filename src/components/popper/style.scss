@@ -1,35 +1,44 @@
+/*
+  Popper
+*/
 .popper {
   position: absolute;
   top: 100%;
   right: -25px;
   padding-top: 15px;
   z-index: 500;
-}
+  z-index: 2000;
 
-.popper-content {
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 4px 20px 0 rgba(25, 25, 34, 0.24);
-  color: #52525d;
-  // padding: 16px;
-  position: relative;
-  width: 240px;
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
 }
 
 .popper-lg {
   width: 320px;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    width: 100%;
+  }
 }
 
+/*
+  Popper header
+*/
 .account-header {
   display: flex;
   align-items: center;
-  color: #32323d;
+  color: var(--text-main-color);
   padding: 12px 20px;
   transition-duration: 0.15s;
   transition-property: background-color;
+  cursor: pointer;
 
   &:hover {
-    background-color: #f2f2f2;
+    background-color: var(--popper-default-hover-background-color);
   }
 }
 
@@ -60,7 +69,7 @@
 }
 
 .account-heading {
-  color: #32323d;
+  color: var(--text-main-color);
   flex: 1;
   font-size: 16px;
   margin-left: 12px;
@@ -106,21 +115,45 @@
   }
 }
 
+/*
+  Popper content
+*/
+.popper-content {
+  background-color: var(--popper-background-color);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px 0 rgba(25, 25, 34, 0.24);
+  color: #52525d;
+  position: relative;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    border-radius: 0;
+  }
+}
+
+/*
+  Popper menu
+*/
 .account-menu {
   font-family: 'Cabin', sans-serif;
   font-size: 16px;
-  border-top: 1px solid #f8f8f9;
+  border-top: 1px solid var(--secondary-border-color);
   margin: 0;
   padding: 8px 0;
 }
 
 .account-item {
   padding: 0 8px;
+
+  @media screen and (min-width: 850px) {
+    &:last-child {
+      display: none;
+    }
+  }
 }
 
 .account-link.is-main {
-  color: #32323d;
-  padding: 12px;
+  color: var(--text-main-color);
+  padding: 10px 12px;
 }
 
 .account-link {
@@ -131,10 +164,11 @@
   padding: 8px;
   transition-duration: 0.15s;
   transition-property: background-color;
+  cursor: pointer;
 }
 
 .account-link:hover {
-  background-color: #f2f2f2;
+  background-color: var(--popper-default-hover-background-color);
 }
 
 .account-link-label {
@@ -143,6 +177,10 @@
 
 .account-input-label {
   margin-right: auto;
+}
+
+.account-input-label.is-main {
+  color: var(--text-main-color);
 }
 
 .account-input {
@@ -193,10 +231,32 @@
   border: 6px solid rgba(0,0,0,0);
   height: 0;
   width: 0;
-  border-bottom-color: #fff;
+  border-bottom-color: var(--popper-background-color);
   border-top-width: 0;
   left: calc(100% - 47px);
   margin-bottom: 0;
   margin-top: 0;
   top: 9px;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    display: none;
+  }
+}
+
+/*
+  Popper only mobile
+*/
+.popper-cancel {
+  display: block;
+  font-weight: 600;
+  color: #ef5466;
+  text-align: center;
+  padding: 15px;
+}
+
+.svg-icon {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0;
+  vertical-align: top;
 }

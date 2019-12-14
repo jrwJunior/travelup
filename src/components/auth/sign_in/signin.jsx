@@ -1,30 +1,32 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-// import Spinner from '../../app_spinner';
+import Social from '../auth_socials';
 import Button from '../button';
-import AuthSocial from '../auth_socials';
 
 const SignInView = props => {
   const { 
     handleSubmit,
     onValidate,
+    onFocus,
+    onBlur,
     valid,
     location
   } = props;
 
   return(
-    <div className='wrapper-auth'>
-      <div className='auth-title'>{ location.pathname === '/login' ? 'Sign in  your account' : null }</div>
-      <AuthSocial/>
-      <span className='auth-or'>or use your email account:</span>
-      <form className='auth' onSubmit={ handleSubmit }>
+    <>
+      <div className='unlogged-heading-2'>Are you ready to travel ?</div>
+      <Social/>
+      <form className='unlogged-form' onSubmit={ handleSubmit }>
         <Field
           name="email"
           component={ props.renderProp }
           type="email"
           placeholder="Enter your email address"
           validate={ onValidate }
+          onFocus={ onFocus }
+          onBlur={ onBlur }
         />
         <Field
           name="password"
@@ -33,17 +35,21 @@ const SignInView = props => {
           placeholder="Enter your password"
           validate={ onValidate }
         />
-        <div className='auth-button'>
-          <Button
+        <Button
             disabled={ !valid }
             path={ location }
           >
             {/* { loading ? <Spinner/> : null } */}
           </Button>
-        </div>
-        <span className='auth-error text-error'>{ location.pathname !== '/login' ? null : props.authError.signIn }</span>
+        <span className='text-error'>{ props.authError.signIn }</span>
       </form>
-    </div>
+      <div className='unlogged-notice'>
+        Not yet registered on Easy Travel?&nbsp;
+        <Link to='/register'>
+          Sign up
+        </Link>
+      </div>
+    </>
   );
 };
 

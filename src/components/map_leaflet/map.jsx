@@ -11,11 +11,13 @@ import shortid from 'shortid';
 import './style.scss';
 
 class Mapleaflet extends Component {
+  map_dark = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  map_white = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+
   componentDidUpdate(prevProps, prevState) {
     const { uid, getAllPhotos, getCordinates } = this.props;
 
     if (uid !== prevProps.uid) {
-      console.log('foo2')
       Promise.all([
         getAllPhotos(uid),
         getCordinates(uid)
@@ -25,11 +27,13 @@ class Mapleaflet extends Component {
 
   handleMouseOver = evt => {
     const ctx = evt.layer;
+    const isColor = this.props.colorTheme === 'dark' ? '#323232' : '#fffdf9';
+    const isOpacity = this.props.colorTheme === 'dark' ? 0.35 : 0.65;
 
     ctx.setStyle({
       weight: 0,
-      fillColor: '#ffffff',
-      fillOpacity: 0.6,
+      fillColor:  isColor,
+      fillOpacity: isOpacity,
     })
   }
 
@@ -86,7 +90,7 @@ class Mapleaflet extends Component {
   }
 
   render() {
-    const { map, images } = this.props;
+    const { map, images, colorTheme } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
     const a = Object.keys(images).length === map.marks.length;
 
@@ -98,7 +102,7 @@ class Mapleaflet extends Component {
         maxBounds={ [[90, -180], [-70, 180]] }
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          url={ colorTheme === 'dark' ? this.map_dark : this.map_white }
           minZoom={ 3 }
           maxZoom={ 5 }
         />
@@ -122,10 +126,11 @@ class Mapleaflet extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, map, gallery }) => {
+const mapStateToProps = ({ fb, map, gallery, theme }) => {
   return {
     uid: fb.auth.uid,
-    images: gallery,
+    images: gallery.photos,
+    colorTheme: theme.colorTheme,
     map
   }
 }

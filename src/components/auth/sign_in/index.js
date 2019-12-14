@@ -1,3 +1,3 @@
-import SignIn from './signin_view';
+import SignIn from './signin';
 
 export default SignIn;

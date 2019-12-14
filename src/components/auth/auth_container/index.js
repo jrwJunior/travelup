@@ -1,3 +1,3 @@
-import AuthContainer from './auth_container';
+import AuthContainer from './auth';
 
 export default AuthContainer;

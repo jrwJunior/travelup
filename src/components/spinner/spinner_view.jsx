@@ -1,9 +1,12 @@
 import React from 'react';
 import './style.scss';
 
-const Spinner = ({ mode = 'white' }) => {
+const Spinner = ({ mode = 'white', width, height }) => {
   return(
-    <div className={ `spinner ${ mode }` }>
+    <div 
+      className={ `spinner ${ mode }` }
+      style={{ width, height }}
+    >
       <svg
         focusable="false"
         preserveAspectRatio="xMidYMid meet"

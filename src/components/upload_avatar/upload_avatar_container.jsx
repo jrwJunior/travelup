@@ -3,15 +3,12 @@ import { connect } from 'react-redux';
 import { getCurrentUser } from '../../actions/user_actions';
 import { setCropPhoto, setCropZoomPhoto } from '../../actions/cropper_actions';
 import { modalOppened } from '../../actions/modal_actions';
+import { popperShow } from '../../actions/popper_actions';
 import UploadAvatar from './upload_avatar';
 
 class UploadAvatarContainer extends Component {
   fileInput = React.createRef();
   modal_id = 'modal_cropper'
-
-  state = {
-    popperShow: false
-  }
 
   componentDidUpdate(prevProps, prevState) {
     const { auth } = this.props.fb;
@@ -31,23 +28,19 @@ class UploadAvatarContainer extends Component {
 
       toggleModal(this.modal_id);
       cropPhoto(url);
-      
     }
   };
 
-  handleClick = () => {
+  handleChangeFile = () => {
     this.fileInput.current.click();
-    this.setState({ popperShow: false });
+
+    this.props.togglePopper();
   };
 
   handlePopper = evt => {
     evt.stopPropagation();
 
-    this.setState(state => {
-      return {
-        popperShow: !state.popperShow
-      }
-    });
+    this.props.togglePopper();
   }
 
   handleCloseModal = () => {
@@ -55,8 +48,7 @@ class UploadAvatarContainer extends Component {
   }
 
   render() {
-    const { popperShow } = this.state;
-    const { modal } = this.props;
+    const { modal, popperShow } = this.props;
 
     return (
       <UploadAvatar
@@ -65,7 +57,7 @@ class UploadAvatarContainer extends Component {
         isOpen={ modal.modalId === this.modal_id }
         fileRef={ this.fileInput }
         onChange={ this.handleChange }
-        onClick={ this.handleClick }
+        onChangeFile={ this.handleChangeFile }
         onClickPopper={ this.handlePopper }
         onCloseModal={ this.handleCloseModal }
       />
@@ -73,11 +65,12 @@ class UploadAvatarContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, user, modal }) => {
+const mapStateToProps = ({ fb, user, modal, popper }) => {
   return {
     fb,
     modal,
-    user: user.currentUser
+    user: user.currentUser,
+    popperShow: popper.popperShow
   }
 }
 
@@ -86,7 +79,8 @@ const mapDispatchToProps = dispatch => {
     getUserPhoto: uid => dispatch(getCurrentUser(uid)),
     cropPhoto: url => dispatch(setCropPhoto(url)),
     cropZoomPhoto: zoom => dispatch(setCropZoomPhoto(zoom)),
-    toggleModal: (id) => dispatch(modalOppened(id))
+    toggleModal: (id) => dispatch(modalOppened(id)),
+    togglePopper: () => dispatch(popperShow())
   }
 }
 

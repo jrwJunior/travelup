@@ -7,7 +7,7 @@ const Button = props => {
 
   return (
     <button
-      className='button-send'
+      className='unlogged-btn unlogged-btn-pink unlogged-btn-wide'
       type="submit" 
       disabled={ disabled }
     >

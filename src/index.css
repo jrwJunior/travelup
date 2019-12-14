@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Helvetica, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.52947;
   font-weight: normal;
@@ -53,4 +53,18 @@ button {
   border: 0;
   padding: 0;
   outline: none;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'), url('./fonts/SFProDisplayRegular.woff') format('woff'), url('./fonts/SFProDisplayRegular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'), url('./fonts/SFProDisplaySemibold.woff') format('woff'), url('./fonts/SFProDisplaySemibold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
 }

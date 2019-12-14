@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from "firebase/app";
 import { signInGoogle } from '../../../actions/auth_actions';
-import AuthSocials from './auth_soc_view';
+import AuthSocials from './auth_soc'
 
 class AuthSocialsContainer extends Component {
   providerGoogle = new firebase.auth.GoogleAuthProvider();

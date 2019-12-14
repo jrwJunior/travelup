@@ -3,10 +3,19 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../../actions/auth_actions';
 import Input from '../input';
+import '../style.scss';
 
 class authContainer extends ReactComponent {
-  handleSubmit = async(values) => {
+  state = {
+    password: {
+      showPass: false
+    },
+    confirmpassword: {
+      showPass: false
+    }
+  }
 
+  handleSubmit = async(values) => {
     const { location } = this.props;
 
     switch(location.pathname) {
@@ -25,31 +34,24 @@ class authContainer extends ReactComponent {
     }
   };
 
-  handleValidate = (values, field) => {
+  handleValidate = (values, field, settings) => {
     if (!values || !values.length) {
       return 'Require field';
     }
 
     switch(values) {
-      case field.username:
-        return this.handleValidUserName(field.username);
       case field.email:
         return this.handleValidUserEmail(field.email);
       case field.password:
-        return this.handleValidUserPassword(field.password);
+        if (settings.form !== 'signin') {
+          return this.handleValidUserPassword(field.password);
+        }
+        break;
       case field.confirmpassword:
         return this.handleValidConfirmPass(field.confirmpassword, field.password);
       default:
         break;
     }
-  }
-
-  handleValidUserName = value => {
-     if (value && value.length < 2) {
-      return 'Name must be at least 2 characters';
-    }
-
-    return undefined;
   }
 
   handleValidUserEmail = value => {
@@ -84,19 +86,58 @@ class authContainer extends ReactComponent {
     return undefined;
   }
 
+  handleFocus = evt => {
+    const { value } = evt.target;
+    if (this.handleValidUserEmail(value)) {
+      evt.target.classList.remove('is-error');
+    }
+  }
+
+  handleBlur = evt => {
+    const { value } = evt.target;
+
+    if (this.handleValidUserEmail(value)) {
+      evt.target.classList.add('is-error');
+    }
+  }
+
+  handleToggleShowPassword = name => {
+    this.setState(state => {
+      return {
+        [name]: {
+          showPass: !state[name].showPass
+        }
+      }
+    });
+  }
+
   render() {
     const { 
       renderComponent: Component,
-      authError
+      authError,
+      location
     } = this.props;
 
+    const { pathname } = location;
+    const showHide = this.state;
+
     return(
-      <Component
-        renderProp={ props => <Input { ...props } /> }
-        onSubmit={ this.handleSubmit }
-        onValidate={ this.handleValidate }
-        authError={ authError }
-      />
+      <div className={ `${ pathname === '/login' ? 'unlogged-authen unlogged-login' : 'unlogged-authen unlogged-signup' }` }>
+        <div className='unlogged-container'>
+          <div className='unlogged-container-inner'>
+            <Component
+              renderProp={ props => <Input { ...props } /> }
+              onSubmit={ this.handleSubmit }
+              onValidate={ this.handleValidate }
+              onFocus={ this.handleFocus }
+              onBlur={ this.handleBlur }
+              onToggleShowPassword={ this.handleToggleShowPassword }
+              authError={ authError }
+              showHide={ showHide }
+            />
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -104,7 +145,7 @@ class authContainer extends ReactComponent {
 const mapStateToProps = ({ auth }) => {
   return {
     authError: auth.authError,
-    authorizedUser: auth.authorizedUser,
+    authorizedUser: auth.authorizedUser
   }
 }
 

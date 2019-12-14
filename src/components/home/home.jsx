@@ -1,27 +1,18 @@
 import React from 'react';
-// import { slide as Menu } from 'react-burger-menu';
+import { slide as Menu } from 'react-burger-menu';
 import AppHeader from '../header';
 import AppMap from '../map_leaflet';
 import AppSidebar from '../sidebar';
 import ReactModal from '../modal';
 import Gallery from '../gallery';
+import Notification from '../notification';
 import './style.scss';
-
-const Notification = isNotification => {
-  return (
-    <div className='notification'>
-      <div className='notification-text'>
-        { isNotification.message }
-      </div>
-    </div>
-  )
-}
 
 const Home = props => {
   const { 
     isOpen,
     onClose,
-    isNotification
+    isNotice
   } = props;
 
   return (
@@ -31,8 +22,13 @@ const Home = props => {
           <AppHeader/>
           <AppMap/>
         </div>
+        
         <aside className='app-sidebar'>
-          <AppSidebar/>
+          <Menu
+            customCrossIcon={ false }
+          >
+            <AppSidebar/>
+          </Menu>
         </aside>
       </div>
       <ReactModal
@@ -45,7 +41,9 @@ const Home = props => {
           onClose={ onClose }
         />
       </ReactModal>
-      { isNotification.notifi ? Notification(isNotification) : null }
+      <Notification
+        notice={ isNotice }
+      />
     </>
   )
 }

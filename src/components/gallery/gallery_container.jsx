@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setDragFilesGallery, deletedData } from '../../actions/gallery_actions';
 import { deleteGPSCoordinates, setGPSCoordinates } from '../../actions/map_actions';
+import { modalOppened } from '../../actions/modal_actions';
 import ServicesGeoCordinats from '../../services/service_geo_cordinats';
-import Gallery from './gallery_view';
+import Gallery from './gallery';
 
 class GalleryContainer extends Component {
   fileInput = React.createRef();
@@ -68,8 +69,14 @@ class GalleryContainer extends Component {
 
   handleSelected = () => {
     this.setState(state => {
+      const { selectedItem } = state;
+
       return {
-        selected: !state.selected
+        selected: !state.selected,
+        selectedItem: {
+          selected: !selectedItem.selected,
+          keys: []
+        }
       }
     });
   }
@@ -128,7 +135,7 @@ class GalleryContainer extends Component {
   };
 
   render() {
-    const { data, map } = this.props;
+    const { data, map, closeModal, isLoading } = this.props;
     const { selected, selectedItem, lightboxIsOpen, selectedIndex } = this.state;
     const { selectMapId } = map;
     const images = [];
@@ -145,6 +152,7 @@ class GalleryContainer extends Component {
         onDrop={ this.handleDragDrop }
         onChange={ this.handleChange }
         onClick={ this.handleClick }
+        onClose={ closeModal }
         onSelected={ this.handleSelected }
         onSelectedItem={ this.handleSelectItem }
         onRemoveItem={ this.handleRemoveItem }
@@ -154,6 +162,7 @@ class GalleryContainer extends Component {
         islightboxOpen={ lightboxIsOpen }
         isSelectedIndex={ selectedIndex }
         isImages={ images }
+        isLoading={ isLoading }
         inputRef={ this.fileInput }
       />
     )
@@ -163,7 +172,8 @@ class GalleryContainer extends Component {
 const mapStateToProps = ({ fb, gallery, map }) => {
   return {
     uid: fb.auth.uid,
-    data: gallery,
+    data: gallery.photos,
+    isLoading: gallery.loading,
     map
   }
 }
@@ -173,7 +183,8 @@ const mapDispatchToProps = dispatch => {
     setPhotosGallery: (uid, id, files) => dispatch(setDragFilesGallery(uid, id, files)),
     deleteDataItem: (uid, id, delitem) => dispatch(deletedData(uid, id, delitem)),
     setCoordinates: (uid, cords) => dispatch(setGPSCoordinates(uid, cords)),
-    deleteMapCords: (uid, id) => dispatch(deleteGPSCoordinates(uid, id))
+    deleteMapCords: (uid, id) => dispatch(deleteGPSCoordinates(uid, id)),
+    closeModal: () => dispatch(modalOppened())
   }
 }
 

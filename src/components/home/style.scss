@@ -8,41 +8,8 @@
   display: flex;
   flex-direction: column;
   width: calc(100% - 300px);
-}
 
-.app-sidebar {
-  background: #fff;
-  width: 300px;
-}
-
-.notification {
-  position: fixed;
-  bottom: 60px;
-  right: 30px;
-  z-index: 6000;
-}
-
-.notification-text {
-  position: relative;
-  font-size: 14px;
-  margin: 0 0 10px;
-  width: 225px;
-  color: #fff;
-  background-color: #22282b;
-  min-height: 45px;
-  border-radius: 4px;
-  text-align: right;
-  padding-top: 11px;
-  padding-right: 15px;
-
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    background: url('../../img/success.svg') no-repeat center/cover;
-    width: 14px;
-    height: 14px;
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    width: 100%;
   }
 }

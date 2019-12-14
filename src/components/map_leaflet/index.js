@@ -1,3 +1,3 @@
-import AppMap from './map_container';
+import AppMap from './map';
 
 export default AppMap;

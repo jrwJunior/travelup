@@ -10,8 +10,9 @@ const EditorView = props => {
     userData,
     isOpen,
     fileRef,
+    popperRef,
     onChange,
-    onClick,
+    onChangeFile,
     onClickPopper,
     onCloseModal
   } = props;
@@ -33,7 +34,13 @@ const EditorView = props => {
         className="input-file"
         ref={ fileRef }
       />
-      { isPopperShow ? <Popper onClick={ onClick } /> : null }
+      { isPopperShow ? (
+        <Popper 
+          onChangeFile={ onChangeFile }
+          onCancel={ onClickPopper }
+          popperRef={ popperRef }
+        />
+      ) : null }
       <ReactModal
         isOpen={ isOpen }
         onRequestClose={ onCloseModal }

@@ -2,6 +2,7 @@ import * as actionTypes from './action_types';
 
 const setGPSCoordinates = (uid, cords) => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const db = getFirestore();
+  dispatch({ type: actionTypes.CORDS_FETCH_REQUESTED });
 
   try {
     const docRef = await db.collection('map_location').doc(uid);
@@ -12,9 +13,7 @@ const setGPSCoordinates = (uid, cords) => async(dispatch, getState, { getFirebas
         [cords.id]: [{ ...cords }]
       });
     } else {
-      dispatch({ type: actionTypes.CORDS_FETCH_REQUESTED });
-
-      await db.collection('map_location').doc(uid).set({
+      db.collection('map_location').doc(uid).set({
         [cords.id]: [{ ...cords }]
       });
     }
@@ -50,7 +49,7 @@ const deleteGPSCoordinates = (uid, id) => async(dispatch, getState, { getFirebas
   const db = getFirestore();
 
   const { marks } = getState().map;
-  const data = getState().gallery;
+  const data = getState().gallery.photos;
   
   if (!data.hasOwnProperty(id)) {
     const newMarks = marks.filter(el => el.id !== id);

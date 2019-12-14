@@ -6,7 +6,8 @@ import './style.scss';
 const AppPopperView = props => {
   const { 
     onClickCheck,
-    onClick,
+    onChangeFile,
+    onCancel,
     isChecked,
     onLogout,
     nodeRef,
@@ -19,7 +20,7 @@ const AppPopperView = props => {
     {/* eslint-disable-next-line */}
       <a
         className='account-header animate-wobble'
-        onClick={ onClick }
+        onClick={ onChangeFile }
       >
         <div className='account-thumbnail'>
           <figure className='thumbnail thumbnail-rounded'>
@@ -62,6 +63,16 @@ const AppPopperView = props => {
            </label>
          </div>
         </li>
+        <li className='account-item'>
+          {/* eslint-disable-next-line */}
+          <a 
+            className='popper-cancel'
+            role='button'
+            onClick={ onCancel }
+          >
+            Cancel
+          </a>
+        </li>
       </ul>
     </div>
     <div className='popper-arrow'></div>
@@ -72,7 +83,8 @@ const AppPopperView = props => {
 AppPopperView.propTypes = {
   onClickCheck: PropTypes.func,
   onLogout: PropTypes.func,
-  isChecked: PropTypes.bool
+  isChecked: PropTypes.bool,
+  userData: PropTypes.object
 }
 
 export default withRouter(AppPopperView);
