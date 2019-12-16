@@ -56,7 +56,7 @@ class UploadFileContainer extends Component {
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, isEmpty } = this.props;
 
     return (
       <>
@@ -64,6 +64,7 @@ class UploadFileContainer extends Component {
           onChange={ this.handleChange }
           onClick={ this.handleClick }
           isLoading={ loading }
+          isEmpty={ isEmpty }
           fileInput={ this.fileInput }
         />
       </>
@@ -71,9 +72,9 @@ class UploadFileContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, map, modal }) => {
+const mapStateToProps = ({ user, map, modal }) => {
   return {
-    uid: fb.auth.uid,
+    isEmpty: user.loading,
     loading: map.loading,
     modal
   }
@@ -81,8 +82,8 @@ const mapStateToProps = ({ fb, map, modal }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCoordinates: (uid, cords) => dispatch(setGPSCoordinates(uid, cords)),
-    setPhotosStorage: (uid, file, id) => dispatch(setGalleryPhotos(uid, file, id)),
+    setCoordinates: cords => dispatch(setGPSCoordinates(cords)),
+    setPhotosStorage: (file, id) => dispatch(setGalleryPhotos(file, id)),
     toggleModal: (id) => dispatch(modalOppened(id))
   }
 }

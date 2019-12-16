@@ -1,33 +1,34 @@
 import * as actionTypes from '../actions/action_types';
 
 const initState  = {
-  authorizedUser: false,
-  logOut: false,
-  authError: {
-    signIn: null,
-    signIp: null
-  }
+  uid: null,
+  isLogined: false,
+  loading: false
 };
 
 const authReducer = (state = initState, action) => {
   switch(action.type) {
-    case actionTypes.FETCH_LOGIN_SUCCESS:
+    case actionTypes.LOGIN_REQUSTED:
       return {
         ...state,
-        authorizedUser: true
+        loading: true
       }
-    case actionTypes.FETCH_LOGIN_ERROR:
+    case actionTypes.LOGIN_SUCCESS:
       return {
-        ...state,
-        authError: {
-          ...state.authError,
-          ...action.payload
-        }
+        uid: action.payload,
+        isLogined: true,
+        loading: false
       }
-    case actionTypes.FETCH_LOGIN_OUT:
+    case actionTypes.LOGIN_ERROR:
+      console.log('ERROR')
+      return {
+        ...state
+      }
+    case actionTypes.LOGIN_OUT:
       return {
         ...state,
-        logOut: true
+        isLogined: false,
+        loading: false
       }
     default:
       return state;

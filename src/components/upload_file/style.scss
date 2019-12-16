@@ -34,5 +34,20 @@
 
   @media screen and (max-width: 850px) and (min-width: 320px) {
     display: none;
-   }
+  }
+}
+
+.skeletonscreen-topbar {
+  display: flex;
+  align-items: center;
+  width: 140px;
+  height: 35px;
+  border-radius: 4px;
+  margin-right: 20px;
+  background: var(--skeleton-background);
+  animation: skeletionPulse ease-in-out 2s .2s infinite;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    width: 40px;
+  }
 }

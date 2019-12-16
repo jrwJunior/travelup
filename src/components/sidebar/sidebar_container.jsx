@@ -46,14 +46,16 @@ class SidebarContainer extends Component {
         onSelectCountry={ this.handleSelectCountry }
         onCountVisited={ this.сountVisited }
         isCountry={ this.state.isFoundCountry }
+        isEmpty={ this.props.isEmpty }
       />
     )
   }
 }
 
-const mapStateToProps = ({ gallery }) => {
+const mapStateToProps = ({ gallery, user }) => {
   return {
-    images: gallery
+    images: gallery,
+    isEmpty: user.loading
   }
 }
 

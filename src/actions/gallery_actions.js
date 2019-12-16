@@ -18,11 +18,12 @@ const setGalleryPhotos = (uid, file, id) => async(dispatch, getState, { getFireb
   }
 }
 
-const getGalleryPhotos = uid => async(dispatch, getState, { getFirebase }) => {
+const getGalleryPhotos = () => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
-    const storageRef = await firebase.storage().ref(`users/${uid}/`);
+    const storageRef = await firebase.storage().ref(`users/${localData.uid}/`);
     const listRef = await storageRef.child(`gallery/`);
 
     const list = await listRef.listAll();

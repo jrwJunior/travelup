@@ -1,19 +1,20 @@
 import * as actionTypes from './action_types';
 
-const setGPSCoordinates = (uid, cords) => async(dispatch, getState, { getFirebase, getFirestore }) => {
+const setGPSCoordinates = cords => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const db = getFirestore();
-  dispatch({ type: actionTypes.CORDS_FETCH_REQUESTED });
+  const localData = JSON.parse(localStorage.getItem('_user'));
+  dispatch({ type: actionTypes.COORDINATES_REQUESTED });
 
   try {
-    const docRef = await db.collection('map_location').doc(uid);
+    const docRef = await db.collection('map_location').doc(localData.uid);
     const refData = await docRef.get();
 
     if (refData.exists) {
-      db.collection('map_location').doc(uid).update({
+      db.collection('map_location').doc(localData.uid).update({
         [cords.id]: [{ ...cords }]
       });
     } else {
-      db.collection('map_location').doc(uid).set({
+      db.collection('map_location').doc(localData.uid).set({
         [cords.id]: [{ ...cords }]
       });
     }
@@ -24,11 +25,12 @@ const setGPSCoordinates = (uid, cords) => async(dispatch, getState, { getFirebas
   }
 }
 
-const getGPSCoordinates = (uid) => async(dispatch, getState, { getFirebase, getFirestore }) => {
+const getGPSCoordinates = () => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const db = getFirestore();
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
-    const docRef = await db.collection('map_location').doc(uid);
+    const docRef = await db.collection('map_location').doc(localData.uid);
     const cords = await docRef.get();
 
     if (cords.exists) {
@@ -45,8 +47,9 @@ const getGPSCoordinates = (uid) => async(dispatch, getState, { getFirebase, getF
   }
 }
 
-const deleteGPSCoordinates = (uid, id) => async(dispatch, getState, { getFirebase, getFirestore }) => {
+const deleteGPSCoordinates = id => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const db = getFirestore();
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   const { marks } = getState().map;
   const data = getState().gallery.photos;
@@ -54,7 +57,7 @@ const deleteGPSCoordinates = (uid, id) => async(dispatch, getState, { getFirebas
   if (!data.hasOwnProperty(id)) {
     const newMarks = marks.filter(el => el.id !== id);
 
-    db.collection('map_location').doc(uid).update({
+    db.collection('map_location').doc(localData.uid).update({
       [id]: db.FieldValue.delete()
     });
 

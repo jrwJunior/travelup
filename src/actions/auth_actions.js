@@ -2,15 +2,13 @@ import * as actionTypes from './action_types';
 
 const signIn = ({ email, password }) => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
+  dispatch({ type: actionTypes.LOGIN_REQUSTED });
 
   try {
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     await firebase.auth().signInWithEmailAndPassword(email, password);
-
-    localStorage.setItem('user', JSON.stringify({ loggedIn : true }));
-    dispatch({ type: actionTypes.FETCH_LOGIN_SUCCESS });
+    dispatch({ type: actionTypes.LOGIN_SUCCESS });
   } catch (err) {
-    dispatch({ type: actionTypes.FETCH_LOGIN_ERROR, payload: {
+    dispatch({ type: actionTypes.LOGIN_ERROR, payload: {
       signIn: err.message
     }});
   }
@@ -21,21 +19,17 @@ const signUp = ({ email, password }) => async(dispatch, getState, { getFirebase,
   const firestore = getFirestore();
 
   try {
-    const res = await firebase
-    .auth()
-    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .createUserWithEmailAndPassword(email, password);
-
-    localStorage.setItem('user', JSON.stringify({ loggedIn : true }));
-    dispatch({ type: actionTypes.FETCH_LOGIN_SUCCESS });
-
-    firestore.collection('users').doc(res.user.uid).set({
+    const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    await firestore.collection('users').doc(res.user.uid).set({
       email,
       password,
-      avatar: null
+      avatar: null,
+      uid: res.user.uid
     });
+
+    dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: res.user.uid });
   } catch (err) {
-    dispatch({ type: actionTypes.FETCH_LOGIN_ERROR, payload: {
+    dispatch({ type: actionTypes.LOGIN_ERROR, payload: {
       signUp: err.message
     }});
   }
@@ -44,10 +38,8 @@ const signUp = ({ email, password }) => async(dispatch, getState, { getFirebase,
 const signOut = () => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
 
-  localStorage.setItem('user', JSON.stringify({ loggedIn : false }));
   await firebase.auth().signOut();
-  
-  dispatch({ type: actionTypes.FETCH_LOGIN_OUT });
+  dispatch({ type: actionTypes.LOGIN_OUT });
 }
 
 const signInGoogle = provider => async(dispatch, getState, { getFirebase }) => {
@@ -56,15 +48,8 @@ const signInGoogle = provider => async(dispatch, getState, { getFirebase }) => {
   await firebase.auth().signInWithPopup(provider);
 
   localStorage.setItem('user', JSON.stringify({ loggedIn : true }));
-  dispatch({ type: actionTypes.FETCH_LOGIN_SUCCESS });
+  dispatch({ type: actionTypes.LOGIN_SUCCESS });
 }
-
-// const clearError = () => dispatch => {
-//   dispatch({ type: actionTypesFETCH_LOGIN_ERROR, payload: {
-//     signIn: null,
-//     signUp: null
-//   }});
-// }
 
 export {
   signIn,

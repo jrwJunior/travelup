@@ -9,7 +9,6 @@
 .user-action-profile {
   width: 38px;
   height: 38px;
-  background-color: #efefef;
   border-radius: 50%;
   vertical-align: middle;
   cursor: pointer;
@@ -23,4 +22,12 @@
 
 .input-file {
   display: none!important;
+}
+
+.sekeletonbox-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--skeleton-background);
+  animation: skeletionPulse ease-in-out 2s .2s infinite;
 }

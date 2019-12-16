@@ -4,7 +4,13 @@ import Spinner from '../spinner';
 import './style.scss';
 
 const UploadFileView = props => {
-  const { onChange, onClick, isLoading, fileInput } = props;
+  const { onChange, onClick, isLoading, isEmpty, fileInput } = props;
+
+  if (isEmpty) {
+    return (
+      <div className='skeletonscreen-topbar'/>
+    )
+  }
 
   return (
     <button

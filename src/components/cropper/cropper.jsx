@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { uploadUserPhoto } from '../../actions/user_actions';
+import { updateUserData } from '../../actions/user_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import { setCropZoomPhoto } from '../../actions/cropper_actions';
 import Cropper from 'react-avatar-editor';
 import InputRange from 'react-input-slider';
-import Spinner from '../spinner';
 
 class EditorPhoto extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.updatePhoto !== prevProps.updatePhoto) {
-			if (!this.props.updatePhoto) {
-				this.props.toggleModal();
-			}
+			this.props.toggleModal();
 		}
 	}
 
@@ -26,13 +23,11 @@ class EditorPhoto extends Component {
 	};
 
 	handleSave = () => {
-		const { uid } = this.props;
-
 		if (this.editor) {
 			const canvasScaled = this.editor.getImageScaledToCanvas();
 
 			canvasScaled.toBlob(blob => {
-				this.props.updateUserAvatar(uid, blob);
+				this.props.updateUserAvatar(blob);
 			});
 		}
   };
@@ -45,8 +40,6 @@ class EditorPhoto extends Component {
 	setEditorRef = editor => this.editor = editor;
 
 	render() {
-		const { updatePhoto } = this.props;
-
 		return (
 			<div className="cropper">
 				<Cropper
@@ -79,10 +72,8 @@ class EditorPhoto extends Component {
           <button 
             className="crop-control" 
 						onClick={ this.handleSave }
-						disabled={ updatePhoto }
           >
             Save 
-						{ updatePhoto ? <Spinner/> : null }
           </button>
         </div>
 			</div>
@@ -90,17 +81,16 @@ class EditorPhoto extends Component {
 	}
 }
 
-const mapStateToProps = ({ fb, cropper, user }) => {
+const mapStateToProps = ({ cropper, user }) => {
   return {
-		uid: fb.auth.uid,
 		cropper,
-		updatePhoto: user.loading
+		updatePhoto: user.user.userAvatar
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-		updateUserAvatar: (uid, url) => dispatch(uploadUserPhoto(uid, url)),
+		updateUserAvatar: url => dispatch(updateUserData(url)),
 		cropZoomPhoto: zoom => dispatch(setCropZoomPhoto(zoom)),
 		toggleModal: () => dispatch(modalOppened()),
   }

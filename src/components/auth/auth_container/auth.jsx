@@ -7,12 +7,8 @@ import '../style.scss';
 
 class authContainer extends ReactComponent {
   state = {
-    password: {
-      showPass: false
-    },
-    confirm: {
-      showPass: false
-    }
+    password: { showPass: false },
+    confirm: { showPass: false }
   }
 
   handleSubmit = async(values) => {
@@ -21,16 +17,19 @@ class authContainer extends ReactComponent {
     switch(location.pathname) {
       case '/login':
         await this.props.signIn(values);
+        console.log('signIn')
         break;
       case '/register':
         await this.props.signUp(values);
+        console.log('signUp')
         break;
       default:
         break;
     }
 
-    if (this.props.authorizedUser) {
+    if (this.props.isLogined) {
       this.props.history.push('/');
+      console.log('redirect');
     }
   };
 
@@ -101,8 +100,8 @@ class authContainer extends ReactComponent {
   render() {
     const { 
       renderComponent: Component,
-      authError,
-      location
+      location,
+      isLoading
     } = this.props;
 
     const { pathname } = location;
@@ -117,8 +116,8 @@ class authContainer extends ReactComponent {
               onSubmit={ this.handleSubmit }
               onValidate={ this.handleValidate }
               onToggleShowPassword={ this.handleToggleShowPassword }
-              authError={ authError }
               showHide={ showHide }
+              isLoading={ isLoading }
             />
           </div>
         </div>
@@ -129,8 +128,8 @@ class authContainer extends ReactComponent {
 
 const mapStateToProps = ({ auth }) => {
   return {
-    authError: auth.authError,
-    authorizedUser: auth.authorizedUser
+    isLogined: auth.isLogined,
+    isLoading: auth.loading
   }
 }
 

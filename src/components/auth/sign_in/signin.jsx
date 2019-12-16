@@ -8,7 +8,8 @@ const SignInView = props => {
   const { 
     handleSubmit,
     onValidate,
-    valid
+    valid,
+    isLoading
   } = props;
 
   return(
@@ -31,11 +32,10 @@ const SignInView = props => {
           component={ props.renderProp }
         />
         <Button
-            disabled={ !valid }
-          >
-            {/* { loading ? <Spinner/> : null } */}
-          </Button>
-        <span className='text-error'>{ props.authError.signIn }</span>
+          disabled={ !valid || isLoading }
+          isLoading={ isLoading }
+        />
+        {/* <span className='text-error'>{ props.authError.signIn }</span> */}
       </form>
       <div className='unlogged-notice'>
         Not yet registered on Easy Travel?&nbsp;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Route, Switch } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home';
 import PrivateRoute from '../auth/private_route';
 import Auth from '../auth/auth_container';
@@ -31,6 +31,7 @@ const App = props => {
           path='/register'
           render={ () => <Auth renderComponent={ SingUp } />} 
         />
+        <Redirect to='/' />
     </Switch>
     </main>
   );

@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/action_types';
 
 const initState  = {
-  currentUser: {
+  user: {
     userAvatar: ''
   },
   loading: false
@@ -9,22 +9,14 @@ const initState  = {
 
 const userReducer = (state = initState, action) => {
   switch(action.type) {
-    case actionTypes.FETCH_REQUEST_DATA:
+    case actionTypes.USER_REQESTED:
       return {
         ...state,
         loading: true
       }
-    case actionTypes.FETCH_REQUEST_USER_DATA:
+    case actionTypes.USER_REQUEST_DATA:
       return {
-        currentUser: {
-          ...state.currentUser,
-          ...action.payload
-        },
-        loading: false
-      }
-    case actionTypes.UPDATE_USER_PHOTO:
-      return {
-        currentUser: {
+        user: {
           userAvatar: action.payload
         },
         loading: false

@@ -14,16 +14,20 @@ class Mapleaflet extends Component {
   map_dark = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
   map_white = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
-  componentDidUpdate(prevProps, prevState) {
-    const { uid, getAllPhotos, getCordinates } = this.props;
-
-    if (uid !== prevProps.uid) {
-      Promise.all([
-        getAllPhotos(uid),
-        getCordinates(uid)
-      ])
-    }
+  componentDidMount() {
+    
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   const { uid, getAllPhotos, getCordinates } = this.props;
+
+  //   if (uid !== prevProps.uid) {
+  //     Promise.all([
+  //       getAllPhotos(uid),
+  //       getCordinates(uid)
+  //     ])
+  //   }
+  // }
 
   handleMouseOver = evt => {
     const ctx = evt.layer;
@@ -90,7 +94,7 @@ class Mapleaflet extends Component {
   }
 
   render() {
-    const { map, images, colorTheme } = this.props;
+    const { map, images, colorTheme, isEmpty } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
     const a = Object.keys(images).length === map.marks.length;
 
@@ -126,9 +130,8 @@ class Mapleaflet extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, map, gallery, theme }) => {
+const mapStateToProps = ({ map, gallery, theme }) => {
   return {
-    uid: fb.auth.uid,
     images: gallery.photos,
     colorTheme: theme.colorTheme,
     map
@@ -138,8 +141,8 @@ const mapStateToProps = ({ fb, map, gallery, theme }) => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleModal: (id) => dispatch(modalOppened(id)),
-    getCordinates: uid => dispatch(getGPSCoordinates(uid)),
-    getAllPhotos: uid => dispatch(getGalleryPhotos(uid)),
+    getCordinates: () => dispatch(getGPSCoordinates()),
+    getAllPhotos: () => dispatch(getGalleryPhotos()),
     selectCountry: id => dispatch(setMapId(id))
   }
 }

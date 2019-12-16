@@ -12,6 +12,7 @@ import noticeReducer from './noticeReducer';
 import themeReducer from './themeReducer';
 
 const rootReducer = combineReducers({
+  fb: firebaseReducer,
   form: formReducer,
   auth: authReducer,
   user: userReducer,
@@ -21,8 +22,7 @@ const rootReducer = combineReducers({
   popper: popperReducer,
   gallery: galleryReducer,
   notice: noticeReducer,
-  theme: themeReducer,
-  fb: firebaseReducer,
+  theme: themeReducer
 });
 
 export default rootReducer;

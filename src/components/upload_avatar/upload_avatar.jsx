@@ -9,6 +9,7 @@ const EditorView = props => {
     isPopperShow,
     userData,
     isOpen,
+    isEmpty,
     fileRef,
     popperRef,
     onChange,
@@ -16,6 +17,12 @@ const EditorView = props => {
     onClickPopper,
     onCloseModal
   } = props;
+
+  if (isEmpty) {
+    return (
+      <div className='sekeletonbox-avatar'/>
+    )
+  }
 
   return (
     <div className="user-action">

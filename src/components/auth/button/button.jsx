@@ -3,8 +3,9 @@ import { withRouter } from 'react-router-dom';
 import './style.scss';
 
 const Button = props => {
-  const { children, location, disabled } = props;
+  const {location, disabled, isLoading } = props;
   const { pathname } = location;
+  const url = ['/login','/register'].find(url => url === pathname);
 
   return (
     <button
@@ -12,8 +13,7 @@ const Button = props => {
       type="submit" 
       disabled={ disabled }
     >
-      { pathname === '/register' ? 'Sign up' : 'Sign in' }
-      { children }
+      { url ? isLoading ? 'Loading...' : 'Sign up' : 'Sign in' }
     </button>
   );
 }

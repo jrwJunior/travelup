@@ -10,7 +10,8 @@ const Sidebar = props => {
     isCountry,
     onFindCountry,
     onSelectCountry,
-    onCountVisited
+    onCountVisited,
+    isEmpty
   } = props;
 
   return (
@@ -33,6 +34,15 @@ const Sidebar = props => {
       >
         <div className='country-items'>
           { features.map(({ properties, id, code }) => {
+            if (isEmpty) {
+              return (
+                <div className='skeletonscreen' key={ id }>
+                  <div className='skeletonscreen-textitem'/>
+                  <span className='skeletonscreen-picture'/>
+                </div>
+              )
+            }
+
             // eslint-disable-next-line
             if (properties.name.toLowerCase().indexOf(isCountry) != '-1') {
               return (

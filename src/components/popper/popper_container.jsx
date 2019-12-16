@@ -76,7 +76,7 @@ class PopperContainer extends Component {
 
 const mapStateToProps = ({ user, theme }) => {
   return {
-    user: user.currentUser,
+    user: user.user,
     colorTheme: theme.colorTheme
   }
 }

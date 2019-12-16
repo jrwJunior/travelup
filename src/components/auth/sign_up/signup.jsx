@@ -10,6 +10,7 @@ const SignUpView = props => {
     onToggleShowPassword,
     valid,
     showHide,
+    isLoading
    } = props;
 
   return(
@@ -50,11 +51,10 @@ const SignUpView = props => {
         />
         <div className='auth-button'> 
           <Button
-            disabled={ !valid }
-          >
-            {/* { loading ? <Spinner/> : null } */}
-          </Button>
-          <span className='text-error'>{  props.authError.signUp }</span>
+            disabled={ !valid || isLoading }
+            isLoading={ isLoading }
+          />
+          {/* <span className='text-error'>{  props.authError.signUp }</span> */}
         </div>
       </form>
     </>

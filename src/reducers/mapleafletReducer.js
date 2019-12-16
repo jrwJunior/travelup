@@ -10,7 +10,7 @@ const initState  = {
 
 const mapLeafletReducer = (state = initState, action) => {
   switch(action.type) {
-    case actionTypes.CORDS_FETCH_REQUESTED:
+    case actionTypes.COORDINATES_REQUESTED:
       return {
         ...state,
         loading: true
