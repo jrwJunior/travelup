@@ -94,6 +94,11 @@
 
 .account-name {
   font-size: 15px;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
 }
 
 .animate-wobble:hover .animate-wobble-target {
@@ -165,6 +170,11 @@
   transition-duration: 0.15s;
   transition-property: background-color;
   cursor: pointer;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
 }
 
 .account-link:hover {
@@ -181,6 +191,11 @@
 
 .account-input-label.is-main {
   color: var(--text-main-color);
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
 }
 
 .account-input {
@@ -201,6 +216,11 @@
   transition-duration: .15s;
   transition-property: background-color;
   box-sizing: border-box;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    width: 38px;
+    height: 22px;
+  }
 }
 
 .input-control {
@@ -216,6 +236,11 @@
   width: 14px;
   transition-duration: 0.15s;
   transition-property: transform;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 .input-switch.is-checked {
@@ -252,6 +277,10 @@
   color: #ef5466;
   text-align: center;
   padding: 15px;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-size: 18px;
+  }
 }
 
 .svg-icon {

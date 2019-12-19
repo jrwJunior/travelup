@@ -68,3 +68,10 @@ button {
   font-weight: 500;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Candara';
+  src: local('Candara'), url('./fonts/CandaraBold.woff') format('woff'), url('./fonts/CandaraBold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}

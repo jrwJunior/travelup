@@ -24,23 +24,15 @@
 }
 
 .unlogged-btn:disabled {
-  background-color: #b7b7b7;
+  background-color: lighten(#ff2f56, 28%);
   color: #fff;
   cursor: default;
 }
 
 .unlogged-btn-wide {
-  min-width: 300px;
+  min-width: 250px;
 }
 
 .unlogged-btn:enabled.unlogged-btn:hover {
   background: lighten(#ff2f56, 10%);
-}
-
-@media screen and (min-width: 320px) and (max-width: 420px) {
-  .unlogged-btn {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-  }
 }

@@ -14,6 +14,7 @@
 	text-align: center;
 	background: var(--modal-default-background-color);
 	max-width: 460px;
+	width: 85%;
 	margin: auto;
 	border-radius: 4px;
 	cursor: auto;
@@ -36,7 +37,7 @@
 }
 
 .modal-cropper {
-	padding: 25px 35px;
+	padding: 25px 23px;
 }
 
 .modal canvas {
@@ -123,15 +124,32 @@
 }
 
 .modal-error {
-	padding: 40px 12px;
 	text-align: center;
+	border-radius: 5px;
 }
 
-.modal-error .close-modal {
-  background: url('../../img/close.svg') no-repeat center/contain;
-  width: 15px;
-  height: 15px;
-  right: 15px;
-  top: 15px;
-  opacity: 0.7;
+.modal-content {
+	padding: 25px 12px;
+}
+
+.modal-error-title {
+	font-size: 18px;
+	font-weight: 500;
+	color: #323232;
+	margin-bottom: 8px;
+}
+
+.modal-btn {
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 500;
+	display: block;
+	width: 100%;
+	color: #F25466;
+	border-top: 1px solid #f1f1f1;
+	padding: 15px;
+
+	&:hover {
+		color: lighten(#F25466, 10%);
+	}
 }

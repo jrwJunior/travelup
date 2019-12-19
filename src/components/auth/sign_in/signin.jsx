@@ -35,10 +35,9 @@ const SignInView = props => {
           disabled={ !valid || isLoading }
           isLoading={ isLoading }
         />
-        {/* <span className='text-error'>{ props.authError.signIn }</span> */}
       </form>
       <div className='unlogged-notice'>
-        Not yet registered on Easy Travel?&nbsp;
+        Not yet registered ? &nbsp;
         <Link to='/register'>
           Sign up
         </Link>

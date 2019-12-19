@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.scss';
 
@@ -11,7 +11,8 @@ const AppPopperView = props => {
     isChecked,
     onLogout,
     nodeRef,
-    userData
+    userData,
+    isLogout
   } = props;
 
   return (
@@ -44,11 +45,9 @@ const AppPopperView = props => {
           <a
             className='account-link is-main animate-wobble'
             role='button'
-            onClick={ () => {
-              onLogout()
-              props.history.push('/login');
-            }}
+            onClick={ onLogout }
           >
+            { isLogout ? <Redirect to='/login'/> : null }
             Log out
           </a>
         </li>
@@ -87,4 +86,4 @@ AppPopperView.propTypes = {
   userData: PropTypes.object
 }
 
-export default withRouter(AppPopperView);
+export default AppPopperView;

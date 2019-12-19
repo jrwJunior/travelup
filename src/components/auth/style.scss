@@ -4,35 +4,61 @@ Auth-form
 */
 
 .unlogged-authen {
-  background-color: #f0f0f0;
+  background-color: #fff;
   background-position: 100% 0;
   background-repeat: no-repeat;
   background-size: 650px;
   color: #32323d;
-  min-height: calc(100% - 72px);
+  min-height: calc(100% - 65px);
+
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    background-size: auto;
+    background-position: 100%;
+  }
+
+  @media only screen and (min-width: 991px) and (max-width: 1336px) {
+    background-size: 550px;
+  }
 }
 
 .unlogged-login {
-  background-image: url('../../img/login.fc87fb7d8bae609f0b9786502704b0a9.jpg');
+  @media only screen and (min-width: 768px) {
+    background-image: url('../../img/login-table.fc87fb7d8bae609f0b9786502704b0a9.jpg');
+  }
+
+  @media only screen and (min-width: 992px) {
+    background-image: url('../../img/login.fc87fb7d8bae609f0b9786502704b0a9.jpg');
+  }
 }
 
 .unlogged-signup {
-  background-image: url('../../img/signUp.Ugpcxb0jG4Q.jpg');
+  @media only screen and (min-width: 768px) {
+    background-image: url('../../img/signUp-tabel.Ugpcxb0jG4Q.jpg');
+  }
+
+  @media only screen and (min-width: 992px) {
+    background-image: url('../../img/signUp.Ugpcxb0jG4Q.jpg');
+  }
 }
 
 .unlogged-container {
   display: flex;
   flex-direction: column;
-  width: 1270px;
+  width: 95%;
+  max-width: 1270px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 2%;
 }
 
 .unlogged-container-inner {
+  max-width: 100%;
   width: 370px;
   margin-top: 80px;
+
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    margin: 45px auto 0 auto;
+  }
 }
 
 .unlogged-form {
@@ -47,21 +73,26 @@ Auth-form
   text-align: center;
   margin-bottom: 20px;
   position: relative;
+
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    font-size: 24px;
+  }
 }
 
 .unlogged-input-container {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .unlogged-input {
   font-family: 'SF Pro Display', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   color: #323232;
   width: 100%;
   padding: 18px 20px;
   border: 1px solid transparent;
-  background: #fff;
+  border-radius: 4px;
+  background: #EFEFF2;
   box-shadow: 0 20px 20px 0 rgba(0,0,0,0);
   outline: none;
   -webkit-appearance: none;
@@ -69,12 +100,13 @@ Auth-form
   appearance: none;
 
   &::-webkit-input-placeholder {
-    font-size: 16px;
-    color: #ACACB6;
+    font-size: 14px;
+    color: #999;
   }
 
   &:focus {
     border-color: #41a6f1;
+    background: #fff;
   }
 
   &.is-error {
@@ -97,6 +129,13 @@ Auth-form
   width: 18px;
   height: 18px;
   background: url('../../img/success.svg') no-repeat center/contain;
+
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    top: 7px;
+    left: 7px;
+    width: 14px;
+    height: 14px;
+  }
 }
 
 .unlogged-error {
@@ -123,55 +162,10 @@ Auth-form
     border-right-color: #fff;
     right: 100%;
   }
-}
 
-.text-error {
-  font-size: 14px;
-  color: rgb(222, 53, 11);
-  display: block;
-  margin-top: 10px;
-}
-
-/*
-Auth-animate route
-=============================
-*/
-
-.example-enter {
-  opacity: 0;
-}
-
-.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-exit {
-  opacity: 0;
-}
-
-.example-exit-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-/*
-Auth-animate error message
-=============================
-*/
-.alert-enter {
-  opacity: 0;
-}
-.alert-enter-active {
-  opacity: 1;
-  transition: opacity 300ms;
-}
-.alert-exit {
-  opacity: 1;
-}
-.alert-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
+  @media only screen and (min-width: 320px) and (max-width: 575px) {
+    display: none;
+  }
 }
 
 .unlogged-socials-btn-container {
@@ -183,7 +177,7 @@ Auth-animate error message
 }
 
 .unlogged-socials-btn-container button:first-child {
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 .unlogged-btn-social {
@@ -198,6 +192,10 @@ Auth-animate error message
   transition: background-color 0.15s;
   box-shadow: 0 0 8px 1px rgba(82, 82, 82, 0.1);
   cursor: pointer;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 125px;
+  }
 }
 
 .unlogged-btn-google {
@@ -205,7 +203,16 @@ Auth-animate error message
 }
 
 .unlogged-btn-facebook {
-  background-color: #fff;
+  background-color: #2553b4;
+}
+
+.unlogged-btn-google,
+.unlogged-btn-facebook {
+  transition: transform 0.15s;
+
+  &:hover {
+    transform: translateY(2px);
+  }
 }
 
 .icon-gpl {
@@ -222,25 +229,43 @@ Auth-animate error message
   height: 38px;
 }
 
-.icon-label {
+.google-label,
+.facebook-label {
   font-family: 'SF Pro Display', sans-serif;
   font-size: 18px;
   margin-left: 5px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.facebook-label {
+  color: #fff;
 }
 
 .unlogged-notice {
-  color: #32323d;
+  font-size: 17px;
+  color: #585858;
   text-align: center;
-  margin-top: 25px;
+  padding: 10px;
+  width: 100%;
+  margin-top: 12px;
 
   a {
-    color: #000;
     font-weight: 500;
+    color: #4a4a4a;
     text-decoration: none;
 
-    &:hover {
+    &:hover, &:active {
       text-decoration: underline;
     }
+  }
+}
+
+.unlogged-notice-register {
+  @media only screen and (min-width: 675px) {
+    display: none;
   }
 }
 
@@ -281,6 +306,10 @@ Auth-animate error message
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 675px) {
+    display: none;
   }
 }
 

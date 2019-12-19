@@ -6,7 +6,7 @@ const getUserData = () => async(dispatch, getState, { getFirebase, getFirestore 
   const localData = JSON.parse(localStorage.getItem('_user'));
 
   dispatch({ type: actionTypes.USER_REQESTED });
-  const docRef = db.collection('users').doc(localData.uid);
+  const docRef = db.collection('auth_users').doc(localData.uid);
   const res = await docRef.get();
 
   if (res.exists) {

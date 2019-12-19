@@ -39,13 +39,12 @@ class HomeContainer extends Component {
   }
 
   render() {
-    const { notice, modal } = this.props;
+    const { notice, id } = this.props;
 
     return (
       <AppHome
         onClose={ this.handleClosedModal }
-        isOpen={ modal.modalId === this.modal_id }
-        isModalId={ modal.modalId }
+        isOpen={ id === this.modal_id }
         isNotice={ notice }
       />
     )
@@ -54,8 +53,8 @@ class HomeContainer extends Component {
 
 const mapStateToProps = ({ notice, modal, theme, user }) => {
   return {
-    modal,
     notice,
+    id: modal.id,
     colorTheme: theme.colorTheme,
     uid: user.user.uid
   }

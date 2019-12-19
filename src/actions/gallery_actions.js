@@ -1,11 +1,12 @@
 import * as actionTypes from './action_types';
 
-const setGalleryPhotos = (uid, file, id) => async(dispatch, getState, { getFirebase }) => {
+const setGalleryPhotos = (file, id) => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
     const data = getState().gallery.photos;
-    const { ref } = await firebase.storage().ref(`users/${uid}/gallery/${id}/${file.name}`).put(file);
+    const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${file.name}`).put(file);
     const src = await ref.getDownloadURL();
 
     if (!data.hasOwnProperty(id)) {
@@ -60,8 +61,9 @@ const getGalleryPhotos = () => async(dispatch, getState, { getFirebase }) => {
   }
 }
 
-const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getFirebase }) => {
+const setDragFilesGallery = (id, files) => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
+  const localData = JSON.parse(localStorage.getItem('_user'));
   
   try {
     const data = getState().gallery.photos;
@@ -72,7 +74,7 @@ const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getF
         console.log(files[key]);
       }
     } else {
-      const { ref } = await firebase.storage().ref(`users/${uid}/gallery/${id}/${files[0].name}`).put(files[0]);
+      const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${files[0].name}`).put(files[0]);
       const src = await ref.getDownloadURL();
       
       if (!data.hasOwnProperty(id)) {
@@ -90,15 +92,16 @@ const setDragFilesGallery = (uid, id, files) => async(dispatch, getState, { getF
   }
 }
 
-const deletedData = (uid, id, delItem) => (dispatch, getState, { getFirebase }) => {
+const deletedData = (id, delItem) => (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   const data = getState().gallery.photos;
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   data[id].forEach((el, idx) => {
     if (delItem.keys.includes(el.name)) {
       data[id].splice(idx, 1);
 
-      firebase.storage().ref(`users/${uid}/gallery/`).child(`${id}/${el.name}`).delete()
+      firebase.storage().ref(`users/${localData.uid}/gallery/`).child(`${id}/${el.name}`).delete()
         .then(() => dispatch({ type: actionTypes.SET_NOTICE, payload: {
           notifi: true,
           message: 'Photo removed from gallery'

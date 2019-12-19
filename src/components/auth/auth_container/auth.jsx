@@ -2,10 +2,14 @@ import React, { Component as ReactComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../../actions/auth_actions';
+import { modalOppened } from '../../../actions/modal_actions';
+import ReactModal from '../../modal';
 import Input from '../input';
 import '../style.scss';
 
 class authContainer extends ReactComponent {
+  modal_id = 'modal-error';
+
   state = {
     password: { showPass: false },
     confirm: { showPass: false }
@@ -17,11 +21,9 @@ class authContainer extends ReactComponent {
     switch(location.pathname) {
       case '/login':
         await this.props.signIn(values);
-        console.log('signIn')
         break;
       case '/register':
         await this.props.signUp(values);
-        console.log('signUp')
         break;
       default:
         break;
@@ -30,6 +32,10 @@ class authContainer extends ReactComponent {
     if (this.props.isLogined) {
       this.props.history.push('/');
       console.log('redirect');
+    }
+
+    if (this.props.error) {
+      this.props.closeModalError(this.modal_id);
     }
   };
 
@@ -101,7 +107,10 @@ class authContainer extends ReactComponent {
     const { 
       renderComponent: Component,
       location,
-      isLoading
+      isLoading,
+      error,
+      id,
+      closeModalError
     } = this.props;
 
     const { pathname } = location;
@@ -121,22 +130,41 @@ class authContainer extends ReactComponent {
             />
           </div>
         </div>
+        <ReactModal
+          isOpen={ id === this.modal_id }
+          onRequestClose={ () => closeModalError() }
+          className="modal modal-error"
+          overlayClassName="modal-mask"
+        >
+          <div className='modal-content'>
+            <div className='modal-error-title'>Error</div>
+            <div className='error-text'>{ error }</div>
+          </div>
+          <button 
+            className='modal-btn'
+            onClick={ () => closeModalError() }
+          >
+            OK
+          </button>
+        </ReactModal>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, modal }) => {
   return {
-    isLogined: auth.isLogined,
-    isLoading: auth.loading
+    isLoading: auth.loading,
+    error: auth.error,
+    id: modal.id
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     signIn: creds => dispatch(signIn(creds)),
-    signUp: creds => dispatch(signUp(creds))
+    signUp: creds => dispatch(signUp(creds)),
+    closeModalError: id => dispatch(modalOppened(id))
   }
 }
 

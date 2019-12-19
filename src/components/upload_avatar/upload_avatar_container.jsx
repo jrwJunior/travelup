@@ -37,13 +37,13 @@ class UploadAvatarContainer extends Component {
   }
 
   render() {
-    const { modal, popperShow, isEmpty } = this.props;
+    const { id, popperShow, isEmpty } = this.props;
 
     return (
       <UploadAvatar
         userData={ this.props.user }
         isPopperShow={ popperShow }
-        isOpen={ modal.modalId === this.modal_id }
+        isOpen={ id === this.modal_id }
         isEmpty={ isEmpty }
         fileRef={ this.fileInput }
         onChange={ this.handleChange }
@@ -57,7 +57,7 @@ class UploadAvatarContainer extends Component {
 
 const mapStateToProps = ({ user, modal, popper }) => {
   return {
-    modal,
+    id: modal.id,
     user: user.user,
     isEmpty: user.loading,
     popperShow: popper.popperShow

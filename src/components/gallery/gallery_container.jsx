@@ -25,7 +25,7 @@ class GalleryContainer extends Component {
   }
 
   handleChange = async(evt) => {
-    const { uid, map, setPhotosGallery, setCoordinates } = this.props;
+    const { map, setPhotosGallery, setCoordinates } = this.props;
     const { selectMapId } = map;
     const fileList = evt.target.files;
     const isCoincidence = map.marks.some(({ id }) => id.includes(selectMapId));
@@ -33,14 +33,14 @@ class GalleryContainer extends Component {
     if (!isCoincidence) {
       const { latlng }  = await this.serviceGeoCordinats.getCords(selectMapId);
 
-      setCoordinates(uid, {
+      setCoordinates({
         lat: latlng[0],
         lon: latlng[1],
         id: selectMapId
       });
     }
 
-    setPhotosGallery(uid, selectMapId, fileList);
+    setPhotosGallery(selectMapId, fileList);
   }
 
   handleDragOverEnter(evt) {
@@ -106,7 +106,7 @@ class GalleryContainer extends Component {
 
   handleRemoveItem = async() => {
     const { selectedItem } = this.state;
-    const { uid, map, deleteDataItem, deleteMapCords } = this.props;
+    const { map, deleteDataItem, deleteMapCords } = this.props;
     const { selectMapId } = map;
 
     this.setState({
@@ -117,8 +117,8 @@ class GalleryContainer extends Component {
       }
     });
 
-    deleteDataItem(uid, selectMapId, selectedItem);
-    deleteMapCords(uid, selectMapId);
+    deleteDataItem(selectMapId, selectedItem);
+    deleteMapCords(selectMapId);
   }
 
   handleOpenLightbox = name => {
@@ -169,9 +169,8 @@ class GalleryContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ fb, gallery, map }) => {
+const mapStateToProps = ({ gallery, map }) => {
   return {
-    uid: fb.auth.uid,
     data: gallery.photos,
     isLoading: gallery.loading,
     map
@@ -180,10 +179,10 @@ const mapStateToProps = ({ fb, gallery, map }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setPhotosGallery: (uid, id, files) => dispatch(setDragFilesGallery(uid, id, files)),
-    deleteDataItem: (uid, id, delitem) => dispatch(deletedData(uid, id, delitem)),
-    setCoordinates: (uid, cords) => dispatch(setGPSCoordinates(uid, cords)),
-    deleteMapCords: (uid, id) => dispatch(deleteGPSCoordinates(uid, id)),
+    setPhotosGallery: (id, files) => dispatch(setDragFilesGallery(id, files)),
+    deleteDataItem: (id, delitem) => dispatch(deletedData(id, delitem)),
+    setCoordinates: cords => dispatch(setGPSCoordinates(cords)),
+    deleteMapCords: id => dispatch(deleteGPSCoordinates(id)),
     closeModal: () => dispatch(modalOppened())
   }
 }

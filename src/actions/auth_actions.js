@@ -5,22 +5,21 @@ const signIn = ({ email, password }) => async(dispatch, getState, { getFirebase 
   dispatch({ type: actionTypes.LOGIN_REQUSTED });
 
   try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-    dispatch({ type: actionTypes.LOGIN_SUCCESS });
-  } catch (err) {
-    dispatch({ type: actionTypes.LOGIN_ERROR, payload: {
-      signIn: err.message
-    }});
+    const res = await firebase.auth().signInWithEmailAndPassword(email, password);
+    dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: res.user.uid });
+  } catch (e) {
+    dispatch({ type: actionTypes.LOGIN_ERROR, payload: e.message });
   }
 }
 
 const signUp = ({ email, password }) => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const firebase = getFirebase();
   const firestore = getFirestore();
+  dispatch({ type: actionTypes.LOGIN_REQUSTED });
 
   try {
     const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
-    await firestore.collection('users').doc(res.user.uid).set({
+    await firestore.collection('auth_users').doc(res.user.uid).set({
       email,
       password,
       avatar: null,
@@ -28,9 +27,9 @@ const signUp = ({ email, password }) => async(dispatch, getState, { getFirebase,
     });
 
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: res.user.uid });
-  } catch (err) {
+  } catch (e) {
     dispatch({ type: actionTypes.LOGIN_ERROR, payload: {
-      signUp: err.message
+      signUp: e.message
     }});
   }
 }
@@ -42,18 +41,29 @@ const signOut = () => async(dispatch, getState, { getFirebase }) => {
   dispatch({ type: actionTypes.LOGIN_OUT });
 }
 
-const signInGoogle = provider => async(dispatch, getState, { getFirebase }) => {
+const signInSocials = provider => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const firebase = getFirebase();
+  const db = getFirestore();
 
-  await firebase.auth().signInWithPopup(provider);
+  try {
+    const res = await firebase.auth().signInWithPopup(provider);
+    const { email, photoURL, uid } = res.user;
 
-  localStorage.setItem('user', JSON.stringify({ loggedIn : true }));
-  dispatch({ type: actionTypes.LOGIN_SUCCESS });
+    db.collection('auth_users').doc(uid).set({
+      email,
+      uid,
+      avatar: photoURL
+    });
+
+    dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: uid });
+  } catch(e) {
+    console.log(e.message);
+  }
 }
 
 export {
   signIn,
   signOut,
   signUp,
-  signInGoogle
+  signInSocials
 };

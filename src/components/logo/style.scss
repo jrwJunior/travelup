@@ -5,20 +5,30 @@
 }
 
 .app-logo-text {
-  font-size: 17px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--text-main-color);
+  font-family: 'Candara', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0797E8;
   white-space: nowrap;
 
-  @media screen and (max-width: 850px) and (min-width: 320px) {
-    font-size: 14px;
+  span {
+    color: #0f73e4;
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    font-size: 24px;
+    letter-spacing: -2px;
   }
 }
 
 .app-logo-pic {
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   background: url('../../img/logo.svg') no-repeat center/contain;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 34px;
+    height: 34px;
+  }
 }

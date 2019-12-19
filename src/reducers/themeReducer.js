@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/action_types';
 
 const initState  = {
-  colorTheme: null
+  colorTheme: 'light'
 };
 
 const themeReducer = (state = initState, action) => {

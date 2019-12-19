@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/action_types';
 
 const initState  = {
   isOpen: false,
-  modalId: null
+  id: null
 };
 
 const modalReducer = (state = initState, action) => {
@@ -10,7 +10,7 @@ const modalReducer = (state = initState, action) => {
     case actionTypes.MODAL_OPENEND:
       return {
         isOpen: !state.isOpen,
-        modalId: action.payload
+        id: action.payload
       }
     default:
       return state;

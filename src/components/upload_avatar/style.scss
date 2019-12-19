@@ -31,3 +31,23 @@
   background: var(--skeleton-background);
   animation: skeletionPulse ease-in-out 2s .2s infinite;
 }
+
+.dropdown-enter {
+  opacity: 0;
+  transform: translateY(100px);
+}
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 350ms, transform 350ms;
+  transition-timing-function: cubic-bezier(0, 0, 0, 1.2);
+}
+.dropdown-exit {
+  opacity: 1;
+}
+.dropdown-exit-active {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 350ms, transform 350ms;
+  transition-timing-function: cubic-bezier(0.66, -.41, 1, 1);
+}

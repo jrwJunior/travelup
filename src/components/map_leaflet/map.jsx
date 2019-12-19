@@ -15,19 +15,11 @@ class Mapleaflet extends Component {
   map_white = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
   componentDidMount() {
-    
+    Promise.all([
+      this.props.getAllPhotos(),
+      this.props.getCordinates()
+    ])
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   const { uid, getAllPhotos, getCordinates } = this.props;
-
-  //   if (uid !== prevProps.uid) {
-  //     Promise.all([
-  //       getAllPhotos(uid),
-  //       getCordinates(uid)
-  //     ])
-  //   }
-  // }
 
   handleMouseOver = evt => {
     const ctx = evt.layer;
@@ -94,7 +86,7 @@ class Mapleaflet extends Component {
   }
 
   render() {
-    const { map, images, colorTheme, isEmpty } = this.props;
+    const { map, images, colorTheme } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
     const a = Object.keys(images).length === map.marks.length;
 
@@ -140,7 +132,7 @@ const mapStateToProps = ({ map, gallery, theme }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleModal: (id) => dispatch(modalOppened(id)),
+    toggleModal: id => dispatch(modalOppened(id)),
     getCordinates: () => dispatch(getGPSCoordinates()),
     getAllPhotos: () => dispatch(getGalleryPhotos()),
     selectCountry: id => dispatch(setMapId(id))

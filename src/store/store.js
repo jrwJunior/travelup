@@ -8,15 +8,16 @@ import rootReducer from '../reducers/rootReducer';
 import fbConfig from '../fb/firebase';
 
 const configureStore = () => {
-  const store = createStore(rootReducer, compose(
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+  const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(
       thunkMiddleware.withExtraArgument({ getFirebase, getFirestore }),
       authMiddleware,
       themeMiddleware
       ),
       reactReduxFirebase(fbConfig),
-      reduxFirestore(fbConfig),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      reduxFirestore(fbConfig)
   ));
 
   return store;

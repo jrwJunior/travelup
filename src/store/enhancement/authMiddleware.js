@@ -6,12 +6,12 @@ const middlewareAuth = () => next => action => {
   switch(action.type) {
     case actionTypes.LOGIN_SUCCESS:
       local.setItem('_user', JSON.stringify({ isLogined: true, uid: action.payload }));
-      next(action);
-      break;
+
+      return next(action);
     case actionTypes.LOGIN_OUT:
-      local.setItem('_user', JSON.stringify({ isLogined : false, uid: null }));
-      next({ type: actionTypes.LOGIN_OUT });
-      break;
+      local.setItem('_user', JSON.stringify({ isLogined : false }));
+
+      return next(action);
     default:
       return next(action);
   }

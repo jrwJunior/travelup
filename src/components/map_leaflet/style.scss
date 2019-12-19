@@ -31,3 +31,9 @@
   text-align: center;
   line-height: 18px;
 }
+
+.leaflet-top {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    display: none;
+  }
+}

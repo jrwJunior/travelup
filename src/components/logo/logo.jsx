@@ -5,7 +5,9 @@ const Logo = () => {
   return (
     <a href="/" className='app-logo'>
       <span className='app-logo-pic'/>
-      <span className='app-logo-text'>Easy Travel</span>
+      <span className='app-logo-text'>
+        <span>Tra</span>velup
+      </span>
     </a>
   )
 }

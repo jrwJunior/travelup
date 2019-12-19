@@ -2,13 +2,13 @@ import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ component:Component, ...rest }) => {
-  const user = JSON.parse(localStorage.getItem('_user'));
+  const isUser = JSON.parse(localStorage.getItem('_user')) || null;
 
   return(
     <Route
       { ...rest }
       render={ routeProps => {
-        return user.isLogined ? <Component { ...routeProps } /> : <Redirect exact to='/login' />
+        return isUser && isUser.isLogined && isUser.uid ? <Component { ...routeProps } /> : <Redirect exact to='/login' />
       }}
     />
   )

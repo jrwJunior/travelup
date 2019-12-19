@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from "firebase/app";
-import { signInGoogle } from '../../../actions/auth_actions';
+import { signInSocials } from '../../../actions/auth_actions';
 import AuthSocials from './auth_soc'
 
 class AuthSocialsContainer extends Component {
@@ -10,12 +10,11 @@ class AuthSocialsContainer extends Component {
   providerFacebook = new firebase.auth.FacebookAuthProvider();
 
   signInGoogle = () => {
-    this.props.signIn(this.providerGoogle);
-    this.props.history.push('/');
+    this.props.signInGoogle(this.providerGoogle);
   };
 
   signInFacebook = () => {
-    this.props.fb.auth.signInWithPopup(this.providerFacebook);
+    this.props.signInFacebook(this.providerFacebook);
   }
 
   render() {
@@ -23,15 +22,25 @@ class AuthSocialsContainer extends Component {
       <AuthSocials
         onSignInGoogle={ this.signInGoogle }
         onSignInFb={ this.signInFacebook }
+        isLogined={ this.props.isLogined }
       />
     )
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = ({ auth }) => {
   return {
-    signIn: provider => dispatch(signInGoogle(provider))
+    isLogined: auth.isLogined
   }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(AuthSocialsContainer));
+const mapDispatchToProps = dispatch => {
+  return {
+    signInGoogle: provider => dispatch(signInSocials(provider)),
+    signInFacebook: provider => dispatch(signInSocials(provider))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(withRouter(AuthSocialsContainer));

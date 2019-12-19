@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import Button from '../button';
 import Social from '../auth_socials';
@@ -54,9 +55,14 @@ const SignUpView = props => {
             disabled={ !valid || isLoading }
             isLoading={ isLoading }
           />
-          {/* <span className='text-error'>{  props.authError.signUp }</span> */}
         </div>
       </form>
+      <div className='unlogged-notice unlogged-notice-register'>
+        Already registered ? &nbsp;
+        <Link to='/login'>
+          Sign in
+        </Link>
+      </div>
     </>
   );
 };

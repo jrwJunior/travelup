@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition } from 'react-transition-group';
 import Popper from '../popper';
 import ReactModal from '../modal';
 import Cropper from '../cropper';
@@ -41,13 +42,18 @@ const EditorView = props => {
         className="input-file"
         ref={ fileRef }
       />
-      { isPopperShow ? (
+      <CSSTransition
+        in={ isPopperShow }
+        timeout={ 350 }
+        classNames='dropdown'
+        unmountOnExit
+      >
         <Popper 
           onChangeFile={ onChangeFile }
           onCancel={ onClickPopper }
           popperRef={ popperRef }
         />
-      ) : null }
+      </CSSTransition>
       <ReactModal
         isOpen={ isOpen }
         onRequestClose={ onCloseModal }

@@ -3,7 +3,9 @@ import * as actionTypes from '../actions/action_types';
 const initState  = {
   uid: null,
   isLogined: false,
-  loading: false
+  loading: false,
+  logout: false,
+  error: null
 };
 
 const authReducer = (state = initState, action) => {
@@ -11,10 +13,12 @@ const authReducer = (state = initState, action) => {
     case actionTypes.LOGIN_REQUSTED:
       return {
         ...state,
-        loading: true
+        loading: true,
+        logout: false
       }
     case actionTypes.LOGIN_SUCCESS:
       return {
+        ...state,
         uid: action.payload,
         isLogined: true,
         loading: false
@@ -22,13 +26,15 @@ const authReducer = (state = initState, action) => {
     case actionTypes.LOGIN_ERROR:
       console.log('ERROR')
       return {
-        ...state
+        ...state,
+        loading: false,
+        error: action.payload
       }
     case actionTypes.LOGIN_OUT:
       return {
         ...state,
         isLogined: false,
-        loading: false
+        logout: true
       }
     default:
       return state;

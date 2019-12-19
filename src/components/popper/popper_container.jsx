@@ -19,7 +19,7 @@ class PopperContainer extends Component {
       window.removeEventListener('click', this.handleOutsideClick);  
     }
 
-    if (this.props.colorTheme) {
+    if (this.props.colorTheme !== 'light') {
       this.setState({ isChecked: true });
     }
   }
@@ -28,7 +28,7 @@ class PopperContainer extends Component {
     const { isChecked } = this.state;
 
     if (isChecked !== prevState.isChecked) {
-      this.props.theme(isChecked ? 'dark' : null);
+      this.props.theme(isChecked ? 'dark' : 'light');
     }
   }
 
@@ -56,17 +56,24 @@ class PopperContainer extends Component {
     this.props.togglePopper();
   }
 
+  handleSignOut = () => {
+    const { togglePopper } = this.props;
+    
+    this.props.signOut().then(togglePopper);
+  }
+
   render() {
     const { isChecked } = this.state;
-    const { onChangeFile, onCancel } = this.props;
+    const { onChangeFile, onCancel, logout } = this.props;
 
     return (
       <Popper
         isChecked={ isChecked }
+        isLogout={ logout }
         nodeRef={ this.ref }
         userData={ this.props.user }
         onClickCheck={ this.handlerChecked }
-        onLogout={ this.props.signOut }
+        onLogout={ this.handleSignOut }
         onChangeFile={ onChangeFile }
         onCancel={ onCancel }
       />
@@ -74,9 +81,10 @@ class PopperContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ user, theme }) => {
+const mapStateToProps = ({ user, theme, auth }) => {
   return {
     user: user.user,
+    logout: auth.logout,
     colorTheme: theme.colorTheme
   }
 }
