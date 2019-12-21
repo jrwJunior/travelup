@@ -1,0 +1,291 @@
+/*
+  Popper
+*/
+.popper {
+  position: absolute;
+  top: 100%;
+  right: -25px;
+  padding-top: 15px;
+  z-index: 500;
+  z-index: 2000;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.popper-lg {
+  width: 320px;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    width: 100%;
+  }
+}
+
+/*
+  Popper header
+*/
+.account-header {
+  display: flex;
+  align-items: center;
+  color: var(--text-main-color);
+  padding: 12px 20px;
+  transition-duration: 0.15s;
+  transition-property: background-color;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--popper-default-hover-background-color);
+  }
+}
+
+.account-thumbnail {
+  position: relative;
+}
+
+.thumbnail-rounded {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.thumbnail {
+  border-radius: 20px;
+  display: inline-block;
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  transform: translateZ(0);
+  vertical-align: top;
+}
+
+.thumbnail .picture {
+  display: block;
+  position: relative;
+}
+
+.account-heading {
+  color: var(--text-main-color);
+  flex: 1;
+  font-size: 16px;
+  margin-left: 12px;
+}
+
+.picture-edit {
+  position: absolute;
+  top: 25px;
+  background: #fff url('../../img/pencil.svg') no-repeat center/10px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-name {
+  font-size: 15px;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
+}
+
+.animate-wobble:hover .animate-wobble-target {
+  animation: wobble .3s;
+}
+
+@keyframes wobble {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+50% {
+    -webkit-transform: translateX(6px);
+    transform: translateX(6px);
+}
+100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+/*
+  Popper content
+*/
+.popper-content {
+  background-color: var(--popper-background-color);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px 0 rgba(25, 25, 34, 0.24);
+  color: #52525d;
+  position: relative;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    border-radius: 0;
+  }
+}
+
+/*
+  Popper menu
+*/
+.account-menu {
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  border-top: 1px solid var(--secondary-border-color);
+  margin: 0;
+  padding: 8px 0;
+}
+
+.account-item {
+  padding: 0 8px;
+
+  @media screen and (min-width: 850px) {
+    &:last-child {
+      display: none;
+    }
+  }
+}
+
+.account-link.is-main {
+  color: var(--text-main-color);
+  padding: 10px 12px;
+}
+
+.account-link {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  color: #72727d;
+  padding: 8px;
+  transition-duration: 0.15s;
+  transition-property: background-color;
+  cursor: pointer;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
+}
+
+.account-link:hover {
+  background-color: var(--popper-default-hover-background-color);
+}
+
+.account-link-label {
+  flex: 1;
+}
+
+.account-input-label {
+  margin-right: auto;
+}
+
+.account-input-label.is-main {
+  color: var(--text-main-color);
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-weight: 500;
+    font-size: 17px;
+  }
+}
+
+.account-input {
+  align-items: center;
+  display: flex;
+  padding: 12px;
+}
+
+.input-switch {
+  background-color: #dedee3;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  padding: 1px;
+  position: relative;
+  width: 32px;
+  transition-duration: .15s;
+  transition-property: background-color;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    width: 38px;
+    height: 22px;
+  }
+}
+
+.input-control {
+  display: none;
+}
+
+.input-switch:after {
+  content: "";
+  background-color: #fff;
+  border-radius: 50%;
+  display: block;
+  height: 14px;
+  width: 14px;
+  transition-duration: 0.15s;
+  transition-property: transform;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.input-switch.is-checked {
+  background-color: #ef5466;
+}
+
+.input-switch.is-checked:after {
+  transform: translate3d(16px,0,0);
+}
+
+.popper-arrow {
+  position: absolute;
+  border: 6px solid rgba(0,0,0,0);
+  height: 0;
+  width: 0;
+  border-bottom-color: var(--popper-background-color);
+  border-top-width: 0;
+  left: calc(100% - 47px);
+  margin-bottom: 0;
+  margin-top: 0;
+  top: 9px;
+
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    display: none;
+  }
+}
+
+/*
+  Popper only mobile
+*/
+.popper-cancel {
+  display: block;
+  font-weight: 600;
+  color: #ef5466;
+  text-align: center;
+  padding: 15px;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-size: 18px;
+  }
+}
+
+.svg-icon {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0;
+  vertical-align: top;
+}

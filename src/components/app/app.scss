@@ -1,0 +1,69 @@
+:root {
+  --main-background-color: #fff;
+  --popper-background-color: #fff;
+  --text-main-color: #32323d;
+  --secondary-border-color: #f8f8f9;
+  --popper-default-hover-background-color: #f2f2f2;
+  --scroll-bar-defualt-background-color: rgba(0,0,0,0.2);
+  --sidebar-default-hover-color: #1b98f1;
+  --search-bar--defualt-background-color: #fff;
+  --search-bar-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
+  --search-bar-default-color: #323232;
+  --modal-default-background-color: #fff;
+  --modal-selected-color: #1b98f1;
+  --drag-text-upload-color: #1b98f1;
+  --gallery-overlay-tile: rgba(255,255,255,0.65);
+  --drab-box-border-color: 2px dashed #e2e2e2;
+  --gallery-item-box-background-color: #fff;
+  --button-main-background-color: #fff;
+  --button-main-hover-background-color: #dadada;
+  --button-menu-background-color: #323232;
+  --picture--color: #323232;
+  --skeleton-background: #e1eaf1;
+}
+
+[data-theme=dark] {
+  --main-background-color: #151515;
+  --popper-background-color: #383838;
+  --popper-default-hover-background-color: #4a4a4a;
+  --text-main-color: #fff;
+  --secondary-border-color: #42424d;
+  --scroll-bar-defualt-background-color: rgba(255,255,255,0.9);
+  --sidebar-default-hover-color: #EF5466;
+  --search-bar--defualt-background-color: #151515;
+  --search-bar-shadow: none;
+  --search-bar-default-color: #fff;
+  --modal-default-background-color: #212121;
+  --modal-selected-color: #EF5466;
+  --drag-text-upload-color: #EF5466;
+  --gallery-overlay-tile: rgba(0,0,0,0.65);
+  --drab-box-border-color: 2px dashed #50505d;
+  --gallery-item-box-background-color: #383838;
+  --button-main-background-color: #323232;
+  --button-main-hover-background-color: #5a5a5a;
+  --button-menu-background-color: #fff;
+  --picture--color: #fff;
+  --skeleton-background: #4e4e4e;
+}
+
+.main-content {
+  height: 100%;
+}
+
+.react-topbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1270px;
+  margin: 0 auto;
+  padding: 0 2%;
+}
+
+.react-container {
+  display: flex;
+  height: 100%;
+  max-width: 1270px;
+  margin: auto;
+  padding: 0 2%;
+}

@@ -1,0 +1,76 @@
+.topbar {
+  position: relative;
+  min-height: 65px;
+  padding: 12px 0;
+  background: #fff;
+  box-shadow: 0 0 8px 1px rgba(90, 90, 90, 0.1);
+
+  @media only screen and (min-width: 320px) and (max-width: 675px),
+  screen and (min-width: 320px) and (max-width: 750px) and (orientation: landscape) {
+    box-shadow: none;
+    padding-top: 30px;
+  }
+}
+
+.header-col {
+  display: flex;
+  align-items: baseline;
+
+  @media only screen and (min-width: 320px) and (max-width: 675px),
+  screen and (min-width: 320px) and (max-width: 750px) and (orientation: landscape) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.header-col-right {
+  @media only screen and (min-width: 320px) and (max-width: 675px),
+  screen and (min-width: 320px) and (max-width: 750px) and (orientation: landscape) {
+    display: none;
+  }
+}
+
+.header-col .unlogged-btn:last-child {
+  margin-left: 15px;
+}
+
+.unlogged-btn-blue {
+  border: 2px solid #3ca0ff;
+  background: #3ca0ff;
+}
+
+.unlogged-btn-black {
+  border: 2px solid #4a4a4a;
+}
+
+.unlogged-btn-outline {
+  background-color: rgba(0,0,0,0);
+}
+
+.unlogged-btn-small {
+  font-size: 15px;
+  padding: 7px 30px;
+  margin-top: 0;
+  transition: all 0.15s;
+}
+
+.unlogged-btn-label:not(.unlogged-btn-outline) {
+  color: #fff;
+}
+
+.unlogged-btn-outline .unlogged-btn-label {
+  color: #4a4a4a;
+}
+
+.unlogged-btn-small:not(.unlogged-btn-outline):hover {
+  background: darken(#3ca0ff, 12%);
+  border-color: darken(#3ca0ff, 12%);
+}
+
+.unlogged-btn-small.unlogged-btn-outline:hover {
+  border-color: lighten(#151515, 45%);
+}
+
+.unlogged-btn-small.unlogged-btn-outline:hover .unlogged-btn-label {
+  color: lighten(#151515, 45%);
+}

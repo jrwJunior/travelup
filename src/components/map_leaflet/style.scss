@@ -1,0 +1,39 @@
+.app-map {
+  width: 100%;
+  height: 100%;
+}
+
+.iconButtonAddPhoto {
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+.marker-quantity {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: #30a6f9;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  line-height: 18px;
+}
+
+.leaflet-top {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    display: none;
+  }
+}

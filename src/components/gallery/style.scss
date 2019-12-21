@@ -1,0 +1,269 @@
+.gallery-head {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.select-photo {
+  position: relative;
+  width: 45px;
+}
+
+.select-btn {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-size: 18px;
+  }
+}
+
+.select-btn:enabled {
+  color: #1b98f1;
+  cursor: pointer;
+
+  &:hover {
+    color: lighten(#1b98f1, 10%);
+  }
+}
+
+.select-btn:disabled {
+  cursor: default;
+  color: #afafaf;
+}
+
+.gallery-basket {
+  position: absolute;
+  top: 4px;
+  right: -30px;
+
+  &:disabled {
+    color: #9e9e9e;
+    cursor: default;
+  }
+
+  &:enabled {
+    color: #ef5466;
+    cursor: pointer;
+  }
+}
+
+.head-title {
+  color: var(--text-main-color);
+  font-weight: 500;
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    font-size: 20px;
+  }
+}
+
+.gallery-head .spinner {
+  right: 65px;
+  top: 20px;
+}
+
+.close-btn {
+  display: block;
+  width: 30px;
+  height: 30px;
+  color: var(--picture--color);
+  transition: opacity .15s;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--button-main-hover-background-color);
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 650px) {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.gallery {
+  height: 100%;
+}
+
+.gallery-content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 195px);
+  padding: 12px 25px;
+
+  @media screen and (max-width: 650px) and (min-width: 320px) {
+    height: calc(100% - 115px);
+    padding: 12px 0;
+  }
+}
+
+.gallery-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery-title {
+  font-size: 28px;
+  text-align: center;
+  color: var(--text-main-color);
+  margin-top: 50px;
+  width: 100%;
+}
+
+.pic-info {
+  background: url('../../img/pictures.svg') no-repeat 50%/contain;
+  display: block;
+  width: 65px;
+  height: 65px;
+  margin: 30px auto;
+}
+
+.gallery-item {
+  position: relative;
+  display: flex;
+  margin: 2px;
+  width: calc((100% / 4) - 4px);
+  overflow: hidden;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: calc((100% / 3) - 4px)
+  }
+}
+
+.gallery-item-view {
+  position: relative;
+  display: block;
+  width: 100%;
+  background-color: var(--gallery-item-box-background-color);
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #323232;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.15s;
+  }
+
+  &:hover {
+    &:before {
+      opacity: 0.65;
+    }
+  }
+}
+
+.gallery-item-view img, .gallery-item-box {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.gallery-item-pic {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+
+.gallery-drag-file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  border: 2px dashed #e8f1f5;
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.gallery-drag-info {
+  padding: 0 10px;
+  color: var(--text-main-color);
+  text-align: center;
+}
+
+.gallery-drag-info span {
+  color: #41a6f1;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.drag-file {
+	display: flex;
+	justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100px;
+  margin: 0 auto;
+	border: var(--drab-box-border-color);
+  border-radius: 8px;
+  
+  @media screen and (max-width: 850px) and (min-width: 320px) {
+    border: 0;
+    height: auto;
+  }
+}
+
+.drag-info {
+  font-size: 18px;
+	color: var(--text-main-color);
+	text-align: center;
+}
+
+.drag-info span {
+	color: var(--drag-text-upload-color);
+	font-weight: 500;
+	transition: opacity 0.15s;
+	cursor: pointer;
+}
+
+.drag-info:hover span {
+	opacity: 0.7;
+}
+
+.dragover {
+	background: #E8F1F5;
+}
+
+.gallery-item-view.on-selected:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gallery-overlay-tile);
+  opacity: 1;
+  z-index: 1;
+}
+
+.select-check-icon {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: url('../../img/success.svg') no-repeat 50%/contain;
+  width: 18px;
+  height: 18px;
+  z-index: 1;
+}
+
+.fullscreen {
+  position: relative;
+  z-index: 5000;
+}
