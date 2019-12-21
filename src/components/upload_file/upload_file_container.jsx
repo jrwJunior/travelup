@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setGPSCoordinates } from '../../actions/map_actions';
-import { setGalleryPhotos } from '../../actions/gallery_actions';
+import { failGPSCoordinates } from '../../actions/map_actions';
+import { setGPSCoordinatesOfPhotos } from '../../actions/map_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import EXIF from 'exif-js';
 import ServiceGeoocoder from '../../services/service_geocoder';
@@ -29,8 +29,8 @@ class UploadFileContainer extends Component {
   getGPSCoordinates(coordinates) {
     return new Promise((res, req) => {
       if (coordinates) {
-        const b = coordinates[0].numerator + coordinates[1].numerator / (60 * coordinates[1].denominator) + coordinates[2].numerator / (3600 * coordinates[2].denominator);
-        res(b);
+        const resCords = coordinates[0].numerator + coordinates[1].numerator / (60 * coordinates[1].denominator) + coordinates[2].numerator / (3600 * coordinates[2].denominator);
+        res(resCords);
       } else {
         req();
       }
@@ -38,7 +38,7 @@ class UploadFileContainer extends Component {
   }
 
   getFile(file) {
-    const { setCoordinates, uid, setPhotosStorage } = this.props;
+    const { setPhotoCoordinates, toggleModal, setError } = this.props;
 
     EXIF.getData(file, () => {
       Promise.all([
@@ -47,25 +47,29 @@ class UploadFileContainer extends Component {
       ])
       .then(data => {
         this.serviceGeoocoder.getData(data)
-        .then(cords => {
-          setCoordinates(uid, cords);
-          setPhotosStorage(uid, file, cords.id);
-        })
-      }, () => console.log('err'))
+        .then(cords => setPhotoCoordinates(file, cords))
+      }, 
+      () => {
+        toggleModal(this.modal_id);
+        setError();
+      })
     });
   }
 
   render() {
-    const { loading, isEmpty } = this.props;
+    const { loading, isEmpty, errorCords, id } = this.props;
 
     return (
       <>
         <UploadFile
           onChange={ this.handleChange }
           onClick={ this.handleClick }
+          onCloseModal={ this.handleModalClose }
           isLoading={ loading }
           isEmpty={ isEmpty }
           fileInput={ this.fileInput }
+          errorCords={ errorCords }
+          isOpen={ id === this.modal_id }
         />
       </>
     )
@@ -76,14 +80,15 @@ const mapStateToProps = ({ user, map, modal }) => {
   return {
     isEmpty: user.loading,
     loading: map.loading,
-    modal
+    errorCords: map.errorCords,
+    id: modal.id
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCoordinates: cords => dispatch(setGPSCoordinates(cords)),
-    setPhotosStorage: (file, id) => dispatch(setGalleryPhotos(file, id)),
+    setPhotoCoordinates: (file, cords) => dispatch(setGPSCoordinatesOfPhotos(file, cords)),
+    setError: () => dispatch(failGPSCoordinates()),
     toggleModal: (id) => dispatch(modalOppened(id))
   }
 }

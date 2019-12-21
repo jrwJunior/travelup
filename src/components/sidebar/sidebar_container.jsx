@@ -54,7 +54,7 @@ class SidebarContainer extends Component {
 
 const mapStateToProps = ({ gallery, user }) => {
   return {
-    images: gallery,
+    images: gallery.photos,
     isEmpty: user.loading
   }
 }

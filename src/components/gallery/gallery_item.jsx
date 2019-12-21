@@ -15,13 +15,13 @@ const GalleryItem = props => {
   return (
     <div className='gallery-item'>
       {/* eslint-disable-next-line */}
-      <a 
+      <a
         className={ `${ isSelected ? 'gallery-item-view on-selected' : 'gallery-item-view' }` }
         onClick={ !isSelected ? () => onOpenLightBox(data.name) : () => onSelectedItem(data.name) }
         >
         { selected && keys.includes(data.name) ? <span className="select-check-icon" /> : null }
         <div className='gallery-item-pic'>
-          <img src={ data.src } alt=""/>
+          <img src={ data.src } alt="shows countries you visited"/>
         </div>
         <div className='gallery-item-box'/>
       </a>

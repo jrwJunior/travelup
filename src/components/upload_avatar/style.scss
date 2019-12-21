@@ -35,6 +35,14 @@
 .dropdown-enter {
   opacity: 0;
   transform: translateY(100px);
+
+  @media screen and (min-width:320px) and (max-width: 650px) {
+		transform: translateY(100px);
+  }
+  
+  @media screen and (min-width:651px) {
+		transform: translateY(12px);
+	}
 }
 .dropdown-enter-active {
   opacity: 1;
@@ -50,4 +58,12 @@
   transform: translateY(100px);
   transition: opacity 350ms, transform 350ms;
   transition-timing-function: cubic-bezier(0.66, -.41, 1, 1);
+
+  @media screen and (min-width:320px) and (max-width: 650px) {
+		transform: translateY(100px);
+  }
+  
+  @media screen and (min-width:651px) {
+		transform: translateY(12px);
+	}
 }

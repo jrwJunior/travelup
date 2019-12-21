@@ -116,6 +116,7 @@ class authContainer extends ReactComponent {
     const { pathname } = location;
     const showHide = this.state;
 
+
     return(
       <div className={ `${ pathname === '/login' ? 'unlogged-authen unlogged-login' : 'unlogged-authen unlogged-signup' }` }>
         <div className='unlogged-container'>

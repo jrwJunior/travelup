@@ -6,7 +6,7 @@ const initState  = {
 
 const themeReducer = (state = initState, action) => {
   switch(action.type) {
-    case actionTypes.SET_THEME:
+    case actionTypes.SET_NEW_THEME:
       return {
         colorTheme: action.payload
       }

@@ -1,15 +1,6 @@
-.modal-mask {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0,0,0,.8);
-	display: flex;
-	align-items: baseline;
-	z-index: 5000;
-}
-
+/*
+	Basic modal
+*/
 .modal {
 	text-align: center;
 	background: var(--modal-default-background-color);
@@ -24,6 +15,37 @@
 	}
 }
 
+.modal-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,.8);
+	display: flex;
+	align-items: baseline;
+	z-index: 5000;
+}
+
+.ReactModal__Content--after-open {
+	animation: IGCoreModalShow .1s ease-out;
+	will-change: transform;
+}
+
+@keyframes IGCoreModalShow {
+	0% {
+		opacity: 0;
+		transform: scale(1.2);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/*
+	Modal gallery photos
+*/
 .modal-gallery {
 	max-width: 100%;
 	width: 670px;
@@ -36,6 +58,9 @@
 	}
 }
 
+/*
+	Modal cropper avatar
+*/
 .modal-cropper {
 	padding: 25px 23px;
 }
@@ -107,22 +132,9 @@
 	left: -5px;
 }
 
-.ReactModal__Content--after-open {
-	animation: IGCoreModalShow .1s ease-out;
-	will-change: transform;
-}
-
-@keyframes IGCoreModalShow {
-	0% {
-		opacity: 0;
-		transform: scale(1.2);
-	}
-	100% {
-		opacity: 1;
-		transform: scale(1);
-	}
-}
-
+/*
+	Modal error
+*/
 .modal-error {
 	text-align: center;
 	border-radius: 5px;
@@ -147,9 +159,13 @@
 	width: 100%;
 	color: #F25466;
 	border-top: 1px solid #f1f1f1;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
 	padding: 15px;
+	transition: background-color 0.15s ease-in;
+	cursor: pointer;
 
 	&:hover {
-		color: lighten(#F25466, 10%);
+		background-color: #f1f1f1;
 	}
 }

@@ -37,7 +37,7 @@
 
 .gallery-basket {
   position: absolute;
-  top: 4px;
+  top: 2px;
   right: -30px;
 
   &:disabled {
@@ -48,6 +48,10 @@
   &:enabled {
     color: #ef5466;
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    right: -40px;
   }
 }
 
@@ -86,8 +90,8 @@
 
   @media screen and (min-width: 320px) and (max-width: 650px) {
     svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
     }
   }
 }
@@ -266,4 +270,15 @@
 .fullscreen {
   position: relative;
   z-index: 5000;
+}
+
+.react-images__dialog .css-h67k8 {
+  background: rgba(0,0,0,0.8) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  padding: 5px 2px;
+  padding-bottom: 0;
+}
+
+.react-images__view .css-6d2p78 {
+  height: 100%;
 }

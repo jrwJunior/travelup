@@ -1,67 +1,6 @@
 import * as actionTypes from './action_types';
 
-const setGalleryPhotos = (file, id) => async(dispatch, getState, { getFirebase }) => {
-  const firebase = getFirebase();
-  const localData = JSON.parse(localStorage.getItem('_user'));
-
-  try {
-    const data = getState().gallery.photos;
-    const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${file.name}`).put(file);
-    const src = await ref.getDownloadURL();
-
-    if (!data.hasOwnProperty(id)) {
-      data[id] = [{ src, name: ref.name }];
-    }
-
-    dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
-  } catch(e) {
-    console.log(e);
-  }
-}
-
-const getGalleryPhotos = () => async(dispatch, getState, { getFirebase }) => {
-  const firebase = getFirebase();
-  const localData = JSON.parse(localStorage.getItem('_user'));
-
-  try {
-    const storageRef = await firebase.storage().ref(`users/${localData.uid}/`);
-    const listRef = await storageRef.child(`gallery/`);
-
-    const list = await listRef.listAll();
-    list.prefixes.forEach(async({ name: id, fullPath: url }) => {
-      const res = await firebase.storage().ref(url).listAll();
-      res.items.forEach(async({ name, fullPath: url }) => {
-        const { timeCreated } = await firebase.storage().ref(url).getMetadata();
-        const src = await firebase.storage().ref(url).getDownloadURL();
-        const data = getState().gallery.photos;
-
-        if (!data.hasOwnProperty(id)) {
-          data[id] = [{ src, name, timeCreated }];
-        }
-
-        if (data[id].length) {
-          const noMatches = data[id].every(el => el.name.includes(name));
-          
-          if (!noMatches) {
-            data[id].push({ src, name, timeCreated });
-          }
-        }
-
-        data[id].sort((a, b) => (
-          new Date(b.timeCreated) - new Date(a.timeCreated)
-        ))
-
-        if (list.prefixes.length === Object.keys(data).length) {
-          dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
-        }
-      })
-    })
-  } catch(e) {
-    console.log(e);
-  }
-}
-
-const setDragFilesGallery = (id, files) => async(dispatch, getState, { getFirebase }) => {
+const setGalleryPhoto = (id, files) => async(dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   const localData = JSON.parse(localStorage.getItem('_user'));
   
@@ -117,8 +56,6 @@ const deletedData = (id, delItem) => (dispatch, getState, { getFirebase }) => {
 }
 
 export {
-  setGalleryPhotos,
-  getGalleryPhotos,
-  setDragFilesGallery,
+  setGalleryPhoto,
   deletedData
 }

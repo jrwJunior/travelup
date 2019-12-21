@@ -1,7 +1,7 @@
 import * as actionTypes from './action_types';
 
 const setTheme = theme => dispatch => {
-  dispatch({ type: actionTypes.SET_THEME, payload: theme });
+  dispatch({ type: actionTypes.SET_NEW_THEME, payload: theme });
 }
 
 const getTheme = () => dispatch => {
