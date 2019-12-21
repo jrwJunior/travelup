@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b8e9ca1406ced583d700bf06e5ddf359",
+    "revision": "2751499fa2cf15e204c60302ec062e0b",
     "url": "/travelup/index.html"
   },
   {
