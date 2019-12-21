@@ -32,7 +32,7 @@ const EditorView = props => {
         className='upload-file user-action-profile'
         onClick={ onClickPopper }
       >
-        <img src={ userData.userAvatar } alt=""/>
+        <img src={ userData.userAvatar } alt="user-avatar"/>
       </button>
       <input 
         type="file"
@@ -52,6 +52,7 @@ const EditorView = props => {
           onChangeFile={ onChangeFile }
           onCancel={ onClickPopper }
           popperRef={ popperRef }
+          { ...props }
         />
       </CSSTransition>
       <ReactModal

@@ -10,9 +10,9 @@ class HomeContainer extends Component {
   modal_id = 'modal_gallery';
 
   componentDidMount() {
-    const { theme, a } = this.props;
+    const { theme, getUser } = this.props;
     theme();
-    a()
+    getUser();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -51,18 +51,17 @@ class HomeContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ notice, modal, theme, user }) => {
+const mapStateToProps = ({ notice, modal, theme }) => {
   return {
     notice,
     id: modal.id,
     colorTheme: theme.colorTheme,
-    uid: user.user.uid
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    a: () => dispatch(getUserData()),
+    getUser: () => dispatch(getUserData()),
     getNotice: () => dispatch(setNotice()),
     toggleModal: () => dispatch(modalOppened()),
     theme: () => dispatch(getTheme())

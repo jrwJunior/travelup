@@ -5,6 +5,7 @@ const initState  = {
   lng: 0,
   marks: [],
   selectMapId: null,
+  errorCords: false, 
   loading: false
 };
 
@@ -13,13 +14,27 @@ const mapLeafletReducer = (state = initState, action) => {
     case actionTypes.COORDINATES_REQUESTED:
       return {
         ...state,
-        loading: true
+        loading: true,
+        errorCords: false
+      }
+    case actionTypes.SET_ERROR_MAP_COORDINATES:
+      return {
+        ...state,
+        errorCords: true
       }
     case actionTypes.SET_MAP_COORDINATES:
       return {
         ...state,
         marks: state.marks.concat(action.payload),
         loading: false
+      }
+    case actionTypes.SET_POSITION_CENTER_MAP:
+      const { lat, lng } = action.payload;
+
+      return {
+        ...state,
+        lat,
+        lng,
       }
     case actionTypes.SET_MAP_ID:
       return {

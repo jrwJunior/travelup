@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setDragFilesGallery, deletedData } from '../../actions/gallery_actions';
-import { deleteGPSCoordinates, setGPSCoordinates } from '../../actions/map_actions';
+import { setGalleryPhoto, deletedData } from '../../actions/gallery_actions';
+import { deleteGPSCoordinates, setGPSCoordinatesOfPhotos } from '../../actions/map_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import ServicesGeoCordinats from '../../services/service_geo_cordinats';
 import Gallery from './gallery';
@@ -69,12 +69,12 @@ class GalleryContainer extends Component {
 
   handleSelected = () => {
     this.setState(state => {
-      const { selectedItem } = state;
+      const isSelect = !!state.selectedItem.keys.length;
 
       return {
         selected: !state.selected,
         selectedItem: {
-          selected: !selectedItem.selected,
+          selected: isSelect,
           keys: []
         }
       }
@@ -179,9 +179,9 @@ const mapStateToProps = ({ gallery, map }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setPhotosGallery: (id, files) => dispatch(setDragFilesGallery(id, files)),
+    setPhotosGallery: (id, files) => dispatch(setGalleryPhoto(id, files)),
     deleteDataItem: (id, delitem) => dispatch(deletedData(id, delitem)),
-    setCoordinates: cords => dispatch(setGPSCoordinates(cords)),
+    setCoordinates: cords => dispatch(setGPSCoordinatesOfPhotos(cords)),
     deleteMapCords: id => dispatch(deleteGPSCoordinates(id)),
     closeModal: () => dispatch(modalOppened())
   }

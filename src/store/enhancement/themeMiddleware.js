@@ -5,7 +5,7 @@ const middlewareTheme = ({ getState }) => next => action => {
   const local = localStorage;
 
   switch(action.type) {
-    case actionTypes.SET_THEME:
+    case actionTypes.SET_NEW_THEME:
       local.setItem('theme', JSON.stringify({ theme: action.payload }));
       return next(action);
     case actionTypes.GET_THEME:
@@ -13,7 +13,7 @@ const middlewareTheme = ({ getState }) => next => action => {
 
       if (data) {
         const { theme } = data;
-        next({ type: actionTypes.SET_THEME, payload: theme });
+        next({ type: actionTypes.SET_NEW_THEME, payload: theme });
       }
       break;
     case actionTypes.LOGIN_SUCCESS:

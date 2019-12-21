@@ -3,22 +3,29 @@ import { connect } from 'react-redux';
 import { Map, Marker, TileLayer, GeoJSON } from 'react-leaflet';
 import { divIcon } from 'leaflet';
 import MapGeo from './map.geo.json';
-import { getGPSCoordinates } from '../../actions/map_actions';
-import { getGalleryPhotos } from '../../actions/gallery_actions';
-import { setMapId } from '../../actions/map_actions';
+import { getAllPhotosAndGPSCoordinates, setMapId, setPositionCenterMap } from '../../actions/map_actions';
 import { modalOppened } from '../../actions/modal_actions';
-import shortid from 'shortid';
+import ServiceGeoCoordinates from '../../services/service_geo_cordinats';
 import './style.scss';
 
 class Mapleaflet extends Component {
+  serviceGeoCoordinates = new ServiceGeoCoordinates();
   map_dark = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  map_white = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  map_light = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
   componentDidMount() {
-    Promise.all([
-      this.props.getAllPhotos(),
-      this.props.getCordinates()
-    ])
+    this.props.getAllPhotos();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { marks } = this.props.map;
+
+    if (marks.length !== prevProps.map.marks.length) {
+      const _id = marks[marks.length -1].id;
+
+      this.serviceGeoCoordinates.getCords(_id)
+        .then(cords => this.props.setCenterMap(cords.latlng));
+    }
   }
 
   handleMouseOver = evt => {
@@ -43,7 +50,7 @@ class Mapleaflet extends Component {
 
     return divIcon({
       html: `
-        <img src=${ items[items.length-1].src } alt=''>
+        <img src=${ items[0].src } alt='preview photo'>
         <span class='marker-quantity'>${ items.length }</span>  
         `,
       className: 'iconButtonAddPhoto',
@@ -86,9 +93,8 @@ class Mapleaflet extends Component {
   }
 
   render() {
-    const { map, images, colorTheme } = this.props;
+    const { map, colorTheme } = this.props;
     const position = [this.props.map.lat, this.props.map.lng];
-    const a = Object.keys(images).length === map.marks.length;
 
     return (
       <Map
@@ -98,7 +104,7 @@ class Mapleaflet extends Component {
         maxBounds={ [[90, -180], [-70, 180]] }
       >
         <TileLayer
-          url={ colorTheme === 'dark' ? this.map_dark : this.map_white }
+          url={ colorTheme === 'dark' ? this.map_dark : this.map_light }
           minZoom={ 3 }
           maxZoom={ 5 }
         />
@@ -109,9 +115,9 @@ class Mapleaflet extends Component {
           onMouseOut={ this.handleMouseOut }
           onClick={ evt => this.selectedCountry(evt) }
         />
-        { a && map.marks.map(cords => (
+        { map.marks.map(cords => (
           <Marker 
-            key={ shortid.generate() }
+            key={ cords.id }
             position={ cords }
             icon={ this.mapCustomMarkIcon(cords.id) }
             onClick={ evt => this.filterCountryId(evt)}
@@ -132,9 +138,9 @@ const mapStateToProps = ({ map, gallery, theme }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getAllPhotos: () => dispatch(getAllPhotosAndGPSCoordinates()),
+    setCenterMap: cords => dispatch(setPositionCenterMap(cords)),
     toggleModal: id => dispatch(modalOppened(id)),
-    getCordinates: () => dispatch(getGPSCoordinates()),
-    getAllPhotos: () => dispatch(getGalleryPhotos()),
     selectCountry: id => dispatch(setMapId(id))
   }
 }
