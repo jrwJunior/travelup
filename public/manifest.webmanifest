@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
-  "start_url": "/travelup/",
+  "start_url": "/travelup",
   "icons": [
     {
       "src": "./icon-192x192.png",

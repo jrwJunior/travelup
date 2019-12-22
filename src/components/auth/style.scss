@@ -9,7 +9,10 @@ Auth-form
   background-repeat: no-repeat;
   background-size: 650px;
   color: #32323d;
-  min-height: calc(100% - 65px);
+
+  @media only screen and (min-width: 768px) {
+    min-height: calc(100% - 65px);
+  }
 
   @media only screen and (min-width: 768px) and (max-width: 991px) {
     background-size: auto;
@@ -56,7 +59,7 @@ Auth-form
   width: 370px;
   margin-top: 80px;
 
-  @media only screen and (min-width: 320px) and (max-width: 768px) {
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
     margin: 45px auto 0 auto;
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home';
 import PrivateRoute from '../auth/private_route';
@@ -9,32 +9,55 @@ import UnloggedTopbar from '../unlogged_topbar';
 
 import './app.scss';
 
-const App = props => {
-  const { location } = props;
-  const url = ['/login', '/register'].find(el => el === location.pathname);
+class App extends Component {
+  state = {
+    isOnline: false
+  }
 
-  return (
-    <main className='main-content'>
-      { url ? <UnloggedTopbar/> : null }
-      <Switch>
-        <PrivateRoute
-          exact
-          path="/"
-          component={ Home }
-        />
-        <Route
-          exact
-          path='/login'
-          render={ () => <Auth renderComponent={ SingIn } />} 
-        />
-        <Route
-          path='/register'
-          render={ () => <Auth renderComponent={ SingUp } />} 
-        />
-        <Redirect to='/' />
-    </Switch>
-    </main>
-  );
+  componentDidMount() {
+    window.addEventListener('online', () => this.setOnlineStatus(true));
+    window.addEventListener('offline', () => this.setOnlineStatus(false));
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('online');
+    window.removeEventListener('offline');
+  }
+
+  handleOnliseStatus = status => {
+    this.setState({ isOnline: status });
+  }
+
+  render() {
+    const { location } = this.props;
+    const url = ['/login', '/register'].find(el => el === location.pathname);
+
+    return (
+      <main className='main-content'>
+        { url ? <UnloggedTopbar/> : null }
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/"
+              component={ Home }
+            />
+            <Route
+              exact
+              path='/login'
+              render={ () => <Auth renderComponent={ SingIn } />} 
+            />
+            <Route
+              path='/register'
+              render={ () => <Auth renderComponent={ SingUp } />} 
+            />
+            <Redirect to='/' />
+        </Switch>
+        { this.state.isOnline ? (
+          <div className='notice-status-connect'>No internet connection</div>
+        ) : null }
+      </main>
+    );
+  }
 }
 
 export default withRouter(App);
