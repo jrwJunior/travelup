@@ -13,7 +13,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "3f8128cc40e963ce5108d157a7c3d7d5"
+    "revision": "4944527f0538f8529ed21cad56a0e6be"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -49,19 +49,11 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "1f576cbe9eace7b8f13a96996e6bfaa0"
+    "revision": "67dfc2b0f9ca701f67c6f0cecf75271d"
   },
   {
     "url": "manifest.webmanifest",
     "revision": "5fec3b539377d934e7516a27cfef9d34"
-  },
-  {
-    "url": "precache-manifest.6b4f1e4fda25c05dc066c2a2b5e96835.js",
-    "revision": "6b4f1e4fda25c05dc066c2a2b5e96835"
-  },
-  {
-    "url": "service-worker.js",
-    "revision": "b94bb3b61342a1b12148b356d25d3bd9"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -92,20 +84,20 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.2edfb147.chunk.css",
-    "revision": "34a68fbbb1c2ea142333ddb863d060fe"
+    "url": "static/css/main.3da9ba0a.chunk.css",
+    "revision": "3dcd32a6280a3969aafbb4afcc3819d3"
   },
   {
-    "url": "static/js/2.37e40794.chunk.js",
-    "revision": "d62778bbef521e2d6235885ae54cb30e"
+    "url": "static/js/2.e72240d3.chunk.js",
+    "revision": "ab20d74fd43208153244f54e2dcf7e94"
   },
   {
-    "url": "static/js/main.51759742.chunk.js",
-    "revision": "64ca422fc87c70bf6c62a3a8981a6e9e"
+    "url": "static/js/main.32712eee.chunk.js",
+    "revision": "3fd45b6e39fd74778013ef1b6ff63e73"
   },
   {
-    "url": "static/js/runtime-main.fa0e6e2f.js",
-    "revision": "b72d310a72cf8c35e188a0ece704d95a"
+    "url": "static/js/runtime-main.04d1ea81.js",
+    "revision": "fa82138a23da37fdd21d96bb89ea0076"
   },
   {
     "url": "static/media/CandaraBold.083a0630.woff2",
