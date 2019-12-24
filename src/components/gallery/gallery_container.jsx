@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setGalleryPhoto, deletedData } from '../../actions/gallery_actions';
-import { deleteGPSCoordinates, setGPSCoordinatesOfPhotos } from '../../actions/map_actions';
+import { deleteGPSCoordinates } from '../../actions/map_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import ServicesGeoCordinats from '../../services/service_geo_cordinats';
 import Gallery from './gallery';
@@ -25,22 +25,16 @@ class GalleryContainer extends Component {
   }
 
   handleChange = async(evt) => {
-    const { map, setPhotosGallery, setCoordinates } = this.props;
+    const { map, setPhotosGallery } = this.props;
     const { selectMapId } = map;
     const fileList = evt.target.files;
-    const isCoincidence = map.marks.some(({ id }) => id.includes(selectMapId));
+    const { latlng }  = await this.serviceGeoCordinats.getCords(selectMapId);
 
-    if (!isCoincidence) {
-      const { latlng }  = await this.serviceGeoCordinats.getCords(selectMapId);
-
-      setCoordinates({
-        lat: latlng[0],
-        lon: latlng[1],
-        id: selectMapId
-      });
-    }
-
-    setPhotosGallery(selectMapId, fileList);
+    setPhotosGallery(selectMapId, fileList, {
+      lat: latlng[0],
+      lon: latlng[1],
+      id: selectMapId
+    });
   }
 
   handleDragOverEnter(evt) {
@@ -104,7 +98,7 @@ class GalleryContainer extends Component {
     });
   }
 
-  handleRemoveItem = async() => {
+  handleRemoveItem = () => {
     const { selectedItem } = this.state;
     const { map, deleteDataItem, deleteMapCords } = this.props;
     const { selectMapId } = map;
@@ -117,8 +111,10 @@ class GalleryContainer extends Component {
       }
     });
 
-    deleteDataItem(selectMapId, selectedItem);
-    deleteMapCords(selectMapId);
+    Promise.all([
+      deleteDataItem(selectMapId, selectedItem),
+      deleteMapCords(selectMapId)
+    ])
   }
 
   handleOpenLightbox = name => {
@@ -179,9 +175,8 @@ const mapStateToProps = ({ gallery, map }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setPhotosGallery: (id, files) => dispatch(setGalleryPhoto(id, files)),
+    setPhotosGallery: (id, files, cords) => dispatch(setGalleryPhoto(id, files, cords)),
     deleteDataItem: (id, delitem) => dispatch(deletedData(id, delitem)),
-    setCoordinates: cords => dispatch(setGPSCoordinatesOfPhotos(cords)),
     deleteMapCords: id => dispatch(deleteGPSCoordinates(id)),
     closeModal: () => dispatch(modalOppened())
   }

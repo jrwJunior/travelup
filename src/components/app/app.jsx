@@ -11,12 +11,12 @@ import './app.scss';
 
 class App extends Component {
   state = {
-    isOnline: false
+    isOnline: true
   }
 
   componentDidMount() {
-    window.addEventListener('online', () => this.setOnlineStatus(true));
-    window.addEventListener('offline', () => this.setOnlineStatus(false));
+    window.addEventListener('online', () => this.handleOnliseStatus(true));
+    window.addEventListener('offline', () => this.handleOnliseStatus(false));
   }
   
   componentWillUnmount() {
@@ -52,8 +52,8 @@ class App extends Component {
             />
             <Redirect to='/' />
         </Switch>
-        { this.state.isOnline ? (
-          <div className='notice-status-connect'>No internet connection</div>
+        { !this.state.isOnline ? (
+          <div className='notice-status-connect'><span/>Travelup is offline</div>
         ) : null }
       </main>
     );

@@ -20,7 +20,7 @@ class Mapleaflet extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { marks } = this.props.map;
 
-    if (marks.length !== prevProps.map.marks.length) {
+    if (marks.length && marks.length !== prevProps.map.marks.length) {
       const _id = marks[marks.length -1].id;
 
       this.serviceGeoCoordinates.getCords(_id)
@@ -83,7 +83,7 @@ class Mapleaflet extends Component {
   selectedCountry = evt => {
     const { map, selectCountry, toggleModal } = this.props;
     const { id } = evt.layer.feature;
-
+    console.log(evt);
     if (!map.marks.some(item => item.id === id)) {
       selectCountry(evt.layer.feature.id);
       toggleModal('modal_gallery');

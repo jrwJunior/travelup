@@ -8,18 +8,16 @@ const setGPSCoordinatesOfPhotos = (file, cords) => async(dispatch, getState, { g
 
   try {
     const { id } = cords;
-    const data = getState().gallery.photos;
-    const dataIsEmpty = !!Object.keys(data).length;
+    const data = {};
     const docRef = await db.collection('map_location').doc(localData.uid);
-    const refData = docRef.get();
+    const refData = await docRef.get();
 
-    if (dataIsEmpty) {
-      const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${file.name}`).put(file);
-      const src = ref.getDownloadURL();
+    const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${file.name}`).put(file);
+    const { timeCreated } = await firebase.storage().ref(ref.fullPath).getMetadata();
+    const src = await ref.getDownloadURL();
 
-      if (!data.hasOwnProperty(id)) {
-        data[id] = [{ src, name: ref.name }];
-      }
+    if (!data.hasOwnProperty(id)) {
+      data[id] = [{ src, name: ref.name, timeCreated }];
     }
 
     if (refData.exists) {
@@ -31,11 +29,12 @@ const setGPSCoordinatesOfPhotos = (file, cords) => async(dispatch, getState, { g
         [id]: [{ ...cords }]
       });
     }
-    
-    if (dataIsEmpty) {
-      dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
-    }
 
+    data[id].sort((a, b) => (
+      new Date(b.timeCreated) - new Date(a.timeCreated)
+    ))
+
+    dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
     dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: cords });
   } catch(e) {
     console.log(e);
@@ -48,49 +47,52 @@ const getAllPhotosAndGPSCoordinates = () => async(dispatch, getState, { getFireb
   const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
+    const data = {};
+    const items = [];
     const storageRef = await firebase.storage().ref(`users/${localData.uid}/`);
     const listRef = await storageRef.child(`gallery/`);
     const docRef = await db.collection('map_location').doc(localData.uid);
     const cords = await docRef.get();
 
     const list = await listRef.listAll();
-    list.prefixes.forEach(async({ name: id, fullPath: url }) => {
+    list.prefixes.forEach(async({ fullPath: url }, idx) => {
       const res = await firebase.storage().ref(url).listAll();
-      res.items.forEach(async({ name, fullPath: url }) => {
-        const { timeCreated } = await firebase.storage().ref(url).getMetadata();
-        const src = await firebase.storage().ref(url).getDownloadURL();
-        const data = getState().gallery.photos;
+      items.push(...res.items);
 
-        if (!data.hasOwnProperty(id)) {
-          data[id] = [{ src, name, timeCreated }];
-        }
-
-        if (data[id].length) {
-          const noMatches = data[id].every(el => el.name.includes(name));
-          
-          if (!noMatches) {
-            data[id].push({ src, name, timeCreated });
+      if (idx+1 === list.prefixes.length) {
+        items.forEach(async({ name, fullPath: url, parent }, idx) => {
+          const { timeCreated } = await firebase.storage().ref(url).getMetadata();
+          const src = await firebase.storage().ref(url).getDownloadURL();
+          const id = parent.name;
+  
+          if (!data.hasOwnProperty(id)) {
+            data[id] = [{ src, name, timeCreated }];
           }
-        }
-
-        data[id].sort((a, b) => (
-          new Date(b.timeCreated) - new Date(a.timeCreated)
-        ))
-
-        if (list.prefixes.length === Object.keys(data).length) {
-          if (cords.exists) {
-            const data = [];
+  
+          if (data[id].length) {
+            const noMatches = data[id].every(el => el.name.includes(name));
             
-            for (let key in cords.data()) {
-              data.push(...cords.data()[key]);
+            if (!noMatches) {
+              data[id].push({ src, name, timeCreated });
             }
-            
-            dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: data });
           }
+  
+          data[id].sort((a, b) => (
+            new Date(b.timeCreated) - new Date(a.timeCreated)
+          ))
 
-          dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
-        }
-      })
+          if (idx+1 === items.length) {
+            const newCords = [];
+
+            for (let key in cords.data()) {
+              newCords.push(...cords.data()[key]);
+            }
+           
+            dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
+            dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: newCords });
+          }
+        })
+      }
     })
   } catch(e) {
     console.log(e);
