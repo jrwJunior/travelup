@@ -37,8 +37,8 @@ const getUserData = () => async(dispatch, getState, { getFirebase, getFirestore 
 
 const updateUserData = file => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const firebase = getFirebase();
-  const localData = JSON.parse(localStorage.getItem('_user'));
   const db = getFirestore();
+  const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
     const snapshot = await firebase.storage().ref(`users/${localData.uid}/user_avatar/`).put(file);

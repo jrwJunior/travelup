@@ -35,7 +35,7 @@ class HomeContainer extends Component {
   pushNotice = () => {
     const { getNotice } = this.props;
 
-    setTimeout(getNotice, 5000);
+    setTimeout(getNotice, 3000);
   }
 
   render() {

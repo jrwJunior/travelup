@@ -37,7 +37,7 @@
 
     if (isProduction && 'serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('%PUBLIC_URL%/sw.js');
       });
     }
     </script>

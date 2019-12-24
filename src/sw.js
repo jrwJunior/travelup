@@ -1,6 +1,6 @@
-importScripts("/workbox-v4.3.1/workbox-sw.js");
+importScripts(`${process.env.PUBLIC_URL}/workbox-v4.3.1/workbox-sw.js`);
 
-workbox.setConfig({ modulePathPrefix: '/workbox-v4.3.1/' });
+workbox.setConfig({ modulePathPrefix: `${process.env.PUBLIC_URL}/workbox-v4.3.1/` });
 
 self.addEventListener('message', evt => {
   if (evt.data && evt.data.type === 'SKIP_WAITING') {

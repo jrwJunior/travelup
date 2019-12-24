@@ -35,12 +35,23 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   font-size: 15px;
-  color: #fff;
+  color: var(--text-main-color);
   text-align: center;
-  background: #f34458;
+  background: var(--main-background-color);
+  border-top: 1px solid var(--status-offline-border-color);
+  z-index: 1000;
   animation: noticaStatucConnect 350ms ease-in;
+
+  span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background-color: #f25466;
+  }
 }
 
 @keyframes noticaStatucConnect {

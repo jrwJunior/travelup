@@ -4,6 +4,7 @@ import { setCropPhoto, setCropZoomPhoto } from '../../actions/cropper_actions';
 import { modalOppened } from '../../actions/modal_actions';
 import { popperShow } from '../../actions/popper_actions';
 import UploadAvatar from './upload_avatar';
+import ExifOrentation from '../../utils/exif_orentation';
 
 class UploadAvatarContainer extends Component {
   fileInput = React.createRef();
@@ -15,10 +16,12 @@ class UploadAvatarContainer extends Component {
 
     if (evt.target.files.length) {
       const file = evt.target.files[0];
-      const url = window.URL.createObjectURL(file);
 
+      new ExifOrentation(file).getFile(
+        window.URL.createObjectURL(file),
+        url => cropPhoto(url)
+      );
       toggleModal(this.modal_id);
-      cropPhoto(url);
     }
   };
 
