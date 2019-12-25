@@ -1,6 +1,6 @@
-importScripts("/travelup/workbox-v4.3.1/workbox-sw.js");
+importScripts(`${process.env.PUBLIC_URL}/workbox-v4.3.1/workbox-sw.js`);
 
-workbox.setConfig({ modulePathPrefix: '/travelup/workbox-v4.3.1/' });
+workbox.setConfig({ modulePathPrefix: `${process.env.PUBLIC_URL}/workbox-v4.3.1/` });
 
 self.addEventListener('message', evt => {
   if (evt.data && evt.data.type === 'SKIP_WAITING') {
@@ -13,7 +13,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "d8a21e570f064d5986ce57df6e517891"
+    "revision": "0f28509289b5921dd0f63669813e72df"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -49,19 +49,19 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "44cc6e88d49360652a54f22fd4e68c66"
+    "revision": "46c90efd5431e54b2607cd2d9a1e7711"
   },
   {
     "url": "manifest.webmanifest",
     "revision": "5fec3b539377d934e7516a27cfef9d34"
   },
   {
-    "url": "precache-manifest.0f4f13af5b8efa85fefaa81866e7769a.js",
-    "revision": "0f4f13af5b8efa85fefaa81866e7769a"
+    "url": "precache-manifest.dad8d4e21903891c6736a7e037a04144.js",
+    "revision": "dad8d4e21903891c6736a7e037a04144"
   },
   {
     "url": "service-worker.js",
-    "revision": "0687dd99176bf4d868d49e16d30904b9"
+    "revision": "0369d9383014868188fa868b5465b1ce"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -92,16 +92,16 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.a561ac04.chunk.css",
-    "revision": "d272123dfbfab37e12e162be9ab5cdf6"
+    "url": "static/css/main.3388b3c7.chunk.css",
+    "revision": "3ff41e237abad766608db3c9e753706f"
   },
   {
-    "url": "static/js/2.8f125e50.chunk.js",
-    "revision": "b876bec70c46ea03b381136749584680"
+    "url": "static/js/2.6bf4a21d.chunk.js",
+    "revision": "04f8cd8b92b1a25ab3e2cf7416ff4183"
   },
   {
-    "url": "static/js/main.8ee754a6.chunk.js",
-    "revision": "25224a057e9aba45d4ee20ae95119fc5"
+    "url": "static/js/main.2b540cf7.chunk.js",
+    "revision": "3c3925240c62ab26dddd5966129e464a"
   },
   {
     "url": "static/js/runtime-main.04d1ea81.js",
@@ -170,6 +170,10 @@ const precacheManifest = [
   {
     "url": "static/media/success.47f32db7.svg",
     "revision": "47f32db73064bfea7ebc388bd6a1a094"
+  },
+  {
+    "url": "static/media/upload-ios.e4e3f98d.svg",
+    "revision": "e4e3f98d4b07591a56a6fd6bfd107ad0"
   }
 ];
 workbox.precaching.precacheAndRoute(precacheManifest);
