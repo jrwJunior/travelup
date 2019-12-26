@@ -1,6 +1,4 @@
-importScripts('/workbox-v4.3.1/workbox-sw.js');
-
-workbox.setConfig({ modulePathPrefix: '/workbox-v4.3.1/' });
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 self.addEventListener('message', evt => {
   if (evt.data && evt.data.type === 'SKIP_WAITING') {
@@ -13,15 +11,17 @@ workbox.core.clientsClaim();
 const precacheManifest = [];
 workbox.precaching.precacheAndRoute(precacheManifest);
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/index.html"), {
-  blacklist: [/^\/_/,/\/[^\/?]+\.[^\/]+$/],
-});
-
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)restcountries.eu/,
   new workbox.strategies.CacheFirst({
     cacheName: 'api-cache',
   }), 'GET');
+
+  workbox.routing.registerRoute(
+    /.*.(?:png|jpg|jpeg|svg)$/,
+    new workbox.strategies.CacheFirst({
+      cacheName: 'meme-images'
+    }), 'GET');
 
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,

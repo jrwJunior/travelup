@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './style.scss';
 
 const Logo = () => {
   return (
-    <a href="/" className='app-logo'>
+    <Link to="/" className='app-logo'>
       <span className='app-logo-pic'/>
       <span className='app-logo-text'>
         <span>Tra</span>velup
       </span>
-    </a>
+    </Link>
   )
 }
 

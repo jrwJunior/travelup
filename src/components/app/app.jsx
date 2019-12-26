@@ -26,7 +26,7 @@ class App extends Component {
       this.setState({ showInstallMessage: true });
     }
 
-    if (!this.handleInStandaloneMode()) {
+    if (navigator.userAgent.match(/Android/i) && !this.handleInStandaloneMode()) {
       this.handleInstall();
     }
   }
@@ -82,22 +82,30 @@ class App extends Component {
   }
 
   handleInstall() {
+    const butInstall = document.getElementById('butInstall');
     let deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', async evt => {
-      console.log('foo')
-      evt.preventDefault();
       deferredPrompt = evt;
 
-      deferredPrompt.prompt();
-      const res = await deferredPrompt.userChoice;
-
-      if (res.outcome === 'accepted') {
-        console.log('User accepted the prompt');
-      } else {
-        console.log('User dismissed the prompt');
-      }
-      deferredPrompt = null;
+      butInstall.addEventListener('click', () => { 
+        const promptEvent = deferredPrompt
+        if (!promptEvent) {
+          // The deferred prompt isn't available.
+          return;
+        }
+        // Show the install prompt.
+        promptEvent.prompt();
+        // Log the result
+        promptEvent.userChoice.then(result => {
+          if (result.outcome === 'accepted') {
+            console.log('User accepted the prompt');
+          } else {
+            console.log('User dismissed the prompt');
+          }
+          deferredPrompt = null;
+        });
+      });
     })
   }
 
