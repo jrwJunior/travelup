@@ -70,23 +70,23 @@ class Mapleaflet extends Component {
 
   filterCountryId = evt => {
     const { options } = evt.target;
-    const { map, toggleModal, selectCountry } = this.props;
+    const { map, showModal, selectCountry } = this.props;
 
     map.marks.forEach(item => {
       if (item.id.includes(options.position.id)) {
         selectCountry(options.position.id);
-        toggleModal('modal_gallery');
+        showModal('gallery', null);
       }
     });
   }
 
   selectedCountry = evt => {
-    const { map, selectCountry, toggleModal } = this.props;
+    const { map, selectCountry, showModal } = this.props;
     const { id } = evt.layer.feature;
-    console.log(evt);
+
     if (!map.marks.some(item => item.id === id)) {
       selectCountry(evt.layer.feature.id);
-      toggleModal('modal_gallery');
+      showModal('gallery', null);
     } else {
       evt.originalEvent.stopPropagation();
     }
@@ -140,7 +140,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllPhotos: () => dispatch(getAllPhotosAndGPSCoordinates()),
     setCenterMap: cords => dispatch(setPositionCenterMap(cords)),
-    toggleModal: id => dispatch(modalOppened(id)),
+    showModal: (id, body) => dispatch(modalOppened(id, body)),
     selectCountry: id => dispatch(setMapId(id))
   }
 }

@@ -27,6 +27,28 @@
 	z-index: 5000;
 }
 
+.modal-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal-footer {
+	font-size: 14px;
+	background-color: #F5F5F5;
+	padding: 10px;
+	margin-bottom: -2px;
+	span {
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		background: url('../../img//upload-ios.svg') no-repeat center/contain;
+	}
+	b {
+		font-weight: 500;
+	}
+}
+
 .ReactModal__Content--after-open {
 	animation: IGCoreModalShow .1s ease-out;
 	will-change: transform;

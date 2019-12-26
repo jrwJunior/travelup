@@ -6,17 +6,41 @@ import Auth from '../auth/auth_container';
 import SingIn from '../auth/sign_in';
 import SingUp from '../auth/sign_up';
 import UnloggedTopbar from '../unlogged_topbar';
+import ModalInfo from '../modal';
+import { modalOppened } from '../../actions/modal_actions';
+import { connect } from 'react-redux';
 
 import './app.scss';
 
 class App extends Component {
   state = {
-    isOnline: true
+    isOnline: true,
+    showInstallMessage: false
   }
 
   componentDidMount() {
     window.addEventListener('online', () => this.handleOnliseStatus(true));
     window.addEventListener('offline', () => this.handleOnliseStatus(false));
+
+    if (this.handlePlatformIos() && !this.handleInStandaloneMode()) {
+      this.setState({ showInstallMessage: true });
+    }
+
+    if (!this.handleInStandaloneMode()) {
+      this.handleInstall();
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.state.isOnline) {
+      const message = 'The internet connection appears to be offline';
+      this.props.showModal('offline', message);
+    }
+
+    if (this.state.showInstallMessage && this.state.isOnline) {
+      const message = 'Install this application on your home screen for quick and easy access when you\'re on the go';
+      this.props.showModal('install', message);
+    }
   }
   
   componentWillUnmount() {
@@ -24,8 +48,57 @@ class App extends Component {
     window.removeEventListener('offline');
   }
 
+  handlePlatformIos() {
+    const iosPlatform = [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ];
+  
+    if (!!navigator.platform) {
+      while (iosPlatform.length) {
+        if (navigator.platform === iosPlatform.pop()) { 
+          return true; 
+        }
+      }
+    }
+  
+    return false;
+  }
+
+  handleInStandaloneMode() {
+    return ('standalone' in window.navigator) && (window.navigator.standalone);
+  }
+
   handleOnliseStatus = status => {
     this.setState({ isOnline: status });
+  }
+
+  handleModalError = () => {
+    this.setState({isOnline: true});
+  }
+
+  handleInstall() {
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', async evt => {
+      console.log('foo')
+      evt.preventDefault();
+      deferredPrompt = evt;
+
+      deferredPrompt.prompt();
+      const res = await deferredPrompt.userChoice;
+
+      if (res.outcome === 'accepted') {
+        console.log('User accepted the prompt');
+      } else {
+        console.log('User dismissed the prompt');
+      }
+      deferredPrompt = null;
+    })
   }
 
   render() {
@@ -52,12 +125,19 @@ class App extends Component {
             />
             <Redirect to='/' />
         </Switch>
-        { !this.state.isOnline ? (
-          <div className='notice-status-connect'><span/>Travelup is offline</div>
-        ) : null }
+        <ModalInfo
+          className="modal modal-error"
+          overlayClassName="modal-mask"
+        />
       </main>
     );
   }
 }
 
-export default withRouter(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    showModal: (id, body) => dispatch(modalOppened(id, body))
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

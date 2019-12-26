@@ -3,13 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../../actions/auth_actions';
 import { modalOppened } from '../../../actions/modal_actions';
-import ReactModal from '../../modal';
 import Input from '../input';
 import '../style.scss';
 
 class authContainer extends ReactComponent {
-  modal_id = 'modal-error';
-
   state = {
     password: { showPass: false },
     confirm: { showPass: false }
@@ -31,11 +28,10 @@ class authContainer extends ReactComponent {
 
     if (this.props.isLogined) {
       this.props.history.push('/');
-      console.log('redirect');
     }
 
     if (this.props.error) {
-      this.props.closeModalError(this.modal_id);
+      this.props.showModal('form-error', this.props.error);
     }
   };
 
@@ -108,9 +104,6 @@ class authContainer extends ReactComponent {
       renderComponent: Component,
       location,
       isLoading,
-      error,
-      id,
-      closeModalError
     } = this.props;
 
     const { pathname } = location;
@@ -131,23 +124,6 @@ class authContainer extends ReactComponent {
             />
           </div>
         </div>
-        <ReactModal
-          isOpen={ id === this.modal_id }
-          onRequestClose={ () => closeModalError() }
-          className="modal modal-error"
-          overlayClassName="modal-mask"
-        >
-          <div className='modal-content'>
-            <div className='modal-error-title'>Error</div>
-            <div className='error-text'>{ error }</div>
-          </div>
-          <button 
-            className='modal-btn'
-            onClick={ () => closeModalError() }
-          >
-            OK
-          </button>
-        </ReactModal>
       </div>
     )
   }
@@ -155,9 +131,8 @@ class authContainer extends ReactComponent {
 
 const mapStateToProps = ({ auth, modal }) => {
   return {
-    isLoading: auth.loading,
     error: auth.error,
-    id: modal.id
+    isLoading: auth.loading
   }
 }
 
@@ -165,7 +140,7 @@ const mapDispatchToProps = dispatch => {
   return {
     signIn: creds => dispatch(signIn(creds)),
     signUp: creds => dispatch(signUp(creds)),
-    closeModalError: id => dispatch(modalOppened(id))
+    showModal: (id, body) => dispatch(modalOppened(id, body))
   }
 }
 

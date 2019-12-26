@@ -12,7 +12,6 @@ export default class ExifOrentation {
 			const orentation = this.file.exifdata.Orientation;
 			this.render(url, orentation, callback)
 		});
-	
 	}
 
 	render(url, orentation, callback) {

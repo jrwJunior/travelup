@@ -3,7 +3,7 @@ import { slide as Menu } from 'react-burger-menu';
 import AppHeader from '../header';
 import AppMap from '../map_leaflet';
 import AppSidebar from '../sidebar';
-import ReactModal from '../modal';
+import ReactModal from 'react-modal';
 import Gallery from '../gallery';
 import Notification from '../notification';
 import './style.scss';
@@ -37,9 +37,7 @@ const Home = props => {
         className="modal modal-gallery"
         overlayClassName="modal-mask"
       >
-        <Gallery
-          onClose={ onClose }
-        />
+        <Gallery onClose={ onClose } />
       </ReactModal>
       <Notification
         notice={ isNotice }

@@ -41,13 +41,13 @@ const updateUserData = file => async(dispatch, getState, { getFirebase, getFires
   const localData = JSON.parse(localStorage.getItem('_user'));
 
   try {
-    const snapshot = await firebase.storage().ref(`users/${localData.uid}/user_avatar/`).put(file);
-    const url = snapshot.ref.getDownloadURL();
+    const snapshot = await firebase.storage().ref(`users/${localData.uid}/user_avatar/avatar`).put(file);
+    const url = await snapshot.ref.getDownloadURL();
 
-    db.collection('users').doc(localData.uid).update({
+    db.collection('auth_users').doc(localData.uid).update({
       avatar: url
     });
-    
+
     dispatch({ type: actionTypes.USER_REQUEST_DATA, payload: url });
   } catch(e) {
     console.log(e);
