@@ -1,5 +1,6 @@
 {
   "name": "travel-app",
+  "homepage": "https://jrwjunior.github.io/travelup/",
   "version": "0.0.1",
   "dependencies": {
     "exif-js": "^2.3.0",
@@ -33,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "cp ./build/index.html ./build/404.html && gh-pages -d build",
-    "start-sw": "workbox injectManifest workbox-config.js && workbox copyLibraries build/ && http-server build/ -c 0"
+    "start-sw": "workbox injectManifest workbox-config.js"
   },
   "eslintConfig": {
     "extends": "react-app"

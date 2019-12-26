@@ -22,9 +22,7 @@ const galleryReducer = (state = initState, action) => {
       }
     case actionTypes.REMOVE_ITEM_GALLERY:
       return {
-        photos: {
-          ...action.payload
-        },
+        photos: action.payload,
         loading: false
       }
     default:

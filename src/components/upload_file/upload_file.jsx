@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactModal from '../modal';
 import Spinner from '../spinner';
 import './style.scss';
 
@@ -10,9 +9,7 @@ const UploadFileView = props => {
     onClick,
     isLoading,
     isEmpty,
-    fileInput,
-    isOpen,
-    onCloseModal
+    fileInput
   } = props;
 
   if (isEmpty) {
@@ -42,23 +39,6 @@ const UploadFileView = props => {
           ref={ fileInput }
         />
       </button>
-      <ReactModal
-        isOpen={ isOpen }
-        onRequestClose={ onCloseModal }
-        className="modal modal-error"
-        overlayClassName="modal-mask"
-      >
-        <div className='modal-content'>
-          <div className='modal-error-title'>Warning</div>
-          <div className='error-text'>We could not get the geolocation data from your photos, you can add photos manually by selecting a country, and add photos yourself.</div>
-        </div>
-        <button 
-          className='modal-btn'
-          onClick={ onCloseModal }
-        >
-          OK
-        </button>
-      </ReactModal>
     </>
   )
 }

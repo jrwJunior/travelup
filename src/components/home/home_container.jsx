@@ -7,8 +7,6 @@ import { getUserData } from '../../actions/user_actions';
 import AppHome from './home';
 
 class HomeContainer extends Component {
-  modal_id = 'modal_gallery';
-
   componentDidMount() {
     const { theme, getUser } = this.props;
     theme();
@@ -35,7 +33,7 @@ class HomeContainer extends Component {
   pushNotice = () => {
     const { getNotice } = this.props;
 
-    setTimeout(getNotice, 3000);
+    setTimeout(getNotice, 2500);
   }
 
   render() {
@@ -44,7 +42,7 @@ class HomeContainer extends Component {
     return (
       <AppHome
         onClose={ this.handleClosedModal }
-        isOpen={ id === this.modal_id }
+        isOpen={ id === 'gallery' }
         isNotice={ notice }
       />
     )

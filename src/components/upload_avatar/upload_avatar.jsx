@@ -1,7 +1,7 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import Popper from '../popper';
-import ReactModal from '../modal';
+import ReactModal from 'react-modal';
 import Cropper from '../cropper';
 import './style.scss';
 

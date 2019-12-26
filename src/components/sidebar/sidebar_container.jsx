@@ -18,10 +18,10 @@ class SidebarContainer extends Component {
   }
 
   handleSelectCountry = id => {
-    const { toggleModal, selectCountry } = this.props;
+    const { showModal, selectCountry } = this.props;
 
     selectCountry(id);
-    toggleModal('modal_gallery');
+    showModal('gallery', null);
   }
 
   сountVisited = id => {
@@ -61,7 +61,7 @@ const mapStateToProps = ({ gallery, user }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleModal: (id) => dispatch(modalOppened(id)),
+    showModal: (id, body) => dispatch(modalOppened(id, body)),
     selectCountry: id => dispatch(setMapId(id))
   }
 }

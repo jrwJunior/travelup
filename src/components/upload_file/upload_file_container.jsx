@@ -9,7 +9,6 @@ import UploadFile from './upload_file';
 
 class UploadFileContainer extends Component {
   fileInput = React.createRef();
-  modal_id = 'modal_info';
   serviceGeoocoder = new ServiceGeoocoder();
 
   handleChange = evt => {
@@ -38,7 +37,7 @@ class UploadFileContainer extends Component {
   }
 
   getFile(file) {
-    const { setPhotoCoordinates, toggleModal, setError } = this.props;
+    const { setPhotoCoordinates, showModal, setError } = this.props;
 
     EXIF.getData(file, () => {
       Promise.all([
@@ -50,7 +49,9 @@ class UploadFileContainer extends Component {
         .then(cords => setPhotoCoordinates(file, cords))
       }, 
       () => {
-        toggleModal(this.modal_id);
+        const message = 'We could not get the geolocation data from your photos, you can add photos manually by selecting a country, and add photos yourself.';
+
+        showModal('error-gps', message);
         setError();
       })
     });
@@ -89,7 +90,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setPhotoCoordinates: (file, cords) => dispatch(setGPSCoordinatesOfPhotos(file, cords)),
     setError: () => dispatch(failGPSCoordinates()),
-    toggleModal: (id) => dispatch(modalOppened(id))
+    showModal: (id, body) => dispatch(modalOppened(id, body))
   }
 }
 

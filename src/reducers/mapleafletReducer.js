@@ -44,9 +44,7 @@ const mapLeafletReducer = (state = initState, action) => {
     case actionTypes.DELETE_MAP_COORDINATES:
       return {
         ...state,
-        marks: [
-          ...action.payload
-        ]
+        marks: action.payload
       }
     default:
       return state;

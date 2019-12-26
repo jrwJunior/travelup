@@ -1,10 +1,10 @@
 import * as actionTypes from './action_types';
+import Orentation from '../utils';
 
 const setGPSCoordinatesOfPhotos = (file, cords) => async(dispatch, getState, { getFirebase, getFirestore }) => {
   const firebase = getFirebase();
   const db = getFirestore();
   const localData = JSON.parse(localStorage.getItem('_user'));
-  dispatch({ type: actionTypes.COORDINATES_REQUESTED });
 
   try {
     const { id } = cords;
@@ -12,13 +12,28 @@ const setGPSCoordinatesOfPhotos = (file, cords) => async(dispatch, getState, { g
     const docRef = await db.collection('map_location').doc(localData.uid);
     const refData = await docRef.get();
 
-    const { ref } = await firebase.storage().ref(`users/${localData.uid}/gallery/${id}/${file.name}`).put(file);
-    const { timeCreated } = await firebase.storage().ref(ref.fullPath).getMetadata();
-    const src = await ref.getDownloadURL();
+    new Orentation(file).getFile(window.URL.createObjectURL(file), async url => {
+      dispatch({ type: actionTypes.COORDINATES_REQUESTED });
 
-    if (!data.hasOwnProperty(id)) {
-      data[id] = [{ src, name: ref.name, timeCreated }];
-    }
+      const name = file.name;
+      const { ref } = await firebase.storage()
+      .ref(`users/${localData.uid}/gallery/${id}/${file.name}`)
+      .putString(url, 'data_url');
+
+      const src = await ref.getDownloadURL();
+      const { timeCreated } = await firebase.storage().ref(ref.fullPath).getMetadata();
+
+      if (!data.hasOwnProperty(id)) {
+        data[id] = [{ src, name, timeCreated }];
+      }
+
+      data[id].sort((a, b) => (
+        new Date(b.timeCreated) - new Date(a.timeCreated)
+      ))
+
+      dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
+      dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: cords });
+    });
 
     if (refData.exists) {
       db.collection('map_location').doc(localData.uid).update({
@@ -29,13 +44,6 @@ const setGPSCoordinatesOfPhotos = (file, cords) => async(dispatch, getState, { g
         [id]: [{ ...cords }]
       });
     }
-
-    data[id].sort((a, b) => (
-      new Date(b.timeCreated) - new Date(a.timeCreated)
-    ))
-
-    dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
-    dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: cords });
   } catch(e) {
     console.log(e);
   }
@@ -48,51 +56,49 @@ const getAllPhotosAndGPSCoordinates = () => async(dispatch, getState, { getFireb
 
   try {
     const data = {};
-    const items = [];
     const storageRef = await firebase.storage().ref(`users/${localData.uid}/`);
     const listRef = await storageRef.child(`gallery/`);
     const docRef = await db.collection('map_location').doc(localData.uid);
     const cords = await docRef.get();
 
     const list = await listRef.listAll();
-    list.prefixes.forEach(async({ fullPath: url }, idx) => {
+    list.prefixes.forEach(async({ fullPath: url }) => {
       const res = await firebase.storage().ref(url).listAll();
-      items.push(...res.items);
 
-      if (idx+1 === list.prefixes.length) {
-        items.forEach(async({ name, fullPath: url, parent }, idx) => {
-          const { timeCreated } = await firebase.storage().ref(url).getMetadata();
-          const src = await firebase.storage().ref(url).getDownloadURL();
-          const id = parent.name;
-  
-          if (!data.hasOwnProperty(id)) {
-            data[id] = [{ src, name, timeCreated }];
+      res.items.forEach(async({ name, fullPath: url, parent }) => {
+        const src = await firebase.storage().ref(url).getDownloadURL();
+        const { timeCreated } = await firebase.storage().ref(url).getMetadata();
+        const id = parent.name;
+
+        if (!data.hasOwnProperty(id)) {
+          data[id] = [{ src, name, timeCreated }];
+        }
+
+        if (data[id].length) {
+          const noMatches = data[id].every(el => el.name.includes(name));
+          
+          if (!noMatches) {
+            data[id].push({ src, name, timeCreated });
           }
-  
-          if (data[id].length) {
-            const noMatches = data[id].every(el => el.name.includes(name));
-            
-            if (!noMatches) {
-              data[id].push({ src, name, timeCreated });
-            }
+        }
+
+        data[id].sort((a, b) => (
+          new Date(b.timeCreated) - new Date(a.timeCreated)
+        ))
+
+        if (Object.keys(data).length === list.prefixes.length) {
+          const newCords = [];
+
+          for (let key in cords.data()) {
+            newCords.push(...cords.data()[key]);
           }
-  
-          data[id].sort((a, b) => (
-            new Date(b.timeCreated) - new Date(a.timeCreated)
-          ))
-
-          if (idx+1 === items.length) {
-            const newCords = [];
-
-            for (let key in cords.data()) {
-              newCords.push(...cords.data()[key]);
-            }
-           
+          
+          if (newCords.length !== getState().map.marks.length) {
             dispatch({ type: actionTypes.SET_PHOTO_GALLERY, payload: data });
             dispatch({ type: actionTypes.SET_MAP_COORDINATES, payload: newCords });
           }
-        })
-      }
+        }
+      })
     })
   } catch(e) {
     console.log(e);
@@ -115,14 +121,14 @@ const deleteGPSCoordinates = id => async(dispatch, getState, { getFirebase, getF
 
   const { marks } = getState().map;
   const data = getState().gallery.photos;
-  
+
   if (!data.hasOwnProperty(id)) {
     const newMarks = marks.filter(el => el.id !== id);
 
     db.collection('map_location').doc(localData.uid).update({
       [id]: db.FieldValue.delete()
     });
-
+    console.log(newMarks)
     dispatch({ type: actionTypes.DELETE_MAP_COORDINATES, payload: newMarks });
   }
 }
