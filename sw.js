@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "b5dd3768e70e34211bbadf4056f85748"
+    "revision": "063dd0c5149b98529354332a7064d05e"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,7 +47,7 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "21fd01418027ac2baad3532c00642018"
+    "revision": "9e7ba6e975fab2329cd0c779579b2116"
   },
   {
     "url": "manifest.webmanifest",
@@ -82,16 +82,16 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.53099e6b.chunk.css",
-    "revision": "66b098ff6faa3d3a473f1a1d6a70e7e6"
+    "url": "static/css/main.1de66a36.chunk.css",
+    "revision": "68d2d6150fa973df23888503dd8ffca4"
   },
   {
     "url": "static/js/2.284d7185.chunk.js",
     "revision": "4517af3040b37818747310e03a965533"
   },
   {
-    "url": "static/js/main.34f838cc.chunk.js",
-    "revision": "68559822a9d2823ec1d9cb869b1f6b52"
+    "url": "static/js/main.48edab6e.chunk.js",
+    "revision": "560a04d39a809718ad4c0b7f59bf0f42"
   },
   {
     "url": "static/js/runtime-main.04d1ea81.js",
@@ -162,8 +162,8 @@ const precacheManifest = [
     "revision": "47f32db73064bfea7ebc388bd6a1a094"
   },
   {
-    "url": "static/media/upload-ios.e4e3f98d.svg",
-    "revision": "e4e3f98d4b07591a56a6fd6bfd107ad0"
+    "url": "static/media/upload-ios.9c9a1dba.svg",
+    "revision": "9c9a1dbaa4f9136d37ad613ecbcf29bb"
   }
 ];
 workbox.precaching.precacheAndRoute(precacheManifest);
@@ -174,11 +174,11 @@ workbox.routing.registerRoute(
     cacheName: 'api-cache',
   }), 'GET');
 
-  workbox.routing.registerRoute(
-    /.*.(?:png|jpg|jpeg|svg)$/,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'meme-images'
-    }), 'GET');
+  // workbox.routing.registerRoute(
+  //   /.*.(?:png|jpg|jpeg|svg)$/,
+  //   new workbox.strategies.CacheFirst({
+  //     cacheName: 'meme-images'
+  //   }), 'GET');
 
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
