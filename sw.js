@@ -55,7 +55,7 @@ const precacheManifest = [
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "e0a8e4fde9a30aeb1b3a9369a878794e"
+    "revision": "3cec9880ec86fa0e13f1cb1fde6873e4"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -184,14 +184,31 @@ workbox.routing.registerRoute(
     cacheName: 'meme-images'
   }), 'GET');
 
-workbox.routing.registerRoute(
+const api = [
+  /(http[s]?:\/\/)lh3.googleusercontent.com/,
   /(http[s]?:\/\/)graph.facebook.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
-
-workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
+  /(http[s]?:\/\/)firestore.googleapis.com/
+]
 
-workbox.routing.registerRoute(
-  /(http[s]?:\/\/)firestore.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
+api.map(regexp => (
+  workbox.routing.registerRoute(
+    regexp,
+    new workbox.strategies.NetworkFirst(), 'GET')
+))
+
+// workbox.routing.registerRoute(
+//   /(http[s]?:\/\/)lh3.googleusercontent.com/,
+//   new workbox.strategies.NetworkFirst(), 'GET');
+
+// workbox.routing.registerRoute(
+//   /(http[s]?:\/\/)graph.facebook.com/,
+//   new workbox.strategies.NetworkFirst(), 'GET');
+
+// workbox.routing.registerRoute(
+//   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
+//   new workbox.strategies.NetworkFirst(), 'GET');
+
+// workbox.routing.registerRoute(
+//   /(http[s]?:\/\/)firestore.googleapis.com/,
+//   new workbox.strategies.NetworkFirst(), 'GET');
