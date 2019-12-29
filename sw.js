@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "3fbb60200754783f43f9482c708084b5"
+    "revision": "b329261d436c83a5680e3461885a4127"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,11 +47,19 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "8f7fea1f77797d68cb3633ff67268697"
+    "revision": "e53dec082bb79e0ac192b2eb8c5004fa"
   },
   {
     "url": "manifest.webmanifest",
     "revision": "5fec3b539377d934e7516a27cfef9d34"
+  },
+  {
+    "url": "precache-manifest.a5a26e4605cadee3113e8e2664cc7044.js",
+    "revision": "a5a26e4605cadee3113e8e2664cc7044"
+  },
+  {
+    "url": "service-worker.js",
+    "revision": "358e621412f8efa197ba0e5a44137de3"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -82,8 +90,8 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.b1892c69.chunk.css",
-    "revision": "314d3bbb7793af3e8df40a700801d1ac"
+    "url": "static/css/main.c354143e.chunk.css",
+    "revision": "f4aec601c3fc72a166d96a80a3527d15"
   },
   {
     "url": "static/js/2.284d7185.chunk.js",
@@ -174,11 +182,11 @@ workbox.routing.registerRoute(
     cacheName: 'api-cache',
   }), 'GET');
 
-  workbox.routing.registerRoute(
-    /.*.(?:png|jpg|jpeg|svg)$/,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'meme-images'
-    }), 'GET');
+workbox.routing.registerRoute(
+  /.*.(?:png|jpg|jpeg|svg)$/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'meme-images'
+  }), 'GET');
 
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
