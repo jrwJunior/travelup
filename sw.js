@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "b329261d436c83a5680e3461885a4127"
+    "revision": "be6bf5ce86e80c45ccc28f0cf4dd709a"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,19 +47,11 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "e53dec082bb79e0ac192b2eb8c5004fa"
+    "revision": "b65c206f63200349e357e0b9200bf125"
   },
   {
     "url": "manifest.webmanifest",
     "revision": "5fec3b539377d934e7516a27cfef9d34"
-  },
-  {
-    "url": "precache-manifest.a5a26e4605cadee3113e8e2664cc7044.js",
-    "revision": "a5a26e4605cadee3113e8e2664cc7044"
-  },
-  {
-    "url": "service-worker.js",
-    "revision": "358e621412f8efa197ba0e5a44137de3"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -90,20 +82,20 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.c354143e.chunk.css",
-    "revision": "f4aec601c3fc72a166d96a80a3527d15"
+    "url": "static/css/main.29e6b186.chunk.css",
+    "revision": "efa0a721997b92dc6f6e9d3571a786a7"
   },
   {
-    "url": "static/js/2.284d7185.chunk.js",
-    "revision": "4517af3040b37818747310e03a965533"
+    "url": "static/js/2.aa9276dd.chunk.js",
+    "revision": "d27d13f4b056749696cc52c52d67df42"
   },
   {
-    "url": "static/js/main.be6d576c.chunk.js",
-    "revision": "15836fb3cce47b47ec4d35566f89a5fd"
+    "url": "static/js/main.4e412db2.chunk.js",
+    "revision": "1b5419494e2497a9610b1e205cfb73bc"
   },
   {
-    "url": "static/js/runtime-main.04d1ea81.js",
-    "revision": "fa82138a23da37fdd21d96bb89ea0076"
+    "url": "static/js/runtime-main.fa0e6e2f.js",
+    "revision": "b72d310a72cf8c35e188a0ece704d95a"
   },
   {
     "url": "static/media/CandaraBold.083a0630.woff2",
