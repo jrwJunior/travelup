@@ -10,10 +10,6 @@ workbox.core.clientsClaim();
 
 const precacheManifest = [
   {
-    "url": "404.html",
-    "revision": "e53dec082bb79e0ac192b2eb8c5004fa"
-  },
-  {
     "url": "asset-manifest.json",
     "revision": "b329261d436c83a5680e3461885a4127"
   },
@@ -55,7 +51,7 @@ const precacheManifest = [
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "3cec9880ec86fa0e13f1cb1fde6873e4"
+    "revision": "88869d228e9526ed5a5cf246c27ae2c2"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -176,6 +172,12 @@ workbox.routing.registerRoute(
   /(http[s]?:\/\/)restcountries.eu/,
   new workbox.strategies.CacheFirst({
     cacheName: 'api-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      }),
+    ]
   }), 'GET');
 
 workbox.routing.registerRoute(
@@ -196,19 +198,3 @@ api.map(regexp => (
     regexp,
     new workbox.strategies.NetworkFirst(), 'GET')
 ))
-
-// workbox.routing.registerRoute(
-//   /(http[s]?:\/\/)lh3.googleusercontent.com/,
-//   new workbox.strategies.NetworkFirst(), 'GET');
-
-// workbox.routing.registerRoute(
-//   /(http[s]?:\/\/)graph.facebook.com/,
-//   new workbox.strategies.NetworkFirst(), 'GET');
-
-// workbox.routing.registerRoute(
-//   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-//   new workbox.strategies.NetworkFirst(), 'GET');
-
-// workbox.routing.registerRoute(
-//   /(http[s]?:\/\/)firestore.googleapis.com/,
-//   new workbox.strategies.NetworkFirst(), 'GET');
