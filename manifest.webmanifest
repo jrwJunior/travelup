@@ -5,8 +5,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
-  "Scope": "https://jrwjunior.github.io/travelup/",
-  "start_url": "/",
+  "Scope": "/",
+  "start_url": "/travelup/",
   "icons": [
     {
       "src": "./icon-192x192.png",
