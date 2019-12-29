@@ -10,6 +10,10 @@ workbox.core.clientsClaim();
 
 const precacheManifest = [
   {
+    "url": "404.html",
+    "revision": "e53dec082bb79e0ac192b2eb8c5004fa"
+  },
+  {
     "url": "asset-manifest.json",
     "revision": "b329261d436c83a5680e3461885a4127"
   },
@@ -179,6 +183,10 @@ workbox.routing.registerRoute(
   new workbox.strategies.CacheFirst({
     cacheName: 'meme-images'
   }), 'GET');
+
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)platform-lookaside.fbsbx.com/,
+  new workbox.strategies.NetworkFirst(), 'GET');
 
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
