@@ -51,7 +51,7 @@ const precacheManifest = [
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "88869d228e9526ed5a5cf246c27ae2c2"
+    "revision": "ed4cd8ed5c69c618beaa87a6dd469020"
   },
   {
     "url": "splash/launch-1125x2436.png",
