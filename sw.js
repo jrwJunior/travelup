@@ -185,7 +185,7 @@ workbox.routing.registerRoute(
   }), 'GET');
 
 workbox.routing.registerRoute(
-  /(http[s]?:\/\/)platform-lookaside.fbsbx.com/,
+  /(http[s]?:\/\/)graph.facebook.com/,
   new workbox.strategies.NetworkFirst(), 'GET');
 
 workbox.routing.registerRoute(
