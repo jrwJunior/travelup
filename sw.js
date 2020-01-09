@@ -10,6 +10,10 @@ workbox.core.clientsClaim();
 
 const precacheManifest = [
   {
+    "url": "404.html",
+    "revision": "ec29262820c0705631eec58c0d71c8f9"
+  },
+  {
     "url": "asset-manifest.json",
     "revision": "d7372d5de4788df6874b7a8bc03022ae"
   },
@@ -51,15 +55,7 @@ const precacheManifest = [
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "42999a299f2ddd364fb5c3d29698da27"
-  },
-  {
-    "url": "precache-manifest.512415fbb5acfb6b8b593e498dc56571.js",
-    "revision": "512415fbb5acfb6b8b593e498dc56571"
-  },
-  {
-    "url": "service-worker.js",
-    "revision": "c1eaf5ead6a08d04332c6a4d6810c3a5"
+    "revision": "d2cd8b0a9e0cb5f8b0068e0c862a52a5"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -208,11 +204,7 @@ api.map(regexp => (
 ));
 
 workbox.routing.registerNavigationRoute(
-  workbox.precaching.getCacheKeyForURL('/index.html'), {
-    whitelist: [
-      new RegExp('/')
-    ],
-    blacklist: [
-      new RegExp('/login'),
-    ]
-  });
+  workbox.precaching.getCacheKeyForURL('/travelup/index.html'), {
+    blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+  }
+);
