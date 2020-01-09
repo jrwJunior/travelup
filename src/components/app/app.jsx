@@ -23,7 +23,7 @@ class App extends Component {
     window.addEventListener('offline', () => this.handleOnliseStatus(false));
 
     if (this.handlePlatformIos() && !this.handleInStandaloneMode()) {
-      this.setState({ showInstallMessage: true });
+      setTimeout(() => this.setState({ showInstallMessage: true }), 15000);
     }
 
     if (navigator.userAgent.match(/Android/i) && !this.handleInStandaloneMode()) {
@@ -91,12 +91,10 @@ class App extends Component {
       butInstall.addEventListener('click', () => { 
         const promptEvent = deferredPrompt
         if (!promptEvent) {
-          // The deferred prompt isn't available.
           return;
         }
-        // Show the install prompt.
+
         promptEvent.prompt();
-        // Log the result
         promptEvent.userChoice.then(result => {
           if (result.outcome === 'accepted') {
             console.log('User accepted the prompt');

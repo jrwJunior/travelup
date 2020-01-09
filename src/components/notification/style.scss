@@ -3,6 +3,10 @@
   bottom: 60px;
   right: 30px;
   z-index: 6000;
+
+  @media screen and (min-width: 350px) and (max-width: 650px) {
+    display: none;
+  }
 }
 
 .notification-text {

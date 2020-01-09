@@ -15,18 +15,29 @@ workbox.routing.registerRoute(
   /(http[s]?:\/\/)restcountries.eu/,
   new workbox.strategies.CacheFirst({
     cacheName: 'api-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      }),
+    ]
   }), 'GET');
 
-  workbox.routing.registerRoute(
-    /.*.(?:png|jpg|jpeg|svg)$/,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'meme-images'
-    }), 'GET');
-
 workbox.routing.registerRoute(
+  /.*.(?:png|jpg|jpeg|svg)$/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'meme-images'
+  }), 'GET');
+
+const api = [
+  /(http[s]?:\/\/)lh3.googleusercontent.com/,
+  /(http[s]?:\/\/)graph.facebook.com/,
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
+  /(http[s]?:\/\/)firestore.googleapis.com/
+]
 
-workbox.routing.registerRoute(
-  /(http[s]?:\/\/)firestore.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
+api.map(regexp => (
+  workbox.routing.registerRoute(
+    regexp,
+    new workbox.strategies.NetworkFirst(), 'GET')
+))
