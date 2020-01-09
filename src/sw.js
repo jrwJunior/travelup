@@ -40,4 +40,10 @@ api.map(regexp => (
   workbox.routing.registerRoute(
     regexp,
     new workbox.strategies.NetworkFirst(), 'GET')
-))
+));
+
+workbox.routing.registerNavigationRoute(
+  workbox.precaching.getCacheKeyForURL('/travelup/index.html'), {
+    blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+  }
+);
