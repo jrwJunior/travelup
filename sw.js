@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "b329261d436c83a5680e3461885a4127"
+    "revision": "d7372d5de4788df6874b7a8bc03022ae"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,11 +47,19 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "e53dec082bb79e0ac192b2eb8c5004fa"
+    "revision": "ec29262820c0705631eec58c0d71c8f9"
   },
   {
     "url": "manifest.webmanifest",
     "revision": "42999a299f2ddd364fb5c3d29698da27"
+  },
+  {
+    "url": "precache-manifest.512415fbb5acfb6b8b593e498dc56571.js",
+    "revision": "512415fbb5acfb6b8b593e498dc56571"
+  },
+  {
+    "url": "service-worker.js",
+    "revision": "c1eaf5ead6a08d04332c6a4d6810c3a5"
   },
   {
     "url": "splash/launch-1125x2436.png",
@@ -82,16 +90,16 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.c354143e.chunk.css",
-    "revision": "f4aec601c3fc72a166d96a80a3527d15"
+    "url": "static/css/main.c5847bcd.chunk.css",
+    "revision": "634cdf72bab2d4daa5b8164a07ad1789"
   },
   {
     "url": "static/js/2.284d7185.chunk.js",
     "revision": "4517af3040b37818747310e03a965533"
   },
   {
-    "url": "static/js/main.be6d576c.chunk.js",
-    "revision": "15836fb3cce47b47ec4d35566f89a5fd"
+    "url": "static/js/main.c72a9cb6.chunk.js",
+    "revision": "fc48885e3d5b6b277e763b60e9420b07"
   },
   {
     "url": "static/js/runtime-main.04d1ea81.js",
@@ -197,4 +205,8 @@ api.map(regexp => (
   workbox.routing.registerRoute(
     regexp,
     new workbox.strategies.NetworkFirst(), 'GET')
-))
+));
+
+workbox.routing.registerNavigationRoute(
+  workbox.precaching.getCacheKeyForURL('/index.html') 
+);
