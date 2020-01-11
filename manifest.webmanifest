@@ -5,7 +5,7 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
-  "start_url": "/travelup/",
+  "start_url": "/travelup/?utm_source=homescreen",
   "icons": [
     {
       "src": "./icon-192x192.png",
