@@ -21,6 +21,9 @@
   --picture--color: #323232;
   --skeleton-background: #e1eaf1;
   --status-offline-border-color: #e8e8e8;
+  --modal-title-color: #323232;
+  --modal-text-color: #323232;
+  --modal-border-color: #e6e6e6;
 }
 
 [data-theme=dark] {
@@ -46,6 +49,9 @@
   --picture--color: #fff;
   --skeleton-background: #4e4e4e;
   --status-offline-border-color: #2f2f2f;
+  --modal-title-color: #fff;
+  --modal-text-color: #fff;
+  --modal-border-color: #2d2d2d;
 }
 
 .main-content {

@@ -170,8 +170,12 @@
 .modal-error-title {
 	font-size: 18px;
 	font-weight: 500;
-	color: #323232;
+	color: var(--modal-title-color);
 	margin-bottom: 8px;
+}
+
+.error-text {
+	color: var(--modal-text-color);
 }
 
 .modal-btn {
@@ -181,14 +185,14 @@
 	display: block;
 	width: 100%;
 	color: #F25466;
-	border-top: 1px solid #f1f1f1;
+	border-top: 1px solid var(--modal-border-color);
 	border-bottom-right-radius: 6px;
 	border-bottom-left-radius: 6px;
 	padding: 15px;
 	transition: background-color 0.15s ease-in;
 	cursor: pointer;
 
-	&:hover {
-		background-color: #f1f1f1;
-	}
+	// &:hover {
+	// 	background-color: #f1f1f1;
+	// }
 }
