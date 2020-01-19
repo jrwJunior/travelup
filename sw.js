@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "0fde959e7e82e70cc4da37dc15f96abf"
+    "revision": "f8cea2c538bf32248c5cddf134acf355"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,7 +47,7 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "f4b0bdab9c2f0828cce50a79bd7eb877"
+    "revision": "fdb35d1bc34bc6ebda8f29cca94e4751"
   },
   {
     "url": "manifest.webmanifest",
@@ -82,8 +82,8 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.cf3e955f.chunk.css",
-    "revision": "4a3f12ae3144005b4369fcfb01ca038f"
+    "url": "static/css/main.3fab4a6c.chunk.css",
+    "revision": "da6a3603b007dc5941e2ab8caa1a74fa"
   },
   {
     "url": "static/js/2.284d7185.chunk.js",
