@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/travelup/static/css/main.231a4e7c.chunk.css",
+    "main.css": "/travelup/static/css/main.450eb77f.chunk.css",
     "main.js": "/travelup/static/js/main.5b462436.chunk.js",
     "main.js.map": "/travelup/static/js/main.5b462436.chunk.js.map",
     "runtime-main.js": "/travelup/static/js/runtime-main.04d1ea81.js",
@@ -8,16 +8,16 @@
     "static/js/2.284d7185.chunk.js": "/travelup/static/js/2.284d7185.chunk.js",
     "static/js/2.284d7185.chunk.js.map": "/travelup/static/js/2.284d7185.chunk.js.map",
     "index.html": "/travelup/index.html",
-    "precache-manifest.6387fc1a68e9d772073d3fac780ec76e.js": "/travelup/precache-manifest.6387fc1a68e9d772073d3fac780ec76e.js",
+    "precache-manifest.75069390c9d787dc2bd83d2cc3b89486.js": "/travelup/precache-manifest.75069390c9d787dc2bd83d2cc3b89486.js",
     "service-worker.js": "/travelup/service-worker.js",
-    "static/css/main.231a4e7c.chunk.css.map": "/travelup/static/css/main.231a4e7c.chunk.css.map",
+    "static/css/main.450eb77f.chunk.css.map": "/travelup/static/css/main.450eb77f.chunk.css.map",
     "static/media/index.css": "/travelup/static/media/SFProDisplaySemibold.af64ab08.woff2",
     "static/media/style.scss": "/travelup/static/media/upload-ios.9c9a1dba.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.04d1ea81.js",
     "static/js/2.284d7185.chunk.js",
-    "static/css/main.231a4e7c.chunk.css",
+    "static/css/main.450eb77f.chunk.css",
     "static/js/main.5b462436.chunk.js"
   ]
 }
