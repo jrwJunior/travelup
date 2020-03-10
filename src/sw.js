@@ -14,19 +14,35 @@ workbox.precaching.precacheAndRoute(precacheManifest);
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)restcountries.eu/,
   new workbox.strategies.CacheFirst({
-    cacheName: 'api-cache',
-  }), 'GET');
+    cacheName: 'api-cache'
+  }));
 
+workbox.routing.registerRoute(
+  /.*.(?:png|jpg|jpeg|svg)$/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      }),
+    ]
+  }));
+
+const api = [
+  /(http[s]?:\/\/)lh3.googleusercontent.com/,
+  /(http[s]?:\/\/)graph.facebook.com/,
+  /(http[s]?:\/\/)firebasestorage.googleapis.com/
+]
+
+api.map(regexp => (
   workbox.routing.registerRoute(
-    /.*.(?:png|jpg|jpeg|svg)$/,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'meme-images'
-    }), 'GET');
+    regexp,
+    new workbox.strategies.NetworkFirst())
+));
 
-workbox.routing.registerRoute(
-  /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
-
-workbox.routing.registerRoute(
-  /(http[s]?:\/\/)firestore.googleapis.com/,
-  new workbox.strategies.NetworkFirst(), 'GET');
+workbox.routing.registerNavigationRoute(
+  workbox.precaching.getCacheKeyForURL('/travelup/index.html'), {
+    blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+  }
+);

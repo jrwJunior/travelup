@@ -21,7 +21,8 @@ const authReducer = (state = initState, action) => {
         ...state,
         uid: action.payload,
         isLogined: true,
-        loading: false
+        loading: false,
+        error: null
       }
     case actionTypes.LOGIN_ERROR:
       console.log('ERROR')
