@@ -10,6 +10,10 @@ workbox.core.clientsClaim();
 
 const precacheManifest = [
   {
+    "url": "404.html",
+    "revision": "fff2ce2ef0d0d8baf9ba0edeb9179442"
+  },
+  {
     "url": "asset-manifest.json",
     "revision": "487185ca8e64e2333c0cc3dbdc2b510c"
   },
@@ -195,13 +199,12 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
   new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'images'
+    cacheName: 'b-images'
   }));
 
 const api = [
   /(http[s]?:\/\/)lh3.googleusercontent.com/,
-  /(http[s]?:\/\/)graph.facebook.com/,
-  /(http[s]?:\/\/)firebasestorage.googleapis.com/
+  /(http[s]?:\/\/)graph.facebook.com/
 ]
 
 api.map(regexp => (
