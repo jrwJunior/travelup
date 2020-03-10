@@ -192,11 +192,11 @@ workbox.routing.registerRoute(
     ]
   }));
 
-// workbox.routing.registerRoute(
-//   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-//   new workbox.strategies.StaleWhileRevalidate({
-//     cacheName: 'images'
-//   }));
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)firebasestorage.googleapis.com/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'images'
+  }));
 
 const api = [
   /(http[s]?:\/\/)lh3.googleusercontent.com/,
