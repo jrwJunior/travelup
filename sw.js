@@ -175,13 +175,7 @@ workbox.precaching.precacheAndRoute(precacheManifest);
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)restcountries.eu/,
   new workbox.strategies.CacheFirst({
-    cacheName: 'api-cache',
-    plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60
-      }),
-    ]
+    cacheName: 'api-cache'
   }));
 
 workbox.routing.registerRoute(
@@ -196,21 +190,10 @@ workbox.routing.registerRoute(
     ]
   }));
 
-workbox.routing.registerRoute(
-  /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  new workbox.strategies.CacheFirst({
-    cacheName: 'b-images',
-    plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60
-      }),
-    ]
-  }));
-
 const api = [
   /(http[s]?:\/\/)lh3.googleusercontent.com/,
-  /(http[s]?:\/\/)graph.facebook.com/
+  /(http[s]?:\/\/)graph.facebook.com/,
+  /(http[s]?:\/\/)firebasestorage.googleapis.com/
 ]
 
 api.map(regexp => (
