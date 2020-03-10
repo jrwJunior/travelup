@@ -11,7 +11,7 @@ workbox.core.clientsClaim();
 const precacheManifest = [
   {
     "url": "asset-manifest.json",
-    "revision": "f8cea2c538bf32248c5cddf134acf355"
+    "revision": "487185ca8e64e2333c0cc3dbdc2b510c"
   },
   {
     "url": "favicon/apple-touch-icon.png",
@@ -47,7 +47,7 @@ const precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "fdb35d1bc34bc6ebda8f29cca94e4751"
+    "revision": "fff2ce2ef0d0d8baf9ba0edeb9179442"
   },
   {
     "url": "manifest.webmanifest",
@@ -82,16 +82,16 @@ const precacheManifest = [
     "revision": "411be3a5350e3379b20fa65e854174e0"
   },
   {
-    "url": "static/css/main.3fab4a6c.chunk.css",
-    "revision": "da6a3603b007dc5941e2ab8caa1a74fa"
+    "url": "static/css/main.cf603386.chunk.css",
+    "revision": "6a67d78aeffc3184e56ef47ed962163b"
   },
   {
     "url": "static/js/2.284d7185.chunk.js",
     "revision": "4517af3040b37818747310e03a965533"
   },
   {
-    "url": "static/js/main.be6d576c.chunk.js",
-    "revision": "15836fb3cce47b47ec4d35566f89a5fd"
+    "url": "static/js/main.5b462436.chunk.js",
+    "revision": "3993c1ef1d545951a90eb8213b521d56"
   },
   {
     "url": "static/js/runtime-main.04d1ea81.js",
@@ -178,25 +178,36 @@ workbox.routing.registerRoute(
         maxAgeSeconds: 30 * 24 * 60 * 60
       }),
     ]
-  }), 'GET');
+  }));
 
 workbox.routing.registerRoute(
   /.*.(?:png|jpg|jpeg|svg)$/,
   new workbox.strategies.CacheFirst({
-    cacheName: 'meme-images'
-  }), 'GET');
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      }),
+    ]
+  }));
+
+// workbox.routing.registerRoute(
+//   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
+//   new workbox.strategies.StaleWhileRevalidate({
+//     cacheName: 'images'
+//   }));
 
 const api = [
   /(http[s]?:\/\/)lh3.googleusercontent.com/,
   /(http[s]?:\/\/)graph.facebook.com/,
-  /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  /(http[s]?:\/\/)firestore.googleapis.com/
+  /(http[s]?:\/\/)firebasestorage.googleapis.com/
 ]
 
 api.map(regexp => (
   workbox.routing.registerRoute(
     regexp,
-    new workbox.strategies.NetworkFirst(), 'GET')
+    new workbox.strategies.NetworkFirst())
 ));
 
 workbox.routing.registerNavigationRoute(

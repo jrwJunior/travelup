@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/travelup/static/css/main.3fab4a6c.chunk.css",
-    "main.js": "/travelup/static/js/main.be6d576c.chunk.js",
-    "main.js.map": "/travelup/static/js/main.be6d576c.chunk.js.map",
+    "main.css": "/travelup/static/css/main.cf603386.chunk.css",
+    "main.js": "/travelup/static/js/main.5b462436.chunk.js",
+    "main.js.map": "/travelup/static/js/main.5b462436.chunk.js.map",
     "runtime-main.js": "/travelup/static/js/runtime-main.04d1ea81.js",
     "runtime-main.js.map": "/travelup/static/js/runtime-main.04d1ea81.js.map",
     "static/js/2.284d7185.chunk.js": "/travelup/static/js/2.284d7185.chunk.js",
     "static/js/2.284d7185.chunk.js.map": "/travelup/static/js/2.284d7185.chunk.js.map",
     "index.html": "/travelup/index.html",
-    "precache-manifest.9ad01021d3fc31b69bb9ce5989ed5299.js": "/travelup/precache-manifest.9ad01021d3fc31b69bb9ce5989ed5299.js",
+    "precache-manifest.2f04c4451ba2549d6cd611c8eaec21cc.js": "/travelup/precache-manifest.2f04c4451ba2549d6cd611c8eaec21cc.js",
     "service-worker.js": "/travelup/service-worker.js",
-    "static/css/main.3fab4a6c.chunk.css.map": "/travelup/static/css/main.3fab4a6c.chunk.css.map",
+    "static/css/main.cf603386.chunk.css.map": "/travelup/static/css/main.cf603386.chunk.css.map",
     "static/media/index.css": "/travelup/static/media/SFProDisplaySemibold.af64ab08.woff2",
     "static/media/style.scss": "/travelup/static/media/upload-ios.9c9a1dba.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.04d1ea81.js",
     "static/js/2.284d7185.chunk.js",
-    "static/css/main.3fab4a6c.chunk.css",
-    "static/js/main.be6d576c.chunk.js"
+    "static/css/main.cf603386.chunk.css",
+    "static/js/main.5b462436.chunk.js"
   ]
 }
