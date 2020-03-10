@@ -4,7 +4,7 @@ Auth-form
 */
 
 .unlogged-authen {
-  background-color: #fff;
+  background-color: #f2f2f2;
   background-position: 100% 0;
   background-repeat: no-repeat;
   background-size: 650px;
@@ -95,7 +95,7 @@ Auth-form
   padding: 18px 20px;
   border: 1px solid transparent;
   border-radius: 4px;
-  background: #EFEFF2;
+  background: #fff;
   box-shadow: 0 20px 20px 0 rgba(0,0,0,0);
   outline: none;
   -webkit-appearance: none;
@@ -103,7 +103,7 @@ Auth-form
   appearance: none;
 
   &::-webkit-input-placeholder {
-    font-size: 14px;
+    font-size: 16px;
     color: #999;
   }
 
@@ -142,7 +142,7 @@ Auth-form
 }
 
 .unlogged-error {
-  background-color: rgba(10,10,22,0.35);
+  background-color: rgba(10,10,22,.45);
   border-radius: 3px;
   font-size: 14px;
   left: 100%;
@@ -162,7 +162,7 @@ Auth-form
     width: 0;
     top: 8px;
     border: 7px solid transparent;
-    border-right-color: rgba(10,10,22,0.35);
+    border-right-color: rgba(10,10,22,.45);
     right: 100%;
   }
 
