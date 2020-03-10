@@ -198,8 +198,14 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)firebasestorage.googleapis.com/,
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'b-images'
+  new workbox.strategies.CacheFirst({
+    cacheName: 'b-images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60
+      }),
+    ]
   }));
 
 const api = [
